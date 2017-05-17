@@ -1,0 +1,31 @@
+Residue 1  Residue 2  Contact Area
+========== ========== ============
+GLN  13A   PRO   3C       0.500
+PHE  14A   PRO   3C      35.900
+PHE  14A   ALA   4C      24.000
+PHE  14A   PRO   5C      21.000
+PHE  14A   PRO   6C      24.500
+PRO  15A   PRO   5C       2.700
+TYR  16A   PRO   8C      16.600
+TYR  16A   ARG  11C       1.200
+SER  18A   ARG  11C       0.200
+TYR  20A   ARG  11C      61.800
+ASP  22A   ARG  11C      14.900
+ASP  23A   ARG  11C      39.400
+LYS  28A   PRO   3C       6.500
+ASP  39A   ARG  11C       6.600
+GLU  41A   PRO   9C      32.900
+GLU  41A   HIS  10C      10.800
+TRP  42A   PRO   8C       2.000
+TRP  42A   PRO   9C      32.800
+TRP  42A   HIS  10C      20.700
+TRP  42A   ARG  11C      37.600
+ILE  58A   ARG  11C      17.000
+PRO  60A   PRO   8C       1.300
+PRO  60A   PRO   9C      32.700
+SER  62A   PRO   6C      29.900
+SER  62A   PRO   7C       2.100
+SER  62A   PRO   9C       7.100
+PHE  63A   PRO   5C      18.900
+PHE  63A   PRO   6C      35.700
+PHE  63A   PRO   8C      19.500

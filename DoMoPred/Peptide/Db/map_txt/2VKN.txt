@@ -1,0 +1,29 @@
+Residue 1  Residue 2  Contact Area
+========== ========== ============
+TYR  11A   LEU   8C      40.800
+TYR  11A   PRO   9C      40.300
+TYR  11A   LEU  10C       7.800
+TYR  11A   ALA  11C       7.000
+PRO  12A   PRO   9C       2.200
+TYR  13A   LYS   3C       2.600
+TYR  13A   PRO   6C      25.700
+ASP  19A   LYS   3C      16.500
+GLU  22A   LYS   3C      28.700
+ARG  39A   LYS   3C       3.800
+ARG  39A   LEU   5C      32.900
+TRP  40A   LYS   3C      51.100
+TRP  40A   PRO   4C      18.800
+TRP  40A   LEU   5C      11.500
+TRP  40A   PRO   6C      18.800
+ILE  52A   LYS   3C       4.000
+PRO  54A   LEU   5C       9.000
+PRO  54A   PRO   6C      29.400
+SER  55A   LEU   5C       6.900
+ASN  56A   LEU   5C      25.700
+ASN  56A   PRO   6C      26.600
+ASN  56A   PRO   7C       0.200
+ASN  56A   LEU   8C      37.400
+TYR  57A   PRO   6C      23.400
+TYR  57A   PRO   7C      29.100
+TYR  57A   LEU   8C       9.800
+TYR  57A   PRO   9C      23.400

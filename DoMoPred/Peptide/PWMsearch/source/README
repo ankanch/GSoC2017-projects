@@ -1,0 +1,5 @@
+Compile c++ files as:
+
+g++ -fPIC -c PWMSearch.cpp -I/usr/include/python2.7 -lpython2.7 -o PWMSearch.o
+
+g++ -shared PWMSearch.o -o PWMSearch.so

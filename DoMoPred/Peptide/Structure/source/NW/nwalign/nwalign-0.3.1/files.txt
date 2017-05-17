@@ -1,0 +1,17 @@
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/EGG-INFO/dependency_links.txt
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/EGG-INFO/entry_points.txt
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/EGG-INFO/native_libs.txt
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/EGG-INFO/not-zip-safe
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/EGG-INFO/PKG-INFO
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/EGG-INFO/requires.txt
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/EGG-INFO/SOURCES.txt
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/EGG-INFO/top_level.txt
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/nwalign/__init__.py
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/nwalign/__init__.pyc
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/nwalign/cnwalign.c
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/nwalign/cnwalign.py
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/nwalign/cnwalign.pyc
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/nwalign/cnwalign.so
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/nwalign/nwserver.py
+/Users/shobhit/Library/Python/2.7/lib/python/site-packages/nwalign-0.3.1-py2.7-macosx-10.9-x86_64.egg/nwalign/nwserver.pyc
+/Users/shobhit/Library/Python/2.7/bin/nwalign
