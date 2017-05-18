@@ -1,0 +1,35 @@
+.div-center-90 {
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.div-center-100 {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.div-90 {
+    width: 90%;
+}
+
+.div-content-center {
+    margin: 0 auto;
+}
+
+.div-margin-top-5 {
+    margin-top: 5px;
+}
+
+.div-margin-top-25 {
+    margin-top: 25px;
+}
+
+.div-margin-bottom-25 {
+    margin-bottom: 25px;
+}
+
+.div-border-right-1px {
+    border-right: 1px solid;
+}
