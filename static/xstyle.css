@@ -4,6 +4,12 @@
     margin: 0 auto;
 }
 
+.div-left-90-l35p {
+    text-align: left;
+    width: 90%;
+    left: 30%;
+}
+
 .div-center-100 {
     text-align: center;
     width: 100%;
@@ -22,6 +28,10 @@
     margin-top: 5px;
 }
 
+.div-margin-top-10 {
+    margin-top: 10px;
+}
+
 .div-margin-top-25 {
     margin-top: 25px;
 }
@@ -32,4 +42,19 @@
 
 .div-border-right-1px {
     border-right: 1px solid;
+}
+
+.div-min-height-256 {
+    min-height: 256px;
+}
+
+.div-certer-vertical {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.div-height-100p {
+    position: absolute;
+    max-width: 250px;
 }
