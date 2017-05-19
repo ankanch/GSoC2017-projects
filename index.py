@@ -8,6 +8,10 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
+@app.route('/result')
+def result():
+    return render_template("result.html")
+
 
 if __name__ == '__main__':
     #app.run(host='10.105.91.217')
