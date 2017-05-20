@@ -5,7 +5,7 @@
             <div class="row div-margin-top-25 div-center-90 " id="input_built_in" style="width:512px;">
                 <div class="row ">
                     <div class="col-md-9">
-                        <textarea class="form-control" id="textarea_input_a" rows="1" placeholder="input protein ids here." style="resize: vertical; "></textarea>
+                        <textarea class="form-control" id="textarea_input_a" rows="1" placeholder="Input protein ids here.One line for one pair." style="resize: vertical; "></textarea>
                     </div>
                     <div class="col-md-3">
                         <select class="form-control" id="select_a">
@@ -26,7 +26,7 @@
                         </div>
                         <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
                             <div class="row div-margin-top-25">
-                                <textarea class="form-control" id="textarea_input_b" rows="3" placeholder="input protein ids here." style="resize: vertical;width:60%; "></textarea>
+                                <textarea class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:60%; "></textarea>
                             </div>
                             <div class="row div-margin-top-10">
                                 <select class="form-control" id="select_b" style="width:40%">
@@ -81,7 +81,7 @@
                 <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
-                <button type="button" class="btn btn-primary">Run</button><br/>
+                <button type="button" class="btn btn-primary" onclick="javascript:window.location='/result';">Run</button><br/>
                 <button type="button" onclick="javascript:toggleDiv('index_placeholder');toggleDiv('input_built_in');" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
             </div>
         </div>

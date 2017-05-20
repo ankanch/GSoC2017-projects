@@ -1,38 +1,44 @@
 {% extends "template.html" %} {% block title %}Result{% endblock %} {% block content %}
 <div class=" div-margin-top-5">
     <div class="row div-center-90">
+        <!--For button which allows you to change view of different result-->
+        {% for result in result_package %}
+        <button type="button" class="btn btn-secondary" id="btn_{{result[0]}}" onclick="javascript:changeView('{{result[0]}}')">{{result[0]}}
+            </button> {% endfor %}
     </div>
     <div class="row" style=" width: 70%;text-align:initial;margin:0 auto;">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
+        <!--result[0] for result_set id,rsult[1] for result set-->
+        {% for result in result_package %}
+        <div class="row" id="table_{{result[0]}}" style="width:99%;margin:0 auto;text-align:initial;display:none;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Domain</th>
+                        <th>Peptide</th>
+                        <th>Start</th>
+                        <th>Stop</th>
+                        <th>Sequence</th>
+                        <th>Peptide Score</th>
+                        <th>Peptide Count</th>
+                        <th>Protein Score</th>
+                        <th>Protein Count</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in result[1] %}
+                    <tr>
+                        <th scope="row">1</th>
+                        {% for x in data %}
+                        <td>{{x}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
     </div>
     <div class="row div-center-90">
         <button type="button" class="btn btn-info">Download</button>
@@ -45,6 +51,20 @@
     }
     $(document).ready(function() {
         toggleDiv('index_placeholder');
+        toggleDiv("table_0");
+        document.getElementById("btn_0").classList.remove("btn-secondary");
+        document.getElementById("btn_0").classList.add("btn-danger");
     });
+
+    var current_view = "0"; //store current rersult view id
+    function changeView(id) {
+        document.getElementById("btn_" + current_view).classList.add("btn-secondary");
+        document.getElementById("btn_" + current_view).classList.remove("btn-danger");
+        toggleDiv("table_" + current_view);
+        toggleDiv("table_" + id);
+        current_view = id;
+        document.getElementById("btn_" + current_view).classList.remove("btn-secondary");
+        document.getElementById("btn_" + current_view).classList.add("btn-danger");
+    }
 </script>
 {% endblock %}
