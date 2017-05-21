@@ -1,0 +1,16 @@
+{% extends "template.html" %} {% block title %}Result{% endblock %} {% block content %}
+<div class=" div-margin-top-25">
+    <div class="row div-center-50">
+        <div class="alert alert-success" role="alert">
+            <strong>Analyzed done.</strong> <br/>We're now redirecting you to the result page.
+            <br/> This may takes serveral seconds.
+        </div>
+    </div>
+</div>
+<script>
+    // when document ready , function below will be executed
+    $(document).ready(function() {
+        window.location = "{{TARGET}}"
+    });
+</script>
+{% endblock %}

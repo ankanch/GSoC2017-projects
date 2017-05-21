@@ -1,3 +1,9 @@
+.div-center-50 {
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
 .div-center-90 {
     text-align: center;
     width: 90%;

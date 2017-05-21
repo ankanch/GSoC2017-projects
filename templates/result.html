@@ -49,6 +49,7 @@
     function toggleDiv(divId) {
         $("#" + divId).toggle();
     }
+    // when document ready , function below will be executed
     $(document).ready(function() {
         toggleDiv('index_placeholder');
         toggleDiv("table_0");
@@ -57,6 +58,7 @@
     });
 
     var current_view = "0"; //store current rersult view id
+    //function below is used to change result view
     function changeView(id) {
         document.getElementById("btn_" + current_view).classList.add("btn-secondary");
         document.getElementById("btn_" + current_view).classList.remove("btn-danger");
