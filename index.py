@@ -4,7 +4,7 @@ from flask import Flask, jsonify, redirect, render_template, request,make_respon
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = ".\\Cache"
+UPLOAD_FOLDER = ".\\Cache\\uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # This is the entrance URL for the index page
