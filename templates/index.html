@@ -1,14 +1,14 @@
 {% extends "template.html" %} {% block title %}Welcome{% endblock %} {% block content %}
 <div class=" div-margin-top-5">
-    <form>
+    <form action="/runanalyze" method="post">
         <div class="row div-center-90">
             <div class="row div-margin-top-25 div-center-90 " id="input_built_in" style="width:512px;">
                 <div class="row ">
                     <div class="col-md-9">
-                        <textarea class="form-control" id="textarea_input_a" rows="1" placeholder="Input protein ids here.One line for one pair." style="resize: vertical; "></textarea>
+                        <textarea name="idpairs_normal" class="form-control" id="textarea_input_a" rows="1" placeholder="Input protein ids here.One line for one pair." style="resize: vertical; "></textarea>
                     </div>
                     <div class="col-md-3">
-                        <select class="form-control" id="select_a">
+                        <select name="select_normal" class="form-control" id="select_a">
             <option>Species</option>
             <option>2</option>
             <option>3</option>
@@ -26,10 +26,10 @@
                         </div>
                         <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
                             <div class="row div-margin-top-25">
-                                <textarea class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:60%; "></textarea>
+                                <textarea name="idpairs_advance" class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:60%; "></textarea>
                             </div>
                             <div class="row div-margin-top-10">
-                                <select class="form-control" id="select_b" style="width:40%">
+                                <select name="select_advance" class="form-control" id="select_b" style="width:40%">
                                 <option>Species</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -40,7 +40,7 @@
                             <h5>OR</h5>
                             <div class="form-group">
                                 <label for="exampleInputFile">Choose a local file</label>
-                                <input type="file" class="form-control-file" id="file_input">
+                                <input name="local_files[]" type="file" class="form-control-file" id="file_input" multiple="">
                             </div>
                         </div>
                     </div>
@@ -49,22 +49,20 @@
                             <h4>FEATURES</h4>
                         </div>
                         <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
-                            <input type="checkbox" name="features" value="cellular_location" checked="checked" />Cellular location<br>
-                            <input type="checkbox" name="features" value="biological_process" checked="checked" />Biological process<br>
-                            <input type="checkbox" name="features" value="molecular_function" checked="checked" />Molecular function<br>
-                            <input type="checkbox" name="features" value="gene_expression" checked="checked" />Gene expression<br>
-                            <input type="checkbox" name="features" value="protein_expression" checked="checked" />Protein expression<br>
-                            <input type="checkbox" name="features" value="sequence_signature" checked="checked" />Sequence signature<br>
+                            <input type="checkbox" name="features[]" value="cellular_location" checked="checked" />Cellular location<br>
+                            <input type="checkbox" name="features[]" value="biological_process" checked="checked" />Biological process<br>
+                            <input type="checkbox" name="features[]" value="molecular_function" checked="checked" />Molecular function<br>
+                            <input type="checkbox" name="features[]" value="gene_expression" checked="checked" />Gene expression<br>
+                            <input type="checkbox" name="features[]" value="protein_expression" checked="checked" />Protein expression<br>
+                            <input type="checkbox" name="features[]" value="sequence_signature" checked="checked" />Sequence signature<br>
                         </div>
                     </div>
                     <div class="col-md-3 div-border-right-1px div-min-height-256">
-                        <!--input type="radio" name="algorithm" value="" />456<br>
-                        <input type="radio" name="algorithm" value="" /><br-->
                         <div class="row">
                             <h4>ALGORITHM</h4>
                         </div>
                         <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
-                            <input type="radio" name="algorithm" value="naive_bayes" checked="checked" />Naive Bayes
+                            <input type="radio" name="algorithms" value="naive_bayes" checked="checked" />Naive Bayes
                         </div>
                     </div>
                     <div class="col-md-3 div-min-height-256">
@@ -72,17 +70,19 @@
                             <h4>OUTPUT</h4>
                         </div>
                         <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
-                            <input type="radio" name="output" value="tabular" checked="checked" />Tabular<br>
+                            <input type="radio" name="outputs" value="tabular" checked="checked" />Tabular<br>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row progress div-center-90 div-margin-top-25 hide" style="width:20%;">
                 <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                <input type="text" name="analyze_type" value="normal" style="display:none;" id="analyze_type" />
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
+                <input type="submit" class="btn btn-primary" value='提交' />
                 <button type="button" class="btn btn-primary" onclick="javascript:window.location='/result';">Run</button><br/>
-                <button type="button" onclick="javascript:toggleDiv('index_placeholder');toggleDiv('input_built_in');" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
+                <button type="button" onclick="javascript:advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
             </div>
         </div>
     </form>
@@ -90,6 +90,21 @@
 <script>
     function toggleDiv(divId) {
         $("#" + divId).toggle();
+
+    }
+
+    var cur_normal = true;
+
+    function advancedSwitcher() {
+        toggleDiv('index_placeholder');
+        toggleDiv('input_built_in');
+        if (cur_normal) {
+            document.getElementById("analyze_type").setAttribute("value", "advance");
+            cur_normal = false;
+        } else {
+            document.getElementById("analyze_type").setAttribute("value", "normal");
+            cur_normal = true;
+        }
     }
 </script>
 {% endblock %}

@@ -1,5 +1,6 @@
 import time
 import flask
+import os
 from flask import Flask, jsonify, redirect, render_template, request,make_response
 
 app = Flask(__name__)
@@ -35,20 +36,39 @@ def result():
 
 
 
-# This URL is used for normal analyze,which just input protein ids
-# and select species
-@app.route('/normal',methods=['POST'])
-def normal_analyze():
-    return redirect('/')
+# This URL is for running analyze, both normal analyze and advance analyze
+# In normal analyze, user need just input protein id pairs and select specices
+# In advance analyze, user will need to optimize a lot of settings or even upload coustom files to analyze
+# We use a hidden value post by a hidden filed to determine which knid of analyze user want to perform
+@app.route('/runanalyze',methods=['POST'])
+def run_analyzealyze():
+    # first we have to query what kind of analyze user want to perform.
+    # the analyze indicator is post with the value of the hidden filed analyze_type in HTML from of index.html
+    # two type of analyze at this time:  1).normal   2).advance
+    analyze_type =  request.form['analyze_type']
+    
 
-# This URL is for advance analyze,which will optimize a lot of
-# settings or even upload coustom files to analyze
-@app.route('/advance',methods=['POST'])
-def advance_analyze():
-    protein_id_list =  request.form['protein_id_list']
-    file = request.files['file']
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename.replace(" ",""))
-    file.save(filepath)
+    if analyze_type == "normal":
+        #user select normal analyze, which requires him to input protein id pairs and select species
+        idpairs_normal = request.form['idpairs_normal']
+        select_normal = request.form['select_normal']
+    elif analyze_type == "advance":
+        #user select advance analyze,which need to customize a lot of options.
+        idpairs_advance = request.form['idpairs_advance']
+        select_advance = request.form['select_advance']
+        features = request.form.getlist('features[]')
+        local_file_list = request.files.getlist('local_files[]')
+        print(local_file_list)
+        if len(local_file_list)>0 :
+            # if file length not equal to zero, this means user had select to upload a file to analyze
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], local_file.filename.replace(" ",""))
+            local_file.save(filepath)
+            print("fielen=",len(local_file_list))
+        print("no upload.")
+    else:
+        #no valid analyze type found? return error!.
+        pass
+
     return redirect('/')
 
 #used for test redirect
