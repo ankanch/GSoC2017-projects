@@ -1,6 +1,6 @@
 {% extends "template.html" %} {% block title %}Welcome{% endblock %} {% block content %}
 <div class=" div-margin-top-5">
-    <form action="/runanalyze" method="post">
+    <form action="runanalyze" method="POST" enctype="multipart/form-data">
         <div class="row div-center-90">
             <div class="row div-margin-top-25 div-center-90 " id="input_built_in" style="width:512px;">
                 <div class="row ">
@@ -40,7 +40,7 @@
                             <h5>OR</h5>
                             <div class="form-group">
                                 <label for="exampleInputFile">Choose a local file</label>
-                                <input name="local_files[]" type="file" class="form-control-file" id="file_input" multiple="">
+                                <input name="files[]" type="file" class="form-control-file" id="file_input" multiple="true">
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                 <input type="text" name="analyze_type" value="normal" style="display:none;" id="analyze_type" />
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
-                <input type="submit" class="btn btn-primary" value='Run' />
+                <input type="submit" class="btn btn-primary" value="Run" />
                 <button type="button" class="btn btn-primary" onclick="javascript:window.location='/result';">DEBUG:Show Result page</button><br/>
                 <button type="button" onclick="javascript:advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
             </div>

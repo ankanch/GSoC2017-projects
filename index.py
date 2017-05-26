@@ -1,11 +1,12 @@
 import time
 import flask
 import os
-from flask import Flask, jsonify, redirect, render_template, request,make_response
+from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file
+from Utilities import SessionManager
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = ".\\Cache\\uploads"
+UPLOAD_FOLDER = "./Cache/uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # This is the entrance URL for the index page
@@ -57,19 +58,30 @@ def run_analyzealyze():
         idpairs_advance = request.form['idpairs_advance']
         select_advance = request.form['select_advance']
         features = request.form.getlist('features[]')
-        local_file_list = request.files.getlist('local_files[]')
-        print(local_file_list)
-        if len(local_file_list)>0 :
+        file_list = request.files.getlist('files[]')
+        # check if user upload a file.
+        if len(file_list)>0 :
             # if file length not equal to zero, this means user had select to upload a file to analyze
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], local_file.filename.replace(" ",""))
-            local_file.save(filepath)
-            print("fielen=",len(local_file_list))
-        print("no upload.")
+            # then we're going to traverse the file list to save them in Cache folder with sub-directory
+            # named by session id. Therefore, 1).we need also generate a session id here.
+            # 2).Then we make a directory with the name of seesion id
+            # 3).At last,we save all the user upload files to the folder.
+            print("User upload files.With length of ",len(file_list))
+            sessionid = SessionManager.generateSessionID()
+            file_target_dir = app.config['UPLOAD_FOLDER']+"/"+sessionid
+            os.mkdir(file_target_dir)
+            for file in file_list:
+                filepath = os.path.join(file_target_dir, file.filename.replace(" ",""))
+                file.save(filepath)
+            print("files saved to ",file_target_dir,"\nStart running analyze...")
+        else:
+            # no files upload,use built in protein ids.
+            print("No files uploaded.")
     else:
         #no valid analyze type found? return error!.
         pass
 
-    return redirect('/')
+    return "1"
 
 #used for test redirect
 #@app.route('/redirect')
