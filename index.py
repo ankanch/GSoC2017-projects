@@ -82,11 +82,25 @@ def run_analyzealyze():
             print("No files uploaded.")
     else:
         #no valid analyze type found? return error!.
-        ERROR_MESSAGE="Analyze type not accepted!"
-        return redirect('/error')
+        server_fault("Analyze type not accepted!")
+        #ERROR_MESSAGE=""
+        #return redirect('/error')
 
     return "1"
 
+# error handlers for web interface.
+# the two functions below are defined as 
+# handler for 404 error and 500 error 
+@app.errorhandler(404)
+def not_found(error):
+    return render_template("error.html",MESSAGE="The page you request not found on the server!"),404
+
+@app.errorhandler(500)
+def server_fault(error):
+    return render_template("error.html",MESSAGE="Internal server error!<br>"+error),500
+
+################[function below used for test some features.]#####################3
+###########[develop only. need to be commented on produce version]########################
 #used for test redirect
 @app.route('/redirect')
 def redirect():
@@ -94,7 +108,8 @@ def redirect():
 #used for test error page
 @app.route('/error')
 def error():
-    return render_template("error.html",MESSAGE=ERROR_MESSAGE)
+    return server_fault("azsdfqasdfasdfasdfasdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasfasdsdfasdfasdfase")
+    #return render_template("error.html",MESSAGE=ERROR_MESSAGE)
 
 
 if __name__ == '__main__':

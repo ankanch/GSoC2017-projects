@@ -4,7 +4,14 @@
         <div class="alert alert-danger" role="alert">
             <strong>Error!</strong>When processing your request, an error occured. We're sorry for this. If you have any questions please contact site admin.
             <br/><br/>
-            <strong>Error Message:</strong>{{MESSAGE}}
+            <div class="row">
+                <div class="col-md-3" style="text-align:right;">
+                    <strong>Error Message:</strong>
+                </div>
+                <div class="col-md-9" style="word-wrap:break-word;">
+                    {{MESSAGE|safe}}
+                </div>
+            </div>
             <br/><br/>
             <p style="text-align:center;"><a href="/">Back to Index</a></p>
         </div>
