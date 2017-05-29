@@ -9,6 +9,9 @@ app = Flask(__name__)
 UPLOAD_FOLDER = "./Cache/uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+#globe variables
+ERROR_MESSAGE = ""
+
 # This is the entrance URL for the index page
 @app.route('/')
 def index():
@@ -79,14 +82,20 @@ def run_analyzealyze():
             print("No files uploaded.")
     else:
         #no valid analyze type found? return error!.
-        pass
+        ERROR_MESSAGE="Analyze type not accepted!"
+        return redirect('/error')
 
     return "1"
 
 #used for test redirect
-#@app.route('/redirect')
-#def redirect():
-#    return render_template("redirect.html",TARGET="/")
+@app.route('/redirect')
+def redirect():
+    return render_template("redirect.html",TARGET="/")
+#used for test error page
+@app.route('/error')
+def error():
+    return render_template("error.html",MESSAGE=ERROR_MESSAGE)
+
 
 if __name__ == '__main__':
     #app.run(host='10.105.91.217')
