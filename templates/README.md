@@ -16,6 +16,8 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 >
 > `template.html`:Base page of every other pages,navigation defined here.
 >
+> `error.html`: Error page which will be rendered to user when an error occured
+>
 
 ## Realted Documents
 

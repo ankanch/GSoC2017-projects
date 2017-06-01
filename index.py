@@ -7,10 +7,8 @@ from Utilities import SessionManager
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "./Cache/uploads"
+RESULT_FOLDER = "./Cache/results"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-#globe variables
-ERROR_MESSAGE = ""
 
 # This is the entrance URL for the index page
 @app.route('/')
@@ -20,8 +18,8 @@ def index():
 
 # This is the result URL
 # For test, I use some selected data to show how it looks
-@app.route('/result')
-def result():
+@app.route('/result/<sessionid>')
+def result(sessionid):
     test_set=[[0,[["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
                     ["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
                     ["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
@@ -33,11 +31,25 @@ def result():
     #result package should be a list of lists which contains a lot of different pairs protein-protein interaction result
     #the interaction result set made up of two part:result name(or id),result list
     #A typical result_package should be look like below:
-    #       [       [result name,   [result list]  ] ,
-    #               [sample result, [[result one],[result two],[...],...]  ]
+    #       [       [result name ,[result list]  ] ,
+    #               [sample result ,[[result one],[result two],[...],...]  ]
     #               ,....  ]
-    return render_template("result.html",result_package=test_set)
+    return render_template("result.html",result_package=test_set,SESSIONID=sessionid)
 
+@app.route('/download/<sessionid>')
+def download(sessionid):
+    # first,we have to check if the result user looking for is exist
+    # normally,the  result file will have the same filename (session id )
+    # with the upload folder
+    if sessionid not in os.listdir(RESULT_FOLDER):
+        return not_found("FIle not found on this server. The result you looking for might be removed.","/result/"+sessionid)
+    # file exist, then we return then we check if an zipped file with the 
+    # same name as the folder, if exist, return it. Otherwise, we have to 
+    # make all files in current folder into a single zip file,then return it.
+    if sessionid+".zip" in os.listdir(RESULT_FOLDER+"/"+sessionid):
+        # return the exist zip file. 
+        pass
+    # compress all files then return it.
 
 
 # This URL is for running analyze, both normal analyze and advance analyze
@@ -83,8 +95,6 @@ def run_analyzealyze():
     else:
         #no valid analyze type found? return error!.
         server_fault("Analyze type not accepted!")
-        #ERROR_MESSAGE=""
-        #return redirect('/error')
 
     return "1"
 
@@ -92,12 +102,12 @@ def run_analyzealyze():
 # the two functions below are defined as 
 # handler for 404 error and 500 error 
 @app.errorhandler(404)
-def not_found(error):
-    return render_template("error.html",MESSAGE="The page you request not found on the server!"),404
+def not_found(error="The page you request not found on the server!",lastpage=""):
+    return render_template("error.html",MESSAGE=error,LASTPAGE=lastpage),404
 
 @app.errorhandler(500)
-def server_fault(error):
-    return render_template("error.html",MESSAGE="Internal server error!<br>"+error),500
+def server_fault(error,lastpage=""):
+    return render_template("error.html",MESSAGE="Internal server error!<br>"+error,LASTPAGE=lastpage),500
 
 ################[function below used for test some features.]#####################3
 ###########[develop only. need to be commented on produce version]########################
@@ -108,8 +118,7 @@ def redirect():
 #used for test error page
 @app.route('/error')
 def error():
-    return server_fault("azsdfqasdfasdfasdfasdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasfasdsdfasdfasdfase")
-    #return render_template("error.html",MESSAGE=ERROR_MESSAGE)
+    return render_template("error.html",MESSAGE="ERROR_MESSAGE")
 
 
 if __name__ == '__main__':

@@ -23,6 +23,8 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 >
 > `templates`:Flask default folder to store HTML files.
 >
+> `Utilities`:Function which will help to manage session,call analyze and so on
+>
 > `index.py`:Flask view functions script where to perform rendering HTML file and process HTTP request.
 
 ## External Link
@@ -36,4 +38,4 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 * [My Proposal:Developing a web interface for DoMo-Pred](https://storage.googleapis.com/summerofcode-prod.appspot.com/gsoc/core_project/doc/4956808348172288_1491032260_ProposalforDevelopingawebinterfaceforDoMo-Pred-NRNB-LongZhang_3.pdf?Expires=1495094303&GoogleAccessId=summerofcode-prod%40appspot.gserviceaccount.com&Signature=G7zxVNZpdiWA1tGfg%2FzYMQnWqKHZHsthUo0GUoY3uDWFrB4kW1LOvoHwhoEi7ntWMzi7DSAimiVsmC1jQLhMKN2Na8bTCKzFbCQXprxr6TOVHLWuWI2pWNZmOJm2C6mlLE3RpYIlhxwWaouE%2FJwvNd2k0DhqYVXWOsEWmXt%2B9HzB15Tx2BLa4wLeCrdWs9jouHoJx2uqHc8n1eJCgEbqbJ7WTJ%2B9r%2FmO1apJOuiM%2FPwZicilgaW4XJ5iWohXAgcce6gXUqFQt5yceYPcgU8Fvzt6nMNNkSxVk%2BM8ulFayMXRZP56OENtYBEJnuYUVbxXzQyd8UP%2FcXfOlgoGOSHSlw%3D%3D)
 
 
-###### last modified: May 27 2017 CST
+###### last modified: Jun 1 2017 CST

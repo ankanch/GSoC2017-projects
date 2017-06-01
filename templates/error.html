@@ -2,11 +2,14 @@
 <div class=" div-margin-top-25">
     <div class="row div-center-50" style="text-align:left;">
         <div class="alert alert-danger" role="alert">
-            <strong>Error!</strong>When processing your request, an error occured. We're sorry for this. If you have any questions please contact site admin.
-            <br/><br/>
             <div class="row">
+                <div class="col-md-12">
+                    <strong>Error! </strong> When processing your request, an error occured.
+                    <br/>We're sorry for this. If you have any question please contact site admin.
+                    <br/><br/>
+                </div>
                 <div class="col-md-3" style="text-align:right;">
-                    <strong>Error Message:</strong>
+                    <strong>Error Details:</strong>
                 </div>
                 <div class="col-md-9" style="word-wrap:break-word;">
                     {{MESSAGE|safe}}
@@ -14,6 +17,10 @@
             </div>
             <br/><br/>
             <p style="text-align:center;"><a href="/">Back to Index</a></p>
+            {% if LASTPAGE | length > 0 %}
+            <!--here , link below will be generate if specified a link to return-->
+            <p style="text-align:center;"><a href="{{LASTPAGE}}">Back to Last Page</a></p>
+            {% endif %}
         </div>
     </div>
 </div>
