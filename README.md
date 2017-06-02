@@ -17,6 +17,8 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 ## File and Folders
 > `Cache`:Cache folder where to store user upload files.
 >
+> `data`: Here is the folder to save built in data.
+>
 > `DoMoPred`:DoMo-Pred source code and excuable files.
 >
 > `static`:Flask default folder to store JavaScript and CSS.

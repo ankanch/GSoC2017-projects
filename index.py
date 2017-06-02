@@ -47,6 +47,8 @@ def download(sessionid):
     # file exist, then we return then we check if an zipped file with the 
     # same name as the folder, if exist, return it. Otherwise, we have to 
     # make all files in current folder into a single zip file,then return it.
+    # File name contains 3 parts:  prefix   +   session    + file-format
+    #                    Example: "Dataset_" +  session id  + ".zip"
     filename = "Dataset_" + sessionid + ".zip"
     if filename in os.listdir(RESULT_FOLDER+"/"+sessionid):
         # return the exist zip file. 
@@ -57,6 +59,8 @@ def download(sessionid):
         return response
     
     # compress all files then return it.
+    # This will only be performed once. Becausethe next time user request
+    # the result dataset with the same session id, it will return the exist file generate last time.
     print("new zip")
     targetfolder = RESULT_FOLDER+"/"+ sessionid + "/"
     filename = "Dataset_%s.zip" % sessionid
