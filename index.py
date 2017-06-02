@@ -2,7 +2,7 @@ import time
 import flask
 import os
 from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file
-from Utilities import SessionManager
+from Utilities import SessionManager,ZipMaker
 
 app = Flask(__name__)
 
@@ -43,13 +43,27 @@ def download(sessionid):
     # with the upload folder
     if sessionid not in os.listdir(RESULT_FOLDER):
         return not_found("FIle not found on this server. The result you looking for might be removed.","/result/"+sessionid)
+    
     # file exist, then we return then we check if an zipped file with the 
     # same name as the folder, if exist, return it. Otherwise, we have to 
     # make all files in current folder into a single zip file,then return it.
-    if sessionid+".zip" in os.listdir(RESULT_FOLDER+"/"+sessionid):
+    filename = "Dataset_" + sessionid + ".zip"
+    if filename in os.listdir(RESULT_FOLDER+"/"+sessionid):
         # return the exist zip file. 
-        pass
+        print("no new zip")
+        filepath = RESULT_FOLDER.replace("./","")+ "/" + sessionid +"/"+filename
+        response = make_response(send_file( filepath ))
+        response.headers["Content-Disposition"] = ("attachment; filename=%s;" % filename)
+        return response
+    
     # compress all files then return it.
+    print("new zip")
+    targetfolder = RESULT_FOLDER+"/"+ sessionid + "/"
+    filename = "Dataset_%s.zip" % sessionid
+    ZipMaker.make_zip(targetfolder,targetfolder+filename)
+    response = make_response(send_file( targetfolder + filename ))
+    response.headers["Content-Disposition"] = ("attachment; filename=%s;" % filename)
+    return response
 
 
 # This URL is for running analyze, both normal analyze and advance analyze
