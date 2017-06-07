@@ -13,6 +13,9 @@ import datetime
 
 # path of session list file
 PATH_SESSION_FILE = "../data/SESSION.session"
+# out of date time, varible below defined the days that an analyzing result 
+# will be expired( delete from the server)
+VAR_RESULT_LIFE = 7 
 
 #gernerate session id for better organised data
 def generateSessionID():
@@ -24,14 +27,15 @@ def generateSessionID():
 # this function is used to add a session to the 
 # session list file for easy manage
 def addSession(sessionid):
-    f = open("SESSION.session","a+")
-    f.write(sessionid + "," + datetime.datetime.strftime("YY-mm-dd HH:MM:ss") + "\r\n")
+    f = open(PATH_SESSION_FILE,"a+")
+    timestr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    f.write(sessionid + "," + timestr + "\r\n")
     f.close()
 
 # this function is used to delete sessions from the 
 # session list file which usally happens when an session out of date 
 def deleteSession(sessionids):
-    f = open("SESSION.session","w")
+    f = open(PATH_SESSION_FILE,"w")
     sessiondata = f.read()
     # start delete
     for session in sessionids:
@@ -48,14 +52,14 @@ def deleteSession(sessionids):
 #  we can then delete them easilt later by calling deleteSession() looply
 def getOutofDateSessionList():
     ntime = datetime.datetime.now()
-    f = open("SESSION.session","r")
+    f = open(PATH_SESSION_FILE,"r")
     sessiondata = f.read()
     f.close()
-    delta = 7 * 3600 * 24
     sessionlist = sessiondata.split("\r\n")
     OOD_list = []
     for session in sessionlist:
-        if ntime - datetime.datetime.strptime("YY-mm-dd HH:MM:ss") > delta:
+        session = session.split(",")
+        if (ntime - datetime.datetime.strptime(session[1],"%Y-%m-%d %H:%M:%S")) > datetime.timedelta(VAR_RESULT_LIFE,0,0):
             OOD_list.append(session[0])
     return OOD_list    
     
@@ -63,13 +67,7 @@ def getOutofDateSessionList():
 
 # code below is used for test if this module works as expect
 if __name__ == "__main__":
-    test_session_data = """x1,2016-5-6 15:42:30\r\nx2,2017-4-21 6:23:00\r\nx4,2017-6-1 5:42:06"""
-    print(test_session_data)
-    for session in ["x2"]:
-        print(session)
-        if test_session_data.find(session) >= 0 :
-            print("1")
-            test_session_data = test_session_data[:test_session_data.find(session)-1] + \
-                                test_session_data[test_session_data.rfind("\n",test_session_data.rfind(session)):]
-    print("================")
-    print(test_session_data)
+    addSession("aslkjdjkassadj")
+    print(getOutofDateSessionList())
+    deleteSession(getOutofDateSessionList())
+    print(getOutofDateSessionList())
