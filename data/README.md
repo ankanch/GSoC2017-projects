@@ -12,4 +12,6 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 >
 > `domain.txt`: the default domain data.
 >
+> `SESSION.session`: File to store session data(session id and session created date). 
+>
 
