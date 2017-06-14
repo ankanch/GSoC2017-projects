@@ -71,8 +71,10 @@ def getOutofDateSessionList():
 
 # code below is used for unit test if this module works as expect
 if __name__ == "__main__":
+    print ">>>>>>>>>>unit test for SessionManager Module<<<<<<<<<<<"
     PATH_SESSION_FILE = "../data/SESSION.session"
     addSession("aslkjdjkassadj")
     print(getOutofDateSessionList())
     deleteSession(getOutofDateSessionList())
     print(getOutofDateSessionList())
+    print ">>>>>>>>>>unit test done for SessionManager Module<<<<<<<<<<<"

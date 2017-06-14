@@ -1,4 +1,9 @@
-
+import sys
+sys.path.append("../DoMoPred")
+import run_pipeline as run_pipeline
+from Classifier import classifier
+from Peptide import run_peptide
+from Protein import run_protein
 # This script is used to call function which used for analyze from 
 # the DoMo-Pred directly.
 
@@ -22,4 +27,21 @@ MODE_USE_UPLOAD = 2     # use user upload files
 #                                                     - a list of features with the type of string.
 #                                                       decided which feature used for analyze
 def Analyzer(sessionid,pwmfiles,domainfile,features):
-    pass
+    # we have to check if use built in data
+    if pwmfiles[0] == True:
+        # use built in PWMs
+        pass
+    else:
+        # use user uploaded files
+        # then we check how many PWMs user had uploaded
+        if len(pwmfiles[1]) == 1:
+            # user just uploaded a single file
+            pass
+        else:
+            # user uploaed many files
+            pass
+
+
+if __name__ == "__main__":
+    print ">>>>>>>>>>unit test for CallAnalyze Module<<<<<<<<<<<"
+    print ">>>>>>>>>>unit test done for CallAnalyze Module<<<<<<<<<<<"
