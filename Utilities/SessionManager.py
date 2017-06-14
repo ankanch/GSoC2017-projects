@@ -12,7 +12,7 @@ import datetime
 # MAXIUM SESSION LIFTTIME: 7 days
 
 # path of session list file
-PATH_SESSION_FILE = "../data/SESSION.session"
+PATH_SESSION_FILE = "./data/SESSION.session"
 # out of date time, varible below defined the days that an analyzing result 
 # will be expired( delete from the server)
 VAR_RESULT_LIFE = 7 
@@ -29,21 +29,23 @@ def generateSessionID():
 def addSession(sessionid):
     f = open(PATH_SESSION_FILE,"a+")
     timestr = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    f.write(sessionid + "," + timestr + "\r\n")
+    f.write(sessionid + "," + timestr + "\n")
     f.close()
 
 # this function is used to delete sessions from the 
 # session list file which usally happens when an session out of date 
 def deleteSession(sessionids):
-    f = open(PATH_SESSION_FILE,"w")
+    f = open(PATH_SESSION_FILE,"a+")
+    f.seek(0)
     sessiondata = f.read()
     # start delete
     for session in sessionids:
-        if sessiondata.find(session) == True:
-            sessiondata = sessiondata[:sessiondata.find(session)-1] + \
-                            sessiondata[sessiondata.rfind("\r\n",sessiondata.rfind(session)):]
-    print(sessiondata)
+        print("process session:",session)
+        if sessiondata.find(session) > -1:
+            sessiondata =  sessiondata[:sessiondata.find(session)-1] + \
+                             sessiondata[sessiondata.rfind("\n",sessiondata.rfind(session)):]
     f.seek(0)
+    f.truncate()
     f.write(sessiondata)
     f.close()
 
@@ -55,18 +57,21 @@ def getOutofDateSessionList():
     f = open(PATH_SESSION_FILE,"r")
     sessiondata = f.read()
     f.close()
-    sessionlist = sessiondata.split("\r\n")
+    sessionlist = sessiondata.split("\n")
     OOD_list = []
     for session in sessionlist:
-        session = session.split(",")
-        if (ntime - datetime.datetime.strptime(session[1],"%Y-%m-%d %H:%M:%S")) > datetime.timedelta(VAR_RESULT_LIFE,0,0):
-            OOD_list.append(session[0])
+        # skip comment by check if line starting with #
+        if session[0] != "#":
+            session = session.split(",")
+            if (ntime - datetime.datetime.strptime(session[1],"%Y-%m-%d %H:%M:%S")) > datetime.timedelta(VAR_RESULT_LIFE,0,0):
+                OOD_list.append(session[0])
     return OOD_list    
     
 
 
-# code below is used for test if this module works as expect
+# code below is used for unit test if this module works as expect
 if __name__ == "__main__":
+    PATH_SESSION_FILE = "../data/SESSION.session"
     addSession("aslkjdjkassadj")
     print(getOutofDateSessionList())
     deleteSession(getOutofDateSessionList())

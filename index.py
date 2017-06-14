@@ -80,8 +80,20 @@ def run_analyzealyze():
     # the analyze indicator is post with the value of the hidden filed analyze_type in HTML from of index.html
     # two type of analyze at this time:  1).normal   2).advance
     analyze_type =  request.form['analyze_type']
-    
 
+    # generate a session id for this analyze which will used to 
+    # flag this analyzing as well as the folder name.
+    # After we generate the session, we have to add it to the Session List which help us to manage.
+    session = SessionManager.generateSessionID()
+    SessionManager.addSession(session)
+
+    # Path below is the path of the folder which store this run of analyzing.
+    # And we create the folder here.
+    # files will be stored: 1).analyze result 2).user uploads 3).domain.txt
+    analyzing_target_dir = app.config['UPLOAD_FOLDER']+"/"+session
+    os.mkdir(analyzing_target_dir)
+
+    # Start processing user's options on analyzing
     if analyze_type == "normal":
         #user select normal analyze, which requires him to input protein id pairs and select species
         idpairs_normal = request.form['idpairs_normal']
@@ -96,17 +108,12 @@ def run_analyzealyze():
         if len(file_list)>0 :
             # if file length not equal to zero, this means user had select to upload a file to analyze
             # then we're going to traverse the file list to save them in Cache folder with sub-directory
-            # named by session id. Therefore, 1).we need also generate a session id here.
-            # 2).Then we make a directory with the name of seesion id
-            # 3).At last,we save all the user upload files to the folder.
-            print("User upload files.With length of ",len(file_list))
-            sessionid = SessionManager.generateSessionID()
-            file_target_dir = app.config['UPLOAD_FOLDER']+"/"+sessionid
-            os.mkdir(file_target_dir)
+            # named by session id. 
+            print("User uploaded files.With length of ",len(file_list))
             for file in file_list:
-                filepath = os.path.join(file_target_dir, file.filename.replace(" ",""))
+                filepath = os.path.join(analyzing_target_dir, file.filename.replace(" ",""))
                 file.save(filepath)
-            print("files saved to ",file_target_dir,"\nStart running analyze...")
+            print("files saved to ",analyzing_target_dir,"\nStart running analyze...")
         else:
             # no files upload,use built in protein ids.
             print("No files uploaded.")
@@ -140,5 +147,5 @@ def error():
 
 
 if __name__ == '__main__':
-    #app.run(host='10.105.91.217')
+    #app.run(host='192.168.81.218',port=80)
     app.run(host='127.0.0.1',debug=True)
