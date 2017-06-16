@@ -2,7 +2,7 @@ import time
 import flask
 import os
 from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file
-from Utilities import SessionManager,ZipMaker
+from Utilities import SessionManager,ZipMaker,CallAnalyze
 
 app = Flask(__name__)
 
@@ -98,12 +98,20 @@ def run_analyzealyze():
         #user select normal analyze, which requires him to input protein id pairs and select species
         idpairs_normal = request.form['idpairs_normal']
         select_normal = request.form['select_normal']
+        print ">>>>>>>>>>>>>>>>\nID pairs data:\n",idpairs_normal,"\n>>>>>>>>>>>>>>>>\n"
+        # here we call functions to check if the ids user input satisfy the creteria that
+        # every line must only contains two protein ids. Function below will help us extract 
+        # both satisfied and unsatisfied protein ids.
+        protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_normal)
     elif analyze_type == "advance":
         #user select advance analyze,which need to customize a lot of options.
         idpairs_advance = request.form['idpairs_advance']
         select_advance = request.form['select_advance']
         features = request.form.getlist('features[]')
         file_list = request.files.getlist('files[]')
+        
+        # secure the protein ids, get both valid and invalid protein ids
+        protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_normal) 
         # check if user upload a file.
         if len(file_list)>0 :
             # if file length not equal to zero, this means user had select to upload a file to analyze
@@ -147,5 +155,6 @@ def error():
 
 
 if __name__ == '__main__':
-    #app.run(host='192.168.81.218',port=80)
-    app.run(host='127.0.0.1',debug=True)
+    print ">>>Webinterface of DoMo-Pred start running...\n"
+    #app.run(host='192.168.81.218',port=80) # uncomment this line when running one beta.baderlab.org
+    app.run(host='127.0.0.1',debug=True) # used for local test
