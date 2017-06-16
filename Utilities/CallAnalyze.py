@@ -1,9 +1,9 @@
 import sys
-#sys.path.append("../DoMoPred")
-#import DoMoPred.run_pipeline as run_pipeline
-#from DoMoPred.Classifier import classifier
-#from DoMoPred.Peptide import run_peptide
-#from DoMoPred.Protein import run_protein
+sys.path.append("./DoMoPred")
+import run_pipeline as run_pipeline
+from Classifier import classifier
+from Peptide import run_peptide
+from Protein import run_protein
 # This script is used to call function which used for analyze from 
 # the DoMo-Pred directly.
 
@@ -53,7 +53,7 @@ def Extract_Protein_Ids(data):
     if type(data) == file:
         # parameter is a file, function will open it then read the data
         return [],[]
-    elif type(date) == str:
+    elif type(data) == str:
         # parameter is a string , function will split it by "\n", then read the dsta
         return [],[]
     else:

@@ -155,6 +155,5 @@ def error():
 
 
 if __name__ == '__main__':
-    print ">>>Webinterface of DoMo-Pred start running...\n"
     #app.run(host='192.168.81.218',port=80) # uncomment this line when running one beta.baderlab.org
     app.run(host='127.0.0.1',debug=True) # used for local test

@@ -11,11 +11,12 @@ from Classifier import classifier
 from Peptide import run_peptide
 from Protein import run_protein
 from datetime import datetime
-import logging
 
-logging.basicConfig(filename='pipeline.log', format='%(asctime)s %(message)s',
-                    datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
-logging.captureWarnings(True)
+# comment code below for debug
+#import logging
+#logging.basicConfig(filename='pipeline.log', format='%(asctime)s %(message)s',
+#                    datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
+#logging.captureWarnings(True)
 
 
 def usage():
