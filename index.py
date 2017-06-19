@@ -4,6 +4,7 @@ import os
 from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file
 from Utilities import SessionManager,ZipMaker,CallAnalyze
 
+
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "./Cache/uploads"
@@ -98,11 +99,17 @@ def run_analyzealyze():
         #user select normal analyze, which requires him to input protein id pairs and select species
         idpairs_normal = request.form['idpairs_normal']
         select_normal = request.form['select_normal']
+        if idpairs_normal.count("\n") == 0:
+            idpairs_normal += "\n"
         print ">>>>>>>>>>>>>>>>\nID pairs data:\n",idpairs_normal,"\n>>>>>>>>>>>>>>>>\n"
         # here we call functions to check if the ids user input satisfy the creteria that
         # every line must only contains two protein ids. Function below will help us extract 
         # both satisfied and unsatisfied protein ids.
         protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_normal)
+        print "protein_ids[0]=",protein_ids[0]
+        #then we call function Analyzer_ProteinIDs from CallAnalyze to analyze
+        CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
+        
     elif analyze_type == "advance":
         #user select advance analyze,which need to customize a lot of options.
         idpairs_advance = request.form['idpairs_advance']

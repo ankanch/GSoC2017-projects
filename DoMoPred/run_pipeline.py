@@ -3,19 +3,20 @@ import sys
 import getopt
 import numpy
 
-os.environ["WORK_DIR_PEP"] = os.getcwd() + '/Peptide/'
-os.environ["WORK_DIR_PRO"] = os.getcwd() + '/Protein/'
-os.environ["WORK_DIR_CLS"] = os.getcwd() + '/Classifier/'
+os.environ["WORK_DIR_PEP"] = os.getcwd() + '/DoMoPred/Peptide/'
+os.environ["WORK_DIR_PRO"] = os.getcwd() + '/DoMoPred/Protein/'
+os.environ["WORK_DIR_CLS"] = os.getcwd() + '/DoMoPred/Classifier/'
 
 from Classifier import classifier
 from Peptide import run_peptide
 from Protein import run_protein
 from datetime import datetime
-import logging
 
-logging.basicConfig(filename='pipeline.log', format='%(asctime)s %(message)s',
-                    datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
-logging.captureWarnings(True)
+# COMMENT FOR EASY DEBUG
+#import logging
+#logging.basicConfig(filename='pipeline.log', format='%(asctime)s %(message)s',
+#                    datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
+#logging.captureWarnings(True)
 
 
 def usage():
@@ -170,6 +171,7 @@ def run_standalone_protein(prot_set, output=None):
 
 
     if output:
+        print ">>>>>OUTPUT>",output,"\r\n>>>>>>>Pred>",pred,"\r\n>>>>>>>>>>pro_set>",pro_set
         write_file(output, pred, pro_set)
     else:
         write_std(pred, pro_set)
