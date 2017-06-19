@@ -11,11 +11,12 @@ from Classifier import classifier
 from Peptide import run_peptide
 from Protein import run_protein
 from datetime import datetime
-import logging
 
-logging.basicConfig(filename='pipeline.log', format='%(asctime)s %(message)s',
-                    datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
-logging.captureWarnings(True)
+# comment code below for debug
+#import logging
+#logging.basicConfig(filename='pipeline.log', format='%(asctime)s %(message)s',
+#                    datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
+#logging.captureWarnings(True)
 
 
 def usage():
@@ -150,29 +151,6 @@ def protein_module(pep_set, data):
         (data[0][0]["P"], data[0][1]), (data[0][0]["F"], data[0][1]), data[1], data[2])
 
     return protein, pro_set
-
-
-def run_standalone_protein(prot_set, output=None):
-    '''
-    Input: m x 2 list of lists or numpy array, path to result file
-    '''
-    data = run_protein.setup_protein()
-    protein, pro_set = run_protein.run_features_standalone(prot_set, (data[0][0]["C"], data[0][1]),
-        (data[0][0]["P"], data[0][1]), (data[0][0]["F"], data[0][1]), data[1], data[2])
-
-    pep_cls, prot_cls = classifier.get_classifier()  # we don't need pep_cls 
-
-    pred = []
-    for case in protein:
-        num_pot = 5 - list(case).count(None)
-        post = prot_cls.test(case)
-        pred.append((post, num_pot))
-
-
-    if output:
-        write_file(output, pred, pro_set)
-    else:
-        write_std(pred, pro_set)
 
 
 def pwm_runner(pwm, domain, pval, output, gen_data, cel_data):

@@ -48,25 +48,3 @@ def run_features(prot_set, *args):
         int_set.append([prot1, prot2, s, e, seq])
 
     return array(results), array(int_set)
-
-
-def run_features_standalone(prot_set, *args):
-    '''
-    fetaure data
-    '''
-
-    features = [semantic_score, semantic_score, semantic_score, expression, sequence]
-
-    results = []
-    int_set = []
-
-    for prot1, prot2 in prot_set:
-        tmp = []
-        for idx, data in enumerate(args):
-            if data:
-                val = features[idx](prot1, prot2, data)
-                tmp.append(val)
-        results.append(tmp)
-        int_set.append([prot1, prot2])
-
-    return array(results), array(int_set)
