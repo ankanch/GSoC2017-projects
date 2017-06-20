@@ -16,7 +16,7 @@ VAR_PROTEIN_ID_LIST = []
 # paths for built in data
 PATH_PWMS = "./data/pwm_dir/"
 PATH_DOMAIN = "./data/domain.txt"
-PATH_RESULTS = "./Cache/results/"
+PATH_RESULTS = "./Cache/"
 PATH_PROTEIN_LIST = PATH_PWMS
 # constant for mode selection
 MODE_USE_BUILT_IN = 1   # use built in pwms and domains
@@ -61,16 +61,17 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set):
     if sessionid not in result_list:
         os.makedirs(PATH_RESULTS + sessionid)
     
-    # then we call run_standalone_protein to analyze it.
-    RP.run_standalone_protein(protein_id_set,PATH_RESULTS + sessionid + "/result.txt")
-
-    # after analyze done, we then make a file of protein ids 
-    # into result/sessionid folder
-    ff = open(PATH_RESULTS+sessionid+"/input_protein_ids.txt","w")
-    astr = ""
-    for pair in protein_id_set:
-        astr += pair[0] + "," + pair[1] + "\n"
-    ff.write(astr)
+    # then we call run_standalone_protein to analyze it. and wtire results to file
+    output,pred,pro_set = RP.run_standalone_protein(protein_id_set,PATH_RESULTS + sessionid + "/result.txt")
+    ff = open(output,"w")
+    print "zip data:",zip(pro_set,pred)
+    head = "#\tInteractionProteins\tPositive\tNegative\tFeaturesUsed\n"
+    ff.write(head)
+    for pro_pair,pred_result in zip(pro_set,pred):
+        astr = pro_pair[0] + " + " + pro_pair[1] + ","
+        print "pred_result",pred_result
+        astr += str(pred_result[0]["positive"]) + "," + str(pred_result[0]["negative"]) + "," + str(pred_result[1])
+        ff.write(astr + "\n")
     ff.close()
 
     return True
@@ -82,7 +83,6 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set):
 # is tagged as unanalyzable. Therefore, the return value will be two list,
 # one is the valid ids, the other one is invalids.
 def Extract_Protein_Ids(data):
-    print "data=",data,"////type=",type(data)
     valid = []
     invalid = []
     if type(data) == file:

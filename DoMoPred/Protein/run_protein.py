@@ -68,5 +68,4 @@ def run_features_standalone(prot_set, *args):
                 tmp.append(val)
         results.append(tmp)
         int_set.append([prot1, prot2])
-
     return array(results), array(int_set)

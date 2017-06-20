@@ -1,5 +1,6 @@
 {% extends "template.html" %} {% block title %}Result{% endblock %} {% block content %}
 <div class=" div-margin-top-5">
+    {% if PWM %}
     <div class="row div-center-90">
         <!--For button which allows you to change view of different result-->
         {% for result in result_package %}
@@ -40,6 +41,33 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <div class="row" style=" width: 70%;text-align:initial;margin:0 auto;">
+        <div class="row" id="table_result" style="width:99%;margin:0 auto;text-align:initial;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Interaction Proteins </th>
+                        <th>Positive</th>
+                        <th>Nagative</th>
+                        <th>Features Used For Predicting</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in result_package %}
+                    <tr>
+                        <th scope="row">1</th>
+                        {% for x in data %}
+                        <td>{{x}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
     <div class="row div-center-90">
         <a type="button" class="btn btn-info" href="/download/{{SESSIONID}}">Download</a>
         <button type="button" class="btn btn-info">Permalink</button>

@@ -1,3 +1,4 @@
+import os
 import random
 import string
 import time
@@ -13,6 +14,7 @@ import datetime
 
 # path of session list file
 PATH_SESSION_FILE = "./data/SESSION.session"
+PATH_RESULT_FOLDER = "./Cache/"
 # out of date time, varible below defined the days that an analyzing result 
 # will be expired( delete from the server)
 VAR_RESULT_LIFE = 7 
@@ -49,6 +51,12 @@ def deleteSession(sessionids):
     f.write(sessiondata)
     f.close()
 
+# this function is used to check if a session exist 
+def checkSession(sessionid):
+    slist = os.listdir(PATH_RESULT_FOLDER)
+    if sessionid not in slist:
+        return False
+    return True
 
 # this function is used to get all sessions that out of date,
 #  we can then delete them easilt later by calling deleteSession() looply
@@ -66,6 +74,26 @@ def getOutofDateSessionList():
             if (ntime - datetime.datetime.strptime(session[1],"%Y-%m-%d %H:%M:%S")) > datetime.timedelta(VAR_RESULT_LIFE,0,0):
                 OOD_list.append(session[0])
     return OOD_list    
+    
+
+# this function is used to create a file which to flag analyze type
+# normal,advance,pwm
+# avaiable types: type_normal,type_advance,type_pwm
+def setType(session,typex):
+    ff = open(PATH_RESULT_FOLDER + session + "/" + typex,"w")
+    ff.close()
+
+def getType(session):
+    files = os.listdir(PATH_RESULT_FOLDER + session)
+    if "type_normal" in files:
+        return "type_normal"
+    elif "type_advance" in files:
+        return "type_advance"
+    elif "type_pwm" in files:
+        return "type_pwm"
+    else:
+        return "unknow"
+        
     
 
 

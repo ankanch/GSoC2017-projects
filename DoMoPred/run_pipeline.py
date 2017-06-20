@@ -169,12 +169,14 @@ def run_standalone_protein(prot_set, output=None):
         post = prot_cls.test(case)
         pred.append((post, num_pot))
 
-
+    """# comment here for avoid error caused by write_file
     if output:
         print ">>>>>OUTPUT>",output,"\r\n>>>>>>>Pred>",pred,"\r\n>>>>>>>>>>pro_set>",pro_set
         write_file(output, pred, pro_set)
     else:
         write_std(pred, pro_set)
+    """
+    return output,pred,pro_set
 
 
 def pwm_runner(pwm, domain, pval, output, gen_data, cel_data):

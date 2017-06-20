@@ -7,9 +7,10 @@ from Utilities import SessionManager,ZipMaker,CallAnalyze
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = "./Cache/uploads"
-RESULT_FOLDER = "./Cache/results"
+UPLOAD_FOLDER = "./Cache"
+RESULT_FOLDER = "./Cache"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
 # This is the entrance URL for the index page
 @app.route('/')
@@ -35,7 +36,27 @@ def result(sessionid):
     #       [       [result name ,[result list]  ] ,
     #               [sample result ,[[result one],[result two],[...],...]  ]
     #               ,....  ]
-    return render_template("result.html",result_package=test_set,SESSIONID=sessionid)
+    if len(sessionid) < 5:
+        # for debug
+        return render_template("result.html",result_package=test_set,SESSIONID=sessionid,PWM=True)
+    # check session first
+    if SessionManager.checkSession(sessionid):
+        not_found("The session you're looking for isn't exist on this server.\n\
+                it might be out of date or never had the session before.")
+    # before we print the result, we have to check analyze type,
+    # to know it is analyzed by protein id pairs or PWMs
+    if SessionManager.getType(sessionid) == "type_normal":
+        # then we open result.txt of that session folder and output the data
+        ff = open(RESULT_FOLDER + "/" + sessionid + "/result.txt")
+        data =  ff.readlines()
+        ff.close()
+        data = data[1:]
+        final_data = []
+        for lines in data:
+            pd = lines.replace("\n","").split(",")
+            final_data.append(pd)
+        return  render_template("result.html",result_package=final_data,SESSIONID=sessionid)
+    
 
 @app.route('/download/<sessionid>')
 def download(sessionid):
@@ -96,9 +117,11 @@ def run_analyzealyze():
 
     # Start processing user's options on analyzing
     if analyze_type == "normal":
+        SessionManager.setType(session,"type_normal")
         #user select normal analyze, which requires him to input protein id pairs and select species
         idpairs_normal = request.form['idpairs_normal']
         select_normal = request.form['select_normal']
+        idpairs_normal = idpairs_normal.replace("\r","")
         if idpairs_normal.count("\n") == 0:
             idpairs_normal += "\n"
         print ">>>>>>>>>>>>>>>>\nID pairs data:\n",idpairs_normal,"\n>>>>>>>>>>>>>>>>\n"
@@ -106,11 +129,21 @@ def run_analyzealyze():
         # every line must only contains two protein ids. Function below will help us extract 
         # both satisfied and unsatisfied protein ids.
         protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_normal)
-        print "protein_ids[0]=",protein_ids[0]
+        print "protein_ids=",protein_ids,"\r\ninvalid_ids=",invalid_ids,"\r\ndata[0][0]=",protein_ids[0][0]
         #then we call function Analyzer_ProteinIDs from CallAnalyze to analyze
         CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
+
+        # after analyze done, we then make a file of protein ids 
+        # into result/sessionid folder
+        ff = open(RESULT_FOLDER+"/"+session+"/input_protein_ids.txt","w")
+        astr = ""
+        for pair in protein_ids:
+            astr += pair[0] + "," + pair[1] + "\n"
+        ff.write(astr)
+        ff.close()
         
     elif analyze_type == "advance":
+        SessionManager.setType(session,"type_advance")
         #user select advance analyze,which need to customize a lot of options.
         idpairs_advance = request.form['idpairs_advance']
         select_advance = request.form['select_advance']
