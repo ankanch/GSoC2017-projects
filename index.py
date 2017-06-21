@@ -142,6 +142,7 @@ def run_analyzealyze():
         ff.write(astr)
         ff.close()
         
+        return render_template("redirect.html",TARGET="result/"+session)
     elif analyze_type == "advance":
         SessionManager.setType(session,"type_advance")
         #user select advance analyze,which need to customize a lot of options.
@@ -186,7 +187,7 @@ def server_fault(error,lastpage=""):
 ###########[develop only. need to be commented on produce version]########################
 #used for test redirect
 @app.route('/redirect')
-def redirect():
+def redirect(TARGET):
     return render_template("redirect.html",TARGET="/")
 #used for test error page
 @app.route('/error')
