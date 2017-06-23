@@ -65,12 +65,15 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set):
     output,pred,pro_set = RP.run_standalone_protein(protein_id_set,PATH_RESULTS + sessionid + "/result.txt")
     ff = open(output,"w")
     print "zip data:",zip(pro_set,pred)
-    head = "#\tInteractionProteins\tPositive\tNegative\tFeaturesUsed\n"
+    #head = "#\tInteractionProteins\tPositive\tNegative\tFeaturesUsed\n"
+    # we will not include nagative score
+    head = "#\tInteractionProteins\tFeaturesUsed\tPositive\n"
     ff.write(head)
     for pro_pair,pred_result in zip(pro_set,pred):
         astr = pro_pair[0] + " + " + pro_pair[1] + ","
-        print "pred_result",pred_result
-        astr += str(pred_result[0]["positive"]) + "," + str(pred_result[0]["negative"]) + "," + str(pred_result[1])
+        #astr += str(pred_result[0]["positive"]) + "," + str(pred_result[0]["negative"]) + "," + str(pred_result[1])
+        #    features used for analyze          positive
+        astr += str(pred_result[1]) + "," + str(pred_result[0]["positive"])
         ff.write(astr + "\n")
     ff.close()
 
@@ -93,6 +96,7 @@ def Extract_Protein_Ids(data):
     pairs = data.split("\n")
     for ids in pairs:
         idd = ids.split(",")
+        idd = [ x for x in idd if len(x)>0 ]
         if len(idd) != 2:
             invalid.append(idd)
             continue

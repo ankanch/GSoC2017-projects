@@ -76,9 +76,9 @@
                 <input type="text" name="analyze_type" value="normal" style="display:none;" id="analyze_type" />
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
-                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="javascript:toggleDiv('progress_bar_x');document.getElementById('btn_run').disabled = false;" />
+                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="javascript:toggleDiv('progress_bar_x');document.getElementById('btn_advance').disabled = true;" />
                 <button type="button" class="btn btn-primary" onclick="javascript:window.location='/result/weriwer293uweweru';">DEBUG:Show Result page</button><br/>
-                <button type="button" onclick="javascript:advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
+                <button id="btn_advance" type="button" onclick="javascript:advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
             </div>
         </div>
     </form>
