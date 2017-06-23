@@ -45,7 +45,8 @@ def result(sessionid):
                 it might be out of date or never had the session before.")
     # before we print the result, we have to check analyze type,
     # to know it is analyzed by protein id pairs or PWMs
-    if SessionManager.getType(sessionid) == "type_normal":
+    if SessionManager.getType(sessionid) == "type_normal" or \
+        SessionManager.getType(sessionid) == "type_advance":
         # then we open result.txt of that session folder and output the data
         ff = open(RESULT_FOLDER + "/" + sessionid + "/result.txt")
         data =  ff.readlines()
@@ -56,6 +57,8 @@ def result(sessionid):
             pd = lines.replace("\n","").split(",")
             final_data.append(pd)
         return  render_template("result.html",result_package=final_data,SESSIONID=sessionid)
+    elif SessionManager.getType(sessionid) == "type_pwm":
+        pass
     
 
 @app.route('/download/<sessionid>')
@@ -146,31 +149,64 @@ def run_analyzealyze():
     elif analyze_type == "advance":
         SessionManager.setType(session,"type_advance")
         #user select advance analyze,which need to customize a lot of options.
-        idpairs_advance = request.form['idpairs_advance']
-        select_advance = request.form['select_advance']
+
+        # first we need to get the file user uploaded, if user doesn't uploaded one,
+        # then we need to check if user input the id pairs. By check the filename's length ,
+        # we can determine wether a user uploaded a file.
         features = request.form.getlist('features[]')
-        file_list = request.files.getlist('files[]')
-        
-        # secure the protein ids, get both valid and invalid protein ids
-        protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_normal) 
+        id_file = request.files["id_file"]
+
         # check if user upload a file.
-        if len(file_list)>0 :
-            # if file length not equal to zero, this means user had select to upload a file to analyze
-            # then we're going to traverse the file list to save them in Cache folder with sub-directory
-            # named by session id. 
+        if len(id_file.filename) > 0:
+            """
             print("User uploaded files.With length of ",len(file_list))
             for file in file_list:
                 filepath = os.path.join(analyzing_target_dir, file.filename.replace(" ",""))
-                file.save(filepath)
+                file.save(filepath + file.name)
+            """
+            # save the file to the disk first.
+            filepath = os.path.join(analyzing_target_dir, id_file.filename.replace(" ",""))
+            id_file.save(filepath)
             print("files saved to ",analyzing_target_dir,"\nStart running analyze...")
+
+            # then, we  secure the protein ids, get both valid and invalid protein ids
+            # let Extract_Protein_Ids help us to reads the data,and run analyze for us.
+            protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(filepath,True) 
+
+            # at last, run the analyze
+            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
+            
         else:
-            # no files upload,use built in protein ids.
-            print("No files uploaded.")
+            # no files upload,run analyze as normal
+            print("No file uploaded.")
+            idpairs_advance = request.form['idpairs_advance']
+            select_advance = request.form['select_advance']
+            idpairs_advance = idpairs_advance.replace("\r","")
+            if idpairs_advance.count("\n") == 0:
+                idpairs_advance += "\n"
+            print ">>>>>>>>>>>>>>>>\nID pairs advance data:\n",idpairs_advance,"\n>>>>>>>>>>>>>>>>\n"
+    
+            # secure the protein ids, get both valid and invalid protein ids
+            protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_advance) 
+
+            # except, the features canbe changable here.
+            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
+
+            # after analyze done, we then make a file of protein ids 
+            # into result/sessionid folder
+            ff = open(RESULT_FOLDER+"/"+session+"/input_protein_ids.txt","w")
+            astr = ""
+            for pair in protein_ids:
+                astr += pair[0] + "," + pair[1] + "\n"
+            ff.write(astr)
+            ff.close()
+        
+        return redirect("/result/"+session)
     else:
         #no valid analyze type found? return error!.
         server_fault("Analyze type not accepted!")
 
-    return "1"
+    return not_found(error="unknow analyze type.")
 
 # error handlers for web interface.
 # the two functions below are defined as 
@@ -185,10 +221,6 @@ def server_fault(error,lastpage=""):
 
 ################[function below used for test some features.]#####################3
 ###########[develop only. need to be commented on produce version]########################
-#used for test redirect
-@app.route('/redirect')
-def redirect(TARGET):
-    return render_template("redirect.html",TARGET="/")
 #used for test error page
 @app.route('/error')
 def error():

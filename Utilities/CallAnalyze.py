@@ -85,16 +85,23 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set):
 # if it's more than two protein id, the line will be stored in a list which 
 # is tagged as unanalyzable. Therefore, the return value will be two list,
 # one is the valid ids, the other one is invalids.
-def Extract_Protein_Ids(data):
+def Extract_Protein_Ids(data,is_file=False):
     valid = []
     invalid = []
-    if type(data) == file:
+    if is_file:
         print "file"
         # parameter is a file, function will open it then read the data
         # then the parameter data will be the content of the file
+        # first line is the species, following with protein id pairs, two protein ids in one line.
+        ff = open(data,"r")
+        a_species = ff.readline()
+        data = ff.read()
+        ff.close()
     # parameter is a string , function will split it by "\n", then read the dsta
     pairs = data.split("\n")
     for ids in pairs:
+        # here we can use space,comma and ; as the separtor of protein ids
+        ids = ids.replace(" ",",").replace(";",",").replace("\r","")
         idd = ids.split(",")
         idd = [ x for x in idd if len(x)>0 ]
         if len(idd) != 2:

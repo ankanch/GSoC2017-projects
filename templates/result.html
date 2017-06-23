@@ -69,7 +69,8 @@
     {% endif %}
     <div class="row div-center-90">
         <a type="button" class="btn btn-info" href="/download/{{SESSIONID}}">Download</a>
-        <button type="button" class="btn btn-info">Permalink</button>
+        <button id="btn_permalink" type="button" class="btn btn-info" data-copytarget="#result_page_url">Permalink</button>
+        <input type="text" id="result_page_url" value="http://127.0.0.1:5000/result/{{SESSIONID}}" style="display:none;" />
     </div>
 </div>
 <script>
@@ -95,5 +96,36 @@
         document.getElementById("btn_" + current_view).classList.remove("btn-secondary");
         document.getElementById("btn_" + current_view).classList.add("btn-danger");
     }
+
+    // copy to clipboard function from https://www.sitepoint.com/javascript-copy-to-clipboard/
+    (function() {
+        'use strict';
+        // click events
+        document.body.addEventListener('click', copy, true);
+        // event handler
+        function copy(e) {
+            // find target element
+            var
+                t = e.target,
+                c = t.dataset.copytarget,
+                inp = (c ? document.querySelector(c) : null);
+            // is element selectable?
+            if (inp && inp.select) {
+                // select text
+                inp.select();
+                try {
+                    // copy text
+                    document.execCommand('copy');
+                    inp.blur();
+                    document.getElementById("btn_permalink").textContent = "COPIED";
+                    setTimeout(function() {
+                        document.getElementById("btn_permalink").textContent = "PERMALINK";
+                    }, 3000);
+                } catch (err) {
+                    alert('cannot automatic copy to clipboard. Please copy URL from the address manually.');
+                }
+            }
+        }
+    })();
 </script>
 {% endblock %}
