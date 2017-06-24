@@ -167,7 +167,6 @@ def run_analyzealyze():
             # save the file to the disk first.
             filepath = os.path.join(analyzing_target_dir, id_file.filename.replace(" ",""))
             id_file.save(filepath)
-            print("files saved to ",analyzing_target_dir,"\nStart running analyze...")
 
             # then, we  secure the protein ids, get both valid and invalid protein ids
             # let Extract_Protein_Ids help us to reads the data,and run analyze for us.

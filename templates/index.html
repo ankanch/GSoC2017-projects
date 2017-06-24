@@ -5,7 +5,12 @@
             <div class="row div-margin-top-25 div-center-90 " id="input_built_in" style="width:512px;">
                 <div class="row ">
                     <div class="col-md-9">
-                        <textarea name="idpairs_normal" class="form-control" id="textarea_input_a" rows="1" placeholder="Input protein ids here.One line for one pair." style="resize: vertical; "></textarea>
+                        <div class="col-md-11" style="padding-right:0px;">
+                            <textarea name="idpairs_normal" class="form-control" id="textarea_input_a" rows="1" placeholder="Input protein ids here.One line for one pair." style="resize: vertical; "></textarea>
+                        </div>
+                        <div class="col-md-1" style="margin-left:0px; padding-left:0px;">
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">A</button>
+                        </div>
                     </div>
                     <div class="col-md-3">
                         <select name="select_normal" class="form-control" id="select_a">
@@ -77,12 +82,78 @@
                 <input type="text" name="analyze_type" value="normal" style="display:none;" id="analyze_type" />
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
-                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="javascript:toggleDiv('progress_bar_x');document.getElementById('btn_advance').disabled = true;" />
-                <button type="button" class="btn btn-primary" onclick="javascript:window.location='/result/weriwer293uweweru';">DEBUG:Show Result page</button><br/>
-                <button id="btn_advance" type="button" onclick="javascript:advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
+                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="toggleDiv('progress_bar_x');document.getElementById('btn_advance').disabled = true;" />
+                <button id="btn_advance" type="button" onclick="advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
             </div>
         </div>
     </form>
+    <!--div below is the modal for easy protein id pairs selections-->
+    <div class="row" style="text-align:left;">
+        <div class="modal fade" id="easy_proteinid_selection_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="title" style="text-align:center;">Select Protein IDs</h3>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="psa">
+                            <!--column titles-->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-control-label">Protein A</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-control-label">Protein B</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-control-label">Options</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-success" style="padding-bottom:2px;padding-top:2px;">+ 1 Row</button>
+                                </div>
+                            </div>
+                            <hr style="margin-top:0px;" />
+                            <!--div below is where the protein id pairs shows / add/ delete-->
+                            <div class="form-group" id="psa_pid">
+                                <div class="row" id="ppp_1">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <select class="form-control" id="exampleSelect1">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <select class="form-control" id="exampleSelect1">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-danger">x</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     function toggleDiv(divId) {
