@@ -28,8 +28,9 @@
                             <h4>INPUT</h4>
                         </div>
                         <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
-                            <div class="row div-margin-top-25">
-                                <textarea name="idpairs_advance" class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:60%; "></textarea>
+                            <div class="row div-margin-top-25"><br/>
+                                <button type="button" style="padding-top:0px;padding-bottom:0px;" class="btn btn-secondary" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">Select Protein IDs</button>
+                                <textarea name="idpairs_advance" class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:80%;"></textarea>
                             </div>
                             <div class="row div-margin-top-10">
                                 <select name="select_advance" class="form-control" id="select_b" style="width:40%">
@@ -82,7 +83,9 @@
                 <input type="text" name="analyze_type" value="normal" style="display:none;" id="analyze_type" />
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
-                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="toggleDiv('progress_bar_x');document.getElementById('btn_advance').disabled = true;" />
+                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="toggleDiv('progress_bar_x');document.getElementById('btn_advance').disabled = true;$('#btn_run').hide();  $('#btn_run_fake').show();" />
+                <input id="btn_run_fake" type="button" class="btn btn-primary disabled" value="Running..." style="display:none;" />
+                <br/>
                 <button id="btn_advance" type="button" onclick="advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
             </div>
         </div>
@@ -140,7 +143,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="getProteinIDPairs()">Submit</button>
+                        <button type="button" class="btn btn-primary" onclick="getProteinIDPairs()">Add All</button>
                     </div>
                 </div>
             </div>
@@ -206,17 +209,25 @@
 
     //this function is used to converted user selected pids in modal to input box
     function getProteinIDPairs() {
+        if (cur_normal) {
+            document.getElementById("textarea_input_a").value = "";
+        } else {
+            document.getElementById("textarea_input_b").value = "";
+        }
         var protein_ids_data = "";
         x = 1;
         for (; x <= current_row_count; x++) {
             var pid_a = document.getElementById("pps_a_" + x);
-            var pid_b = document.getElementById("pps_a_" + x);
+            var pid_b = document.getElementById("pps_b_" + x);
             var pa = pid_a.options[pid_a.selectedIndex].text;
             var pb = pid_b.options[pid_b.selectedIndex].text;
             protein_ids_data += pa + "," + pb + "\r\n";
         }
-        document.getElementById("textarea_input_a").textContent = "";
-        document.getElementById("textarea_input_a").textContent = protein_ids_data;
+        if (cur_normal) {
+            document.getElementById("textarea_input_a").value = protein_ids_data;
+        } else {
+            document.getElementById("textarea_input_b").value = protein_ids_data;
+        }
         $('#easy_proteinid_selection_modal').modal('toggle');
     }
 
