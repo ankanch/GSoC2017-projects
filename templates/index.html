@@ -110,45 +110,37 @@
                                     <label class="form-control-label">Options</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success" style="padding-bottom:2px;padding-top:2px;">+ 1 Row</button>
+                                    <button type="button" onclick="addRow()" class="btn btn-success" style="padding-bottom:2px;padding-top:2px;">+ 1 Row</button>
                                 </div>
                             </div>
                             <hr style="margin-top:0px;" />
                             <!--div below is where the protein id pairs shows / add/ delete-->
                             <div class="form-group" id="psa_pid">
-                                <div class="row" id="ppp_1">
+                                <!--EXAMPLE div class="row" id="ppp_@PPPID@">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <select class="form-control" id="exampleSelect1">
+                                            <select class="form-control" id="pps_a_@PPPID@">
                                             <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <select class="form-control" id="exampleSelect1">
+                                            <select class="form-control" id="pps_b_@PPPID@">
                                             <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-danger">x</button>
+                                        <button type="button" class="btn btn-danger" onclick="delteRow('@PPPID@')">x</button>
                                     </div>
-                                </div>
+                                </divEXAMPLE-->
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-primary" onclick="getProteinIDPairs()">Submit</button>
                     </div>
                 </div>
             </div>
@@ -174,5 +166,67 @@
             cur_normal = true;
         }
     }
+
+    // code here for protein id selection 
+    var row_data = `<div class="row" id="ppp_@PPPID@">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" id="pps_a_@PPPID@">
+                                {% for id in PID %}
+                                <option>{{id}}</option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" id="pps_b_@PPPID@">
+                                {% for id in PID %}
+                                <option>{{id}}</option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-danger" onclick="delteRow('@PPPID@')">x</button>
+                        </div>
+                    </div>`;
+    var current_row_count = 0;
+    //delete button in protein selction
+    function delteRow(rid) {
+        $("#ppp_" + rid).remove();
+        current_row_count--;
+    }
+
+    //add a new row to the protein selection
+    function addRow() {
+        current_row_count++;
+        document.getElementById("psa_pid").innerHTML = document.getElementById("psa_pid").innerHTML + row_data.replace(new RegExp("@PPPID@", 'g'), current_row_count);
+    }
+
+    //this function is used to converted user selected pids in modal to input box
+    function getProteinIDPairs() {
+        var protein_ids_data = "";
+        x = 1;
+        for (; x <= current_row_count; x++) {
+            var pid_a = document.getElementById("pps_a_" + x);
+            var pid_b = document.getElementById("pps_a_" + x);
+            var pa = pid_a.options[pid_a.selectedIndex].text;
+            var pb = pid_b.options[pid_b.selectedIndex].text;
+            protein_ids_data += pa + "," + pb + "\r\n";
+        }
+        document.getElementById("textarea_input_a").textContent = "";
+        document.getElementById("textarea_input_a").textContent = protein_ids_data;
+        $('#easy_proteinid_selection_modal').modal('toggle');
+    }
+
+    //this function is used to converted user input to modal selections.
+    function loadProteinPairs() {
+
+    }
+
+    $(document).ready(function() {
+        addRow();
+    });
 </script>
 {% endblock %}

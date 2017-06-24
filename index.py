@@ -15,7 +15,8 @@ app.config['RESULT_FOLDER'] = RESULT_FOLDER
 # This is the entrance URL for the index page
 @app.route('/')
 def index():
-    return render_template("index.html")
+    Protein_id_list = CallAnalyze.Load_Protein_IDList()
+    return render_template("index.html",PID=Protein_id_list)
 
 
 # This is the result URL

@@ -1,3 +1,0 @@
-#	InteractionProteins	FeaturesUsed	Positive
-P11710 + P15891,5,0.881965522517
-P38753 + P38041,5,0.10044316456
