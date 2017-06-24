@@ -69,7 +69,7 @@
     {% endif %}
     <div class="row div-center-90">
         <a type="button" class="btn btn-info" href="/download/{{SESSIONID}}">Download Result</a>
-        <input type="text" id="result_page_url" value="http://127.0.0.1:5000/result/{{SESSIONID}}" style="display:true;" readonly/>
+        <input type="text" id="result_page_url" value="http://beta.baderlab.org/result/{{SESSIONID}}" style="display:true;" readonly/>
         <button id="btn_permalink" type="button" class="btn btn-info" data-copytarget="#result_page_url">Copy Permalink</button>
 
     </div>
@@ -131,7 +131,9 @@
                     inp.blur();
 
                     // copied animation
-                    document.getElementById("btn_permalink").textContent = "COPIED";
+                    document.getElementById("btn_permalink").textContent = "PERMALINK COPIED";
+                    document.getElementById("btn_permalink").classList.add("btn-success");
+                    document.getElementById("btn_permalink").classList.remove("btn-info");
                 } catch (err) {
                     alert('please press Ctrl/Cmd+C to copy');
                 }
