@@ -23,7 +23,7 @@ def index():
 # For test, I use some selected data to show how it looks
 @app.route('/result/<sessionid>')
 def result(sessionid):
-    test_set=[[0,[["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
+    sample_result=[[0,[["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
                     ["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
                     ["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
                     ["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0]]],
@@ -39,7 +39,7 @@ def result(sessionid):
     #               ,....  ]
     if len(sessionid) < 5:
         # for debug
-        return render_template("result.html",result_package=test_set,SESSIONID=sessionid,PWM=True)
+        return render_template("result.html",result_package=sample_result,SESSIONID=sessionid,PWM=True)
     # check session first
     if SessionManager.checkSession(sessionid):
         not_found("The session you're looking for isn't exist on this server.\n\
@@ -119,6 +119,9 @@ def run_analyzealyze():
     analyzing_target_dir = app.config['UPLOAD_FOLDER']+"/"+session
     os.mkdir(analyzing_target_dir)
 
+    protein_ids = []
+    invalid_ids = []
+
     # Start processing user's options on analyzing
     if analyze_type == "normal":
         SessionManager.setType(session,"type_normal")
@@ -128,11 +131,14 @@ def run_analyzealyze():
         idpairs_normal = idpairs_normal.replace("\r","")
         if idpairs_normal.count("\n") == 0:
             idpairs_normal += "\n"
-        print ">>>>>>>>>>>>>>>>\nID pairs data:\n",idpairs_normal,"\n>>>>>>>>>>>>>>>>\n"
+
         # here we call functions to check if the ids user input satisfy the creteria that
         # every line must only contains two protein ids. Function below will help us extract 
         # both satisfied and unsatisfied protein ids.
         protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_normal)
+        if len(protein_ids) < 1 or len(protein_ids[0]) < 2:
+            return server_fault("Invalid Protein ID input.<br/> Please use comma,space as separtor.\
+                    <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
         print "protein_ids=",protein_ids,"\r\ninvalid_ids=",invalid_ids,"\r\ndata[0][0]=",protein_ids[0][0]
         #then we call function Analyzer_ProteinIDs from CallAnalyze to analyze
         CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
@@ -159,12 +165,6 @@ def run_analyzealyze():
 
         # check if user upload a file.
         if len(id_file.filename) > 0:
-            """
-            print("User uploaded files.With length of ",len(file_list))
-            for file in file_list:
-                filepath = os.path.join(analyzing_target_dir, file.filename.replace(" ",""))
-                file.save(filepath + file.name)
-            """
             # save the file to the disk first.
             filepath = os.path.join(analyzing_target_dir, id_file.filename.replace(" ",""))
             id_file.save(filepath)
@@ -172,6 +172,9 @@ def run_analyzealyze():
             # then, we  secure the protein ids, get both valid and invalid protein ids
             # let Extract_Protein_Ids help us to reads the data,and run analyze for us.
             protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(filepath,True) 
+            if len(protein_ids) < 1 or len(protein_ids[0]) < 2:
+                return server_fault("Invalid Protein ID input.<br/> Please use comma,space as separtor.\
+                        <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
 
             # at last, run the analyze
             CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
@@ -184,10 +187,12 @@ def run_analyzealyze():
             idpairs_advance = idpairs_advance.replace("\r","")
             if idpairs_advance.count("\n") == 0:
                 idpairs_advance += "\n"
-            print ">>>>>>>>>>>>>>>>\nID pairs advance data:\n",idpairs_advance,"\n>>>>>>>>>>>>>>>>\n"
     
             # secure the protein ids, get both valid and invalid protein ids
             protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_advance) 
+            if len(protein_ids) < 1 or len(protein_ids[0]) < 2:
+                return server_fault("Invalid Protein ID input.<br/> Please use comma,space as separtor.\
+                        <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
 
             # except, the features canbe changable here.
             CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
@@ -204,7 +209,7 @@ def run_analyzealyze():
         return redirect("/result/"+session)
     else:
         #no valid analyze type found? return error!.
-        server_fault("Analyze type not accepted!")
+        return server_fault("Analyze type not accepted!")
 
     return not_found(error="unknow analyze type.")
 

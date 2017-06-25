@@ -66,6 +66,35 @@ def run_features_standalone(prot_set, *args):
             if data:
                 val = features[idx](prot1, prot2, data)
                 tmp.append(val)
+                print "\n====\n",val
+        results.append(tmp)
+        int_set.append([prot1, prot2])
+    return array(results), array(int_set)
+
+# this function need one more parameters specify which features to use
+# features = "ABCDE" refers to use all five features
+# this function will return an extra varialbe(leftmost) to infer how many features used in analyze
+def run_features_standalone_with_features_selection(prot_set,features, *args):
+    '''
+    fetaure data
+    '''
+
+    feature_code = "ABCDE"
+    #feature code:     A               B               C             D         E
+    features = [semantic_score, semantic_score, semantic_score, expression, sequence]
+
+    #select featues to use
+
+    results = []
+    int_set = []
+
+    for prot1, prot2 in prot_set:
+        tmp = []
+        for idx, data in enumerate(args):
+            if data:
+                val = features[idx](prot1, prot2, data)
+                tmp.append(val)
+                print "\n====\n",val
         results.append(tmp)
         int_set.append([prot1, prot2])
     return array(results), array(int_set)

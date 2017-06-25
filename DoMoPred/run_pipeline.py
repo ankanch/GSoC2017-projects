@@ -167,15 +167,11 @@ def run_standalone_protein(prot_set, output=None):
     for case in protein:
         num_pot = 5 - list(case).count(None)
         post = prot_cls.test(case)
+
+        print ">>>>>>>>>\ncase:",case,"\npost:",post,"\n>>>>>>>>>>>>"
+
         pred.append((post, num_pot))
 
-    """# comment here for avoid error caused by write_file
-    if output:
-        print ">>>>>OUTPUT>",output,"\r\n>>>>>>>Pred>",pred,"\r\n>>>>>>>>>>pro_set>",pro_set
-        write_file(output, pred, pro_set)
-    else:
-        write_std(pred, pro_set)
-    """
     return output,pred,pro_set
 
 
