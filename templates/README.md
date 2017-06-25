@@ -7,7 +7,7 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 
 ##### This folder is used for store HTML pages. Pages descriptions are as below.
 
-## Pages descriptions
+## Folder/File descriptions
 > `index.html`:Index page of PPI-Pred.
 >
 > `redirect.html`:An intermediate page for redirecting.
