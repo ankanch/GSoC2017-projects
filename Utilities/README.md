@@ -14,5 +14,6 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 >
 > `ZipMaker.py`: Function in this module is used to make zip file from results.
 >
+> `globeVar.py`: Here stores some globe variables used to exchange data between modules.
 
 ## Realted Documents
