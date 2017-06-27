@@ -174,6 +174,29 @@ def run_standalone_protein(prot_set, output=None):
 
     return output,pred,pro_set
 
+def run_standalone_protein_with_features_selection(prot_set,features_to_use,output=None):
+    '''
+    Input: m x 2 list of lists or numpy array, path to result file
+    '''
+    data = run_protein.setup_protein()
+    features_used,protein, pro_set = run_protein.run_features_standalone_with_features_selection(prot_set,features_to_use,
+                (data[0][0]["C"], data[0][1]),(data[0][0]["P"], data[0][1]),(data[0][0]["F"], data[0][1]), data[1], data[2])
+                # features_used is the number of features used for this analyze.
+
+    pep_cls, prot_cls = classifier.get_classifier()  # we don't need pep_cls 
+
+    pred = []
+    for case in protein:
+        num_pot = 5 - list(case).count(None)
+        if len(features_used) < num_pot:
+            num_pot = len(features_used)
+        post = prot_cls.test(case)
+        print ">>>>>>>>>\ncase:",case,"\npost:",post,"\n>>>>>>>>>>>>"
+        #pred.append((post, num_pot))
+        pred.append((post, features_used)) # append features name list directly
+
+    return output,pred,pro_set
+
 
 def pwm_runner(pwm, domain, pval, output, gen_data, cel_data):
     '''

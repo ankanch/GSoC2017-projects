@@ -72,11 +72,12 @@ def run_features_standalone(prot_set, *args):
     return array(results), array(int_set)
 
 # this function need one more parameters specify which features to use
-# features = "ABCDE" refers to use all five features
-# this function will return an extra varialbe(leftmost) to infer how many features used in analyze
-def run_features_standalone_with_features_selection(prot_set,features, *args):
+# example: features = "ABCDE" refers to use all five features
+# this function will return an extra varialbe(leftmost) to infer which features used for analyze
+def run_features_standalone_with_features_selection(prot_set,features_to_use, *args):
     '''
     fetaure data
+    we have to make sure that every parameters in args corresponds to the right features 
     '''
 
     feature_code = "ABCDE"
@@ -91,10 +92,10 @@ def run_features_standalone_with_features_selection(prot_set,features, *args):
     for prot1, prot2 in prot_set:
         tmp = []
         for idx, data in enumerate(args):
-            if data:
+            if data and feature_code[idx] in features_to_use:  # make sure user select to use this feature
+                                                               # we're bypass these unselected features here
                 val = features[idx](prot1, prot2, data)
                 tmp.append(val)
-                print "\n====\n",val
         results.append(tmp)
         int_set.append([prot1, prot2])
-    return array(results), array(int_set)
+    return [x for x in features_to_use if x in feature_code],array(results), array(int_set)

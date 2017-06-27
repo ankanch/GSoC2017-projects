@@ -162,6 +162,7 @@ def run_analyzealyze():
         # we can determine wether a user uploaded a file.
         features = request.form.getlist('features[]')
         id_file = request.files["id_file"]
+        feature_str = CallAnalyze.getFeatures(features)
 
         # check if user upload a file.
         if len(id_file.filename) > 0:
@@ -177,7 +178,7 @@ def run_analyzealyze():
                         <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
 
             # at last, run the analyze
-            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
+            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids,feature_str)
             
         else:
             # no files upload,run analyze as normal
@@ -195,7 +196,7 @@ def run_analyzealyze():
                         <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
 
             # except, the features canbe changable here.
-            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
+            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids,feature_str)
 
             # after analyze done, we then make a file of protein ids 
             # into result/sessionid folder

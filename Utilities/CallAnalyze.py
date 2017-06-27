@@ -1,6 +1,7 @@
 import os
 import sys
 sys.path.append("./DoMoPred")
+import globeVar
 import run_pipeline as RP
 from Classifier import classifier
 from Peptide import run_peptide
@@ -54,7 +55,7 @@ def Analyzer(sessionid,pwmfiles,domainfile,features):
 # this function will call  run_standalone_protein(prot_set, output=None) 
 # from run_pipline directly and the result will be stored in the folder 
 # of which named by session id under results folder
-def Analyzer_ProteinIDs(sessionid,protein_id_set):
+def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE"):
     # first we have to check if the folder with the session id exist
     # if not, make it
     result_list = os.listdir(PATH_RESULTS)
@@ -62,7 +63,8 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set):
         os.makedirs(PATH_RESULTS + sessionid)
     
     # then we call run_standalone_protein to analyze it. and wtire results to file
-    output,pred,pro_set = RP.run_standalone_protein(protein_id_set,PATH_RESULTS + sessionid + "/result.txt")
+    output,pred,pro_set = RP.run_standalone_protein_with_features_selection(protein_id_set,features_to_use,PATH_RESULTS + sessionid + "/result.txt")
+    #output,pred,pro_set = RP.run_standalone_protein(protein_id_set,PATH_RESULTS + sessionid + "/result.txt")
     ff = open(output,"w")
     print "zip data:",zip(pro_set,pred)
     #head = "#\tInteractionProteins\tPositive\tNegative\tFeaturesUsed\n"
@@ -73,11 +75,23 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set):
         astr = pro_pair[0] + " + " + pro_pair[1] + ","
         #astr += str(pred_result[0]["positive"]) + "," + str(pred_result[0]["negative"]) + "," + str(pred_result[1])
         #    features used for analyze          positive
-        astr += str(pred_result[1]) + "," + str(pred_result[0]["positive"])
+        feanamestr = ""
+        for x in pred_result[1]:
+            feanamestr += globeVar.VAR_FEATURES.keys()[globeVar.VAR_FEATURES.values().index(x)] + ";"
+        astr += feanamestr + "," + str(pred_result[0]["positive"])
         ff.write(astr + "\n")
     ff.close()
 
     return True
+
+# this function is used to get user selected features
+# post back from the index page
+# this function will return a single string that can be used as the third parameters of Analyzer_ProteinIDs
+def getFeatures(fea_list):
+    fstr = ""
+    for fea in fea_list:
+        fstr += globeVar.VAR_FEATURES[str(fea)]
+    return fstr
 
 # this function is used to extract protein ids from user's uploaed file and user input
 # the pramater is the file user upload or the list user input in input box.
