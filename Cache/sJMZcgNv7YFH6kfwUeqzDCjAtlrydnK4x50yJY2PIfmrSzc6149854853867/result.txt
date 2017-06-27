@@ -1,0 +1,2 @@
+#	InteractionProteins	FeaturesUsed	Positive
+P11710 + P15891,cellular_location;biological_process;molecular_function;gene_expression;protein_expression;,0.881965522517

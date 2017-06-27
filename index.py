@@ -39,15 +39,18 @@ def result(sessionid):
     #               ,....  ]
     if len(sessionid) < 5:
         # for debug
-        return render_template("result.html",result_package=sample_result,SESSIONID=sessionid,PWM=True)
+        return render_template("result.html",result_package=sample_result,SESSIONID=sessionid,TIME=["1.1.1.1","X"],PWM=True)
     # check session first
     if SessionManager.checkSession(sessionid):
         not_found("The session you're looking for isn't exist on this server.\n\
                 it might be out of date or never had the session before.")
     # before we print the result, we have to check analyze type,
     # to know it is analyzed by protein id pairs or PWMs
-    if SessionManager.getType(sessionid) == "type_normal" or \
-        SessionManager.getType(sessionid) == "type_advance":
+    try:
+        analyze_type = SessionManager.getType(sessionid)
+    except:
+        return server_fault("Invalid session.<br/>Cannot found the session you request.<br/> The session you are looking for might be expired.")
+    if analyze_type == "type_normal" or analyze_type == "type_advance":
         # then we open result.txt of that session folder and output the data
         ff = open(RESULT_FOLDER + "/" + sessionid + "/result.txt")
         data =  ff.readlines()
@@ -57,7 +60,8 @@ def result(sessionid):
         for lines in data:
             pd = lines.replace("\n","").split(",")
             final_data.append(pd)
-        return  render_template("result.html",result_package=final_data,SESSIONID=sessionid)
+        create_time = [SessionManager.getDate(sessionid),str(SessionManager.VAR_RESULT_LIFE)]
+        return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time)
     elif SessionManager.getType(sessionid) == "type_pwm":
         pass
     

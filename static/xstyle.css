@@ -74,3 +74,11 @@
     position: absolute;
     max-width: 250px;
 }
+
+.div-dialog-bbx {
+    border-radius: 62px 62px 62px 62px;
+    -moz-border-radius: 62px 62px 62px 62px;
+    -webkit-border-radius: 62px 62px 62px 62px;
+    border: 0px solid #000000;
+    background-color: #e4ebe9;
+}

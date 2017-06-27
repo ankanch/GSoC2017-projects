@@ -69,12 +69,26 @@ def getOutofDateSessionList():
     OOD_list = []
     for session in sessionlist:
         # skip comment by check if line starting with #
-        if session[0] != "#":
+        if len(session)>0 and session[0] != "#":
             session = session.split(",")
             if (ntime - datetime.datetime.strptime(session[1],"%Y-%m-%d %H:%M:%S")) > datetime.timedelta(VAR_RESULT_LIFE,0,0):
                 OOD_list.append(session[0])
     return OOD_list    
     
+# this fucntion is used to get a session's created date
+def getDate(sessionid):
+    f = open(PATH_SESSION_FILE,"r")
+    sessiondata = f.read()
+    f.close()
+    sessionlist = sessiondata.split("\n")
+    for session in sessionlist:
+        # skip comment by check if line starting with #
+        print "session=",session
+        if len(session)>0 and session[0] != "#":
+            session = session.split(",")
+            if session[0].find(sessionid)>-1:
+                return session[1]
+    return "UNKNOW TIME"
 
 # this function is used to create a file which to flag analyze type
 # normal,advance,pwm
