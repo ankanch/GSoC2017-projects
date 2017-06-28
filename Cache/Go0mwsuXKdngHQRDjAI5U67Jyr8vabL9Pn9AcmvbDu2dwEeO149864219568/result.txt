@@ -1,0 +1,2 @@
+#	cellular location	biological process	molecular function	gene expression	sequence signature	score
+I2HB70,O13511,@1,@1,@0,@0,@1,0.0288352999052

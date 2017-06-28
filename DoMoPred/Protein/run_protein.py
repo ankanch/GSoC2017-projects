@@ -96,6 +96,8 @@ def run_features_standalone_with_features_selection(prot_set,features_to_use, *a
                                                                # we're bypass these unselected features here
                 val = features[idx](prot1, prot2, data)
                 tmp.append(val)
+            else:
+                tmp.append(None)
         results.append(tmp)
         int_set.append([prot1, prot2])
     return [x for x in features_to_use if x in feature_code],array(results), array(int_set)
