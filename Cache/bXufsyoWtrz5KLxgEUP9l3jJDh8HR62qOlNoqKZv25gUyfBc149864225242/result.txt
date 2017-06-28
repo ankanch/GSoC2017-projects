@@ -1,2 +1,0 @@
-#	cellular location	biological process	molecular function	gene expression	sequence signature	score
-D6W196,A2P2R3,@1,@1,@1,@1,@1,0.00163144151237

@@ -67,18 +67,20 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE"):
     # we will not include nagative score
     head = "#\tcellular location\tbiological process\tmolecular function\tgene expression\tsequence signature\tscore\n"
     ff.write(head)
+    feature_code = ["A","B","C","D","E"]
     feature_used = ["A","B","C","D","E"]
     for pro_pair,pred_result in zip(pro_set,pred):
         astr = pro_pair[0] + "," + pro_pair[1] + ","
         #    features used for analyze          positive
         for x in pred_result[1]:
-            feature_used[ feature_used.index(x) ] =  "@1"
+            feature_used[ feature_code.index(x) ] =  "@1"
         feanamestr = ""
         for x in feature_used:
             if x != "@1":
                 feanamestr += "@0,"
             else:
                 feanamestr += "@1,"
+        feature_used = feature_code
         astr += feanamestr + str(pred_result[0]["positive"])
         ff.write(astr + "\n")
     ff.close()
