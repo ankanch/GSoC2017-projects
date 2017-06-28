@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <select name="select_normal" class="form-control" id="select_a">
+                        <select name="select_normal" class="form-control" id="select_a" onchange="selectCheck()">
             <option>Species</option>
             <option>Yeast</option>
             <option>Human</option>
@@ -33,7 +33,7 @@
                                 <textarea name="idpairs_advance" class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:80%;"></textarea>
                             </div>
                             <div class="row div-margin-top-10">
-                                <select name="select_advance" class="form-control" id="select_b" style="width:40%">
+                                <select name="select_advance" class="form-control" id="select_b" style="width:40%" onchange="selectCheck()">
                                 <option>Species</option>
                                 <option>Yeast</option>
                                 <option>Human</option>
@@ -56,8 +56,8 @@
                             <input type="checkbox" name="features[]" value="biological_process" checked="checked" />Biological process<br>
                             <input type="checkbox" name="features[]" value="molecular_function" checked="checked" />Molecular function<br>
                             <input type="checkbox" name="features[]" value="gene_expression" checked="checked" />Gene expression<br>
-                            <input type="checkbox" name="features[]" value="protein_expression" checked="checked" />Protein expression<br>
                             <input type="checkbox" name="features[]" value="sequence_signature" checked="checked" />Sequence signature<br>
+                            <input type="checkbox" name="features[]" value="protein_expression" checked="checked" id="sel_pe" />Protein expression<br>
                         </div>
                     </div>
                     <div class="col-md-3 div-border-right-1px div-min-height-256">
@@ -119,25 +119,6 @@
                             <hr style="margin-top:0px;" />
                             <!--div below is where the protein id pairs shows / add/ delete-->
                             <div class="form-group" id="psa_pid">
-                                <!--EXAMPLE div class="row" id="ppp_@PPPID@">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <select class="form-control" id="pps_a_@PPPID@">
-                                            <option>1</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <select class="form-control" id="pps_b_@PPPID@">
-                                            <option>1</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-danger" onclick="delteRow('@PPPID@')">x</button>
-                                    </div>
-                                </divEXAMPLE-->
                             </div>
                         </form>
                     </div>
@@ -167,6 +148,18 @@
         } else {
             document.getElementById("analyze_type").setAttribute("value", "normal");
             cur_normal = true;
+        }
+    }
+
+    // this function is used to enable features based on Species selection box value
+    function selectCheck() {
+        var sel = document.getElementById("select_b").value;
+        if (sel == "Human") {
+            document.getElementById("sel_pe").disabled = false;
+            document.getElementById("sel_pe").checked = true;
+        } else {
+            document.getElementById("sel_pe").disabled = true;
+            document.getElementById("sel_pe").checked = false;
         }
     }
 
@@ -238,6 +231,7 @@
 
     $(document).ready(function() {
         addRow();
+        selectCheck();
     });
 </script>
 {% endblock %}

@@ -15,10 +15,8 @@ from Protein import run_protein
 VAR_PROTEIN_ID_LIST = []  
 
 # paths for built in data
-PATH_PWMS = "./data/pwm_dir/"
 PATH_DOMAIN = "./data/domain.txt"
 PATH_RESULTS = "./Cache/"
-PATH_PROTEIN_LIST = PATH_PWMS
 # constant for mode selection
 MODE_USE_BUILT_IN = 1   # use built in pwms and domains
 MODE_USE_UPLOAD = 2     # use user upload files
@@ -136,7 +134,10 @@ def Extract_Protein_Ids(data,is_file=False):
 # this function will run once when the module was load
 def Load_Protein_IDList():
     global VAR_PROTEIN_ID_LIST
-    VAR_PROTEIN_ID_LIST = os.listdir(PATH_PWMS)
+    # open protein id file to read
+    ff = open(globeVar.VAR_PATH_PROTEIN_ID_DATABASE,"r")
+    linedata =  ff.readlines()[1:]
+    VAR_PROTEIN_ID_LIST = [ x.split('\t')[0] for x in linedata ]
     return VAR_PROTEIN_ID_LIST
         
 Load_Protein_IDList()
