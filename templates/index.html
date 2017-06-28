@@ -229,6 +229,27 @@
 
     }
 
+    /*/ this function is used to check if user input protein id contains in the database
+    function checkPID() {
+        var iddata = "";
+        if (cur_normal) {
+            iddata = document.getElementById("textarea_input_a").value;
+        } else {
+            iddata = document.getElementById("textarea_input_b").value;
+        }
+        iddata = iddata.replace("\r", "").replace(";", ",").replace(" ", ",");
+        var pairs = iddata.split("\n");
+        for (var i = 0; i < pairs.length; i++) {
+            var pid = pairs[i].split(",");
+            if (row_data.indexOf(pid[0]) < 0 || row_data.indexOf(pid[1]) < 0) {
+                // invalid id found. stop
+                alert("invalid id found");
+                return false;
+            }
+        }
+        return true;
+    }/*/
+
     $(document).ready(function() {
         addRow();
         selectCheck();

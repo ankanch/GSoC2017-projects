@@ -83,7 +83,6 @@ def getDate(sessionid):
     sessionlist = sessiondata.split("\n")
     for session in sessionlist:
         # skip comment by check if line starting with #
-        print "session=",session
         if len(session)>0 and session[0] != "#":
             session = session.split(",")
             if session[0].find(sessionid)>-1:

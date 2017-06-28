@@ -64,19 +64,22 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE"):
     output,pred,pro_set = RP.run_standalone_protein_with_features_selection(protein_id_set,features_to_use,PATH_RESULTS + sessionid + "/result.txt")
     #output,pred,pro_set = RP.run_standalone_protein(protein_id_set,PATH_RESULTS + sessionid + "/result.txt")
     ff = open(output,"w")
-    print "zip data:",zip(pro_set,pred)
-    #head = "#\tInteractionProteins\tPositive\tNegative\tFeaturesUsed\n"
     # we will not include nagative score
-    head = "#\tInteractionProteins\tFeaturesUsed\tPositive\n"
+    head = "#\tcellular location\tbiological process\tmolecular function\tgene expression\tsequence signature\tscore\n"
     ff.write(head)
+    feature_used = ["A","B","C","D","E"]
     for pro_pair,pred_result in zip(pro_set,pred):
-        astr = pro_pair[0] + " + " + pro_pair[1] + ","
-        #astr += str(pred_result[0]["positive"]) + "," + str(pred_result[0]["negative"]) + "," + str(pred_result[1])
+        astr = pro_pair[0] + "," + pro_pair[1] + ","
         #    features used for analyze          positive
-        feanamestr = ""
         for x in pred_result[1]:
-            feanamestr += globeVar.VAR_FEATURES.keys()[globeVar.VAR_FEATURES.values().index(x)] + ";"
-        astr += feanamestr + "," + str(pred_result[0]["positive"])
+            feature_used[ feature_used.index(x) ] =  "@1"
+        feanamestr = ""
+        for x in feature_used:
+            if x != "@1":
+                feanamestr += "@0,"
+            else:
+                feanamestr += "@1,"
+        astr += feanamestr + str(pred_result[0]["positive"])
         ff.write(astr + "\n")
     ff.close()
 

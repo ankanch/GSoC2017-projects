@@ -1,7 +1,19 @@
 {% extends "template.html" %} {% block title %}Result{% endblock %} {% block content %}
 <div class=" div-margin-top-5">
     <div class="row div-center-90">
+        {% if PWM %}
         <p><span style="color:#ffa07a;">This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.</span></p>
+        {% else %}
+        <div class="col-md-8" style="color:#ffa07a;margin-top:15px;">
+            This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.
+        </div>
+        <div class="col-md-4">
+            <table class="table table-striped" style="text-align:center;width:30%;margin: 0 auto;">
+                <td class="alert-success">Used Feature</td>
+                <td class="alert-danger">Unused Feature</td>
+            </table>
+        </div>
+        {% endif %}
     </div>
     {% if PWM %}
     <div class="row div-center-90" style="margin-top:5px;">
@@ -46,23 +58,33 @@
     </div>
     {% else %}
     <div class="row" style=" width: 70%;text-align:initial;margin:0 auto;margin-top:15px;">
+
         <div class="row" id="table_result" style="width:99%;margin:0 auto;text-align:initial;">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Interaction Proteins </th>
-                        <th>Features Used For Predicting</th>
-                        <th>Probability of Interaction</th>
+                        <th>Protein A</th>
+                        <th>Protein B</th>
+                        <th>Cellular location</th>
+                        <th>Biological process</th>
+                        <th>Molecular function</th>
+                        <th>Gene expression</th>
+                        <th>Sequence signature</th>
+                        <th>Score</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for data in result_package %}
                     <tr>
                         <th scope="row"> {{ loop.index }}</th>
-                        {% for x in data %}
+                        {% for x in data %} {% if x in ("@1","@0") %} {% if x in ("@1") %}
+                        <td class="alert-success"></td>
+                        {% else %}
+                        <td class="alert-danger"></td>
+                        {% endif %} {% else %}
                         <td>{{x}}</td>
-                        {% endfor %}
+                        {% endif %} {% endfor %}
                     </tr>
                     {% endfor %}
                 </tbody>
