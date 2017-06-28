@@ -146,7 +146,3 @@ def Load_Protein_IDList():
     return VAR_PROTEIN_ID_LIST
         
 Load_Protein_IDList()
-
-if __name__ == "__main__":
-    print ">>>>>>>>>>unit test for CallAnalyze Module<<<<<<<<<<<"
-    print ">>>>>>>>>>unit test done for CallAnalyze Module<<<<<<<<<<<"

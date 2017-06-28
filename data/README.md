@@ -16,3 +16,5 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 >
 > `test_data`: here is the folder of test data used for test web interface
 
+**NOTES:** Protein IDs are stored in /DoMoPred/Protein/map.sgd.txt
+
