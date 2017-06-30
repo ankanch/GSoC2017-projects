@@ -1,5 +1,6 @@
 import os
 import sys
+import copy
 sys.path.append("./DoMoPred")
 import globeVar
 import run_pipeline as RP
@@ -80,8 +81,8 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE"):
                 feanamestr += "@0,"
             else:
                 feanamestr += "@1,"
-        feature_used = feature_code
-        astr += feanamestr + str(pred_result[0]["positive"])
+        feature_used = copy.copy(feature_code)
+        astr += feanamestr + str(round(pred_result[0]["positive"],2))  # round the scroe to decimal
         ff.write(astr + "\n")
     ff.close()
 

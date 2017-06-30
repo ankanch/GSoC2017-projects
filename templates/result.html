@@ -79,7 +79,7 @@
                     <tr>
                         <th scope="row"> {{ loop.index }}</th>
                         {% for x in data %} {% if x in ("@1","@0") %} {% if x in ("@1") %}
-                        <td class="alert-success"></td>
+                        <td class="alert-success" style="border-left: 4px solid #eeeeee;border-bottom: 4px solid #eeeeee;border-right: 4px solid #eeeeee;"></td>
                         {% else %}
                         <td class="alert-danger"></td>
                         {% endif %} {% else %}
