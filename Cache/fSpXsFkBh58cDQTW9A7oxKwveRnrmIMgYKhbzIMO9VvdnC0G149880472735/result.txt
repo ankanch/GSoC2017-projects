@@ -1,0 +1,3 @@
+#	cellular location	biological process	molecular function	gene expression	sequence signature	score
+A2P2R3,A2P2R3,@1,@1,@1,@1,@1,1.0
+O13513,A2P2R3,@1,@1,@1,@1,@1,0.5

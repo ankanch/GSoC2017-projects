@@ -1,16 +1,15 @@
 import time
 import flask
 import os
+from Utilities import globeVar
 from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file
 from Utilities import SessionManager,ZipMaker,CallAnalyze
 
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = "./Cache"
-RESULT_FOLDER = "./Cache"
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['RESULT_FOLDER'] = RESULT_FOLDER
+app.config['UPLOAD_FOLDER'] = globeVar.VAR_PATH_UPLOAD_FOLDER
+app.config['RESULT_FOLDER'] = globeVar.VAR_PATH_RESULT_FOLDER
 
 # This is the entrance URL for the index page
 @app.route('/')
@@ -52,7 +51,7 @@ def result(sessionid):
         return server_fault("Invalid session.<br/>Cannot found the session you request.<br/> The session you are looking for might be expired.")
     if analyze_type == "type_normal" or analyze_type == "type_advance":
         # then we open result.txt of that session folder and output the data
-        ff = open(RESULT_FOLDER + "/" + sessionid + "/result.txt")
+        ff = open(globeVar.VAR_PATH_RESULT_FOLDER + "/" + sessionid + "/result.txt")
         data =  ff.readlines()
         ff.close()
         data = data[1:]
@@ -71,7 +70,7 @@ def download(sessionid):
     # first,we have to check if the result user looking for is exist
     # normally,the  result file will have the same filename (session id )
     # with the upload folder
-    if sessionid not in os.listdir(RESULT_FOLDER):
+    if sessionid not in os.listdir(globeVar.VAR_PATH_RESULT_FOLDER):
         return not_found("FIle not found on this server. The result you looking for might be removed.","/result/"+sessionid)
     
     # file exist, then we return then we check if an zipped file with the 
@@ -80,10 +79,10 @@ def download(sessionid):
     # File name contains 3 parts:  prefix   +   session    + file-format
     #                    Example: "Dataset_" +  session id  + ".zip"
     filename = "Dataset_" + sessionid + ".zip"
-    if filename in os.listdir(RESULT_FOLDER+"/"+sessionid):
+    if filename in os.listdir(globeVar.VAR_PATH_RESULT_FOLDER+"/"+sessionid):
         # return the exist zip file. 
         print("no new zip")
-        filepath = RESULT_FOLDER.replace("./","")+ "/" + sessionid +"/"+filename
+        filepath = globeVar.VAR_PATH_RESULT_FOLDER.replace("./","")+ "/" + sessionid +"/"+filename
         response = make_response(send_file( filepath ))
         response.headers["Content-Disposition"] = ("attachment; filename=%s;" % filename)
         return response
@@ -92,7 +91,7 @@ def download(sessionid):
     # This will only be performed once. Becausethe next time user request
     # the result dataset with the same session id, it will return the exist file generate last time.
     print("new zip")
-    targetfolder = RESULT_FOLDER+"/"+ sessionid + "/"
+    targetfolder = globeVar.VAR_PATH_RESULT_FOLDER+"/"+ sessionid + "/"
     filename = "Dataset_%s.zip" % sessionid
     ZipMaker.make_zip(targetfolder,targetfolder+filename)
     response = make_response(send_file( targetfolder + filename ))
@@ -149,12 +148,7 @@ def run_analyzealyze():
 
         # after analyze done, we then make a file of protein ids 
         # into result/sessionid folder
-        ff = open(RESULT_FOLDER+"/"+session+"/input_protein_ids.txt","w")
-        astr = ""
-        for pair in protein_ids:
-            astr += pair[0] + "," + pair[1] + "\n"
-        ff.write(astr)
-        ff.close()
+        CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids)
         
         return render_template("redirect.html",TARGET="result/"+session)
     elif analyze_type == "advance":
@@ -204,12 +198,7 @@ def run_analyzealyze():
 
             # after analyze done, we then make a file of protein ids 
             # into result/sessionid folder
-            ff = open(RESULT_FOLDER+"/"+session+"/input_protein_ids.txt","w")
-            astr = ""
-            for pair in protein_ids:
-                astr += pair[0] + "," + pair[1] + "\n"
-            ff.write(astr)
-            ff.close()
+            CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids)
         
         return redirect("/result/"+session)
     else:

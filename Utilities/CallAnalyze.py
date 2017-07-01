@@ -145,5 +145,13 @@ def Load_Protein_IDList():
     linedata =  ff.readlines()[1:]
     VAR_PROTEIN_ID_LIST = [ x.split('\t')[0] for x in linedata ]
     return VAR_PROTEIN_ID_LIST
+
+def Save_ProteinID_List_TO_File(session,pairlist):
+    ff = open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+session+"/input_protein_ids.txt","w")
+    astr = ""
+    for pair in pairlist:
+        astr += pair[0] + "," + pair[1] + "\n"
+    ff.write(astr)
+    ff.close()
         
 Load_Protein_IDList()
