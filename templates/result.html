@@ -1,109 +1,115 @@
 {% extends "template.html" %} {% block title %}Result{% endblock %} {% block content %}
-<div class=" div-margin-top-5">
-    <div class="row div-center-90">
-        {% if PWM %}
-        <p><span style="color:#ffa07a;">This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.</span></p>
-        {% else %}
-        <div class="col-md-8" style="color:#ffa07a;margin-top:15px;">
-            This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.
+<div class="panel panel-primary div-margin-top-5 div-center-90">
+    <div class="panel-heading" style="text-align:left;">Protein Protein Interaction Prediction Results</div>
+    <div class="panel-body">
+        <div class="row div-center-90">
+            {% if PWM %}
+            <p><span style="color:#ffa07a;">This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.</span></p>
+            {% else %}
+            <div class="col-md-8" style="color:#ffa07a;margin-top:15px;">
+                This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.
+            </div>
+            <div class="col-md-4">
+                <table class="table table-striped" style="text-align:center;width:30%;margin: 0 auto;">
+                    <td class="alert-success">Used Feature</td>
+                    <td class="alert-danger">Unused Feature</td>
+                </table>
+            </div>
+            {% endif %}
         </div>
-        <div class="col-md-4">
-            <table class="table table-striped" style="text-align:center;width:30%;margin: 0 auto;">
-                <td class="alert-success">Used Feature</td>
-                <td class="alert-danger">Unused Feature</td>
-            </table>
+        {% if PWM %}
+        <div class="row div-center-90" style="margin-top:5px;">
+            <!-- button group-->
+            <!--For button which allows you to change view of different result-->Change result view: {% for result in result_package %}
+            <button type="button" class="btn btn-secondary" id="btn_{{result[0]}}" onclick="changeView('{{result[0]}}')">{{result[0]}}
+            </button> {% endfor %}
+        </div>
+        <hr style="margin-top:10px;width:70%;border-top:1px solid #428bca;" />
+        <div class="row" style=" width: 85%;text-align:initial;margin:0 auto;margin-top:15px;">
+            <!--result[0] for result_set id,rsult[1] for result set-->
+            {% for result in result_package %}
+            <div class="row" id="table_{{result[0]}}" style="width:99%;margin:0 auto;text-align:initial;display:none;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Domain</th>
+                            <th>Peptide</th>
+                            <th>Start</th>
+                            <th>Stop</th>
+                            <th>Sequence</th>
+                            <th>Peptide Score</th>
+                            <th>Peptide Count</th>
+                            <th>Protein Score</th>
+                            <th>Protein Count</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in result[1] %}
+                        <tr>
+                            <th scope="row"> {{ loop.index }}</th>
+                            {% for x in data %}
+                            <td>{{x}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <hr style="margin-top:10px;width:70%;border-top:1px solid #428bca;" />
+        <div class="row" style=" width: 85%;text-align:initial;margin:0 auto;margin-top:15px;">
+
+            <div class="row" id="table_result" style="width:99%;margin:0 auto;text-align:initial;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Protein A</th>
+                            <th>Protein B</th>
+                            <th>Cellular location</th>
+                            <th>Biological process</th>
+                            <th>Molecular function</th>
+                            <th>Gene expression</th>
+                            <th>Sequence signature</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in result_package %}
+                        <tr>
+                            <th scope="row"> {{ loop.index }}</th>
+                            {% for x in data %} {% if x in ("@1","@0") %} {% if x in ("@1") %}
+                            <td class="alert-success" style="border-left: 4px solid #eeeeee;border-bottom: 4px solid #eeeeee;border-right: 4px solid #eeeeee;"></td>
+                            {% else %}
+                            <td class="alert-danger"></td>
+                            {% endif %} {% else %}
+                            <td>{{x}}</td>
+                            {% endif %} {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         {% endif %}
-    </div>
-    {% if PWM %}
-    <div class="row div-center-90" style="margin-top:5px;">
-        <!-- button group-->
-        <!--For button which allows you to change view of different result-->Change result view: {% for result in result_package %}
-        <button type="button" class="btn btn-secondary" id="btn_{{result[0]}}" onclick="changeView('{{result[0]}}')">{{result[0]}}
-            </button> {% endfor %}
-    </div>
-    <div class="row" style=" width: 70%;text-align:initial;margin:0 auto;margin-top:15px;">
-        <!--result[0] for result_set id,rsult[1] for result set-->
-        {% for result in result_package %}
-        <div class="row" id="table_{{result[0]}}" style="width:99%;margin:0 auto;text-align:initial;display:none;">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Domain</th>
-                        <th>Peptide</th>
-                        <th>Start</th>
-                        <th>Stop</th>
-                        <th>Sequence</th>
-                        <th>Peptide Score</th>
-                        <th>Peptide Count</th>
-                        <th>Protein Score</th>
-                        <th>Protein Count</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for data in result[1] %}
-                    <tr>
-                        <th scope="row"> {{ loop.index }}</th>
-                        {% for x in data %}
-                        <td>{{x}}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="row" style=" width: 70%;text-align:initial;margin:0 auto;margin-top:15px;">
-
-        <div class="row" id="table_result" style="width:99%;margin:0 auto;text-align:initial;">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Protein A</th>
-                        <th>Protein B</th>
-                        <th>Cellular location</th>
-                        <th>Biological process</th>
-                        <th>Molecular function</th>
-                        <th>Gene expression</th>
-                        <th>Sequence signature</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for data in result_package %}
-                    <tr>
-                        <th scope="row"> {{ loop.index }}</th>
-                        {% for x in data %} {% if x in ("@1","@0") %} {% if x in ("@1") %}
-                        <td class="alert-success" style="border-left: 4px solid #eeeeee;border-bottom: 4px solid #eeeeee;border-right: 4px solid #eeeeee;"></td>
-                        {% else %}
-                        <td class="alert-danger"></td>
-                        {% endif %} {% else %}
-                        <td>{{x}}</td>
-                        {% endif %} {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    {% endif %}
-    <hr style="margin-top:10px;width:50%;" />
-    <div class="row div-center-90">
-        <a type="button " class="btn  btn-primary" href="/download/{{SESSIONID}}">Download Result</a>
-        <a class="btn btn-primary" data-toggle="collapse" href="#copybox" aria-expanded="false" aria-controls="collapseExample">Permalink</a>
-        <div class="collapse div-dialog-bbx" id="copybox" style="margin-top:20px;width:50%;margin:0 auto;">
-            <div class="div-center-50;">
-                <input type="text" id="result_page_url" value="http://beta.baderlab.org/result/{{SESSIONID}}" style="display:true;margin-top:20px;margin-bottom:20px;width:60%;" readonly/>
-                <button id="btn_permalink" type="button" class="btn btn-info" data-copytarget="#result_page_url">Copy Permalink</button>
+        <hr style="margin-top:10px;width:50%;border-top:1px solid #428bca;" />
+        <div class="row div-center-90">
+            <a type="button " class="btn  btn-primary" href="/download/{{SESSIONID}}">Download Result</a>
+            <a class="btn btn-primary" data-toggle="collapse" href="#copybox" aria-expanded="false" aria-controls="collapseExample">Permalink</a>
+            <div class="collapse div-dialog-bbx" id="copybox" style="margin-top:20px;width:50%;margin:0 auto;">
+                <div class="div-center-50;">
+                    <input type="text" id="result_page_url" value="http://beta.baderlab.org/result/{{SESSIONID}}" style="display:true;margin-top:20px;margin-bottom:20px;width:60%;" readonly/>
+                    <button id="btn_permalink" type="button" class="btn btn-info" data-copytarget="#result_page_url">Copy Permalink</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div style="margin-bottom:15px;"></div>
 <script>
     var current_mode = "{{PWM}}";
 
@@ -113,6 +119,7 @@
     // when document ready , function below will be executed
     $(document).ready(function() {
         toggleDiv('index_placeholder');
+        toggleDiv('index_icon');
         toggleDiv("table_0");
         if (current_mode.length > 0) {
             document.getElementById("btn_0").classList.remove("btn-secondary");

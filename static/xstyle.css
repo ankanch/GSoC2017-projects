@@ -4,6 +4,12 @@
     margin: 0 auto;
 }
 
+.div-center-100 {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .div-center-90 {
     text-align: center;
     width: 90%;
