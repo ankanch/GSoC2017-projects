@@ -83,7 +83,8 @@
                 <input type="text" name="analyze_type" value="normal" style="display:none;" id="analyze_type" />
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
-                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="toggleDiv('progress_bar_x');document.getElementById('btn_advance').disabled = true;$('#btn_run').hide();  $('#btn_run_fake').show();" />
+                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="toggleDiv('progress_bar_x');document.getElementById('btn_advance').disabled = true;$('#btn_run').hide();  $('#btn_run_fake').show();showMsg('Start running analyze,this may takes serveral minutes.');"
+                />
                 <input id="btn_run_fake" type="button" class="btn btn-primary disabled" value="Running..." style="display:none;" />
                 <br/>
                 <button id="btn_advance" type="button" onclick="advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
@@ -265,27 +266,6 @@
     function loadProteinPairs() {
 
     }
-
-    /*/ this function is used to check if user input protein id contains in the database
-    function checkPID() {
-        var iddata = "";
-        if (cur_normal) {
-            iddata = document.getElementById("textarea_input_a").value;
-        } else {
-            iddata = document.getElementById("textarea_input_b").value;
-        }
-        iddata = iddata.replace("\r", "").replace(";", ",").replace(" ", ",");
-        var pairs = iddata.split("\n");
-        for (var i = 0; i < pairs.length; i++) {
-            var pid = pairs[i].split(",");
-            if (row_data.indexOf(pid[0]) < 0 || row_data.indexOf(pid[1]) < 0) {
-                // invalid id found. stop
-                alert("invalid id found");
-                return false;
-            }
-        }
-        return true;
-    }/*/
 
     $(document).ready(function() {
         //addRow();

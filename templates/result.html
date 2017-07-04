@@ -1,7 +1,7 @@
 {% extends "template.html" %} {% block title %}Result{% endblock %} {% block content %}
 <div class="panel panel-primary div-margin-top-5 div-center-90">
     <div class="panel-heading" style="text-align:left;">Protein Protein Interaction Prediction Results</div>
-    <div class="panel-body">
+    <div class="panel-body" style="background:#f4f4f4;">
         <div class="row div-center-90">
             {% if PWM %}
             <p><span style="color:#ffa07a;">This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.</span></p>
@@ -165,7 +165,7 @@
                     document.getElementById("btn_permalink").classList.add("btn-success");
                     document.getElementById("btn_permalink").classList.remove("btn-info");
                 } catch (err) {
-                    alert('please press Ctrl/Cmd+C to copy');
+                    showMsg('Cannot automaticaly copy.Please press Ctrl/Cmd+C to copy!');
                 }
             }
         }

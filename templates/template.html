@@ -12,6 +12,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../static/jquery-3.2.1.min.js"></script>
     <link href="../static/xstyle.css" rel="stylesheet">
+    <link href="../static/snackbar.css" rel="stylesheet">
 
 </head>
 
@@ -42,6 +43,7 @@
         <div class="row div-center-100">
             {% block content %}{% endblock %}
         </div>
+        <div id="snackbar"></div>
     </div>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -50,6 +52,18 @@
 <script>
     function toggleDiv(divId) {
         $("#" + divId).toggle();
+    }
+
+    function showMsg(message) {
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar");
+        x.innerText = message;
+        // Add the "show" class to DIV
+        x.className = "show";
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function() {
+            x.className = x.className.replace("show", "");
+        }, 3000);
     }
 </script>
 
