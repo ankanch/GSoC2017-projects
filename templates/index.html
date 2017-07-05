@@ -1,6 +1,6 @@
 {% extends "template.html" %} {% block title %}Welcome{% endblock %} {% block content %}
 <div class=" div-margin-top-5">
-    <form action="runanalyze" method="POST" enctype="multipart/form-data">
+    <form action="runanalyze" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="row div-center-90">
             <div class="row div-margin-top-25 div-center-90 " id="input_built_in" style="width:512px;">
                 <div class="row ">
@@ -83,8 +83,7 @@
                 <input type="text" name="analyze_type" value="normal" style="display:none;" id="analyze_type" />
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
-                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" onclick="toggleDiv('progress_bar_x');document.getElementById('btn_advance').disabled = true;$('#btn_run').hide();  $('#btn_run_fake').show();showMsg('Start running analyze,this may takes serveral minutes.');"
-                />
+                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" />
                 <input id="btn_run_fake" type="button" class="btn btn-primary disabled" value="Running..." style="display:none;" />
                 <br/>
                 <button id="btn_advance" type="button" onclick="advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
@@ -146,7 +145,7 @@
                             <!--div below is where the protein id pairs shows / add/ delete-->
                             <div class="form-group" id="psa_pid" style="text-align:center;">
                                 <div class="alert alert-danger" role="alert">
-                                    You <strong>haven't add any protein id pairs</strong> , please use selection above to select protein id pairs then click<strong> add</strong> button.
+                                    You <strong>haven't</strong> add any protein id pairs yet, please use selection above to select protein id pairs then click<strong> add</strong> button.
                                 </div>
                             </div>
                         </form>
@@ -195,6 +194,26 @@
             document.getElementById("sel_pe").disabled = true;
             document.getElementById("sel_pe").checked = false;
         }
+    }
+
+    function validateForm() {
+        var e;
+        if (cur_normal) {
+            e = document.getElementById("select_a");
+        } else {
+            e = document.getElementById("select_b");
+        }
+        var ev = e.options[e.selectedIndex].value;
+        if (ev == "Species") {
+            showMsg("Please select Species before submit.")
+            return false;
+        }
+        toggleDiv('progress_bar_x');
+        document.getElementById('btn_advance').disabled = true;
+        $('#btn_run').hide();
+        $('#btn_run_fake').show();
+        showMsg('Start running analyze,this may takes serveral minutes.');
+        return true;
     }
 
     // code here for protein id selection 

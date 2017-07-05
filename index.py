@@ -148,7 +148,7 @@ def run_analyzealyze():
 
         # after analyze done, we then make a file of protein ids 
         # into result/sessionid folder
-        CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids)
+        CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,select_normal)
         
         return render_template("redirect.html",TARGET="result/"+session)
     elif analyze_type == "advance":
@@ -198,7 +198,7 @@ def run_analyzealyze():
 
             # after analyze done, we then make a file of protein ids 
             # into result/sessionid folder
-            CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids)
+            CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,select_advance)
         
         return redirect("/result/"+session)
     else:

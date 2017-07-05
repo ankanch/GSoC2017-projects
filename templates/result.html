@@ -2,21 +2,6 @@
 <div class="panel panel-primary div-margin-top-5 div-center-90">
     <div class="panel-heading" style="text-align:left;">Protein Protein Interaction Prediction Results</div>
     <div class="panel-body" style="background:#f4f4f4;">
-        <div class="row div-center-90">
-            {% if PWM %}
-            <p><span style="color:#ffa07a;">This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.</span></p>
-            {% else %}
-            <div class="col-md-8" style="color:#ffa07a;margin-top:15px;">
-                This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.
-            </div>
-            <div class="col-md-4">
-                <table class="table table-striped" style="text-align:center;width:30%;margin: 0 auto;">
-                    <td class="alert-success">Used Feature</td>
-                    <td class="alert-danger">Unused Feature</td>
-                </table>
-            </div>
-            {% endif %}
-        </div>
         {% if PWM %}
         <div class="row div-center-90" style="margin-top:5px;">
             <!-- button group-->
@@ -24,7 +9,7 @@
             <button type="button" class="btn btn-secondary" id="btn_{{result[0]}}" onclick="changeView('{{result[0]}}')">{{result[0]}}
             </button> {% endfor %}
         </div>
-        <hr style="margin-top:10px;width:70%;border-top:1px solid #428bca;" />
+        <hr style="margin-top:10px;width:80%;border-top:1px solid #428bca;" />
         <div class="row" style=" width: 85%;text-align:initial;margin:0 auto;margin-top:15px;">
             <!--result[0] for result_set id,rsult[1] for result set-->
             {% for result in result_package %}
@@ -60,7 +45,7 @@
             {% endfor %}
         </div>
         {% else %}
-        <hr style="margin-top:10px;width:70%;border-top:1px solid #428bca;" />
+        <hr style="margin-top:10px;width:80%;border-top:1px solid #428bca;" />
         <div class="row" style=" width: 85%;text-align:initial;margin:0 auto;margin-top:15px;">
 
             <div class="row" id="table_result" style="width:99%;margin:0 auto;text-align:initial;">
@@ -96,7 +81,23 @@
             </div>
         </div>
         {% endif %}
-        <hr style="margin-top:10px;width:50%;border-top:1px solid #428bca;" />
+        <hr style="margin-top:10px;margin-bottom:3px;width:80%;border-top:1px solid #428bca;" />
+        <div class="row div-center-90">
+            {% if PWM %}
+            <p><span style="color:#ffa07a;">This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.</span></p>
+            {% else %}
+            <div class="col-md-8" style="color:#ffa07a;margin-top:10px;">
+                This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.
+            </div>
+            <div class="col-md-4">
+                <table class="table table-striped" style="text-align:center;width:68%;margin: 0 auto;">
+                    <td class="alert-success">Used Feature</td>
+                    <td class="alert-danger">Unused Feature</td>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+        <hr style="margin-top:3px;width:50%;border-top:1px solid #428bca;" />
         <div class="row div-center-90">
             <a type="button " class="btn  btn-primary" href="/download/{{SESSIONID}}">Download Result</a>
             <a class="btn btn-primary" data-toggle="collapse" href="#copybox" aria-expanded="false" aria-controls="collapseExample">Permalink</a>
