@@ -5,19 +5,19 @@
             <div class="row div-margin-top-25 div-center-90 " id="input_built_in" style="width:512px;">
                 <div class="row ">
                     <div class="col-md-9">
-                        <div class="col-md-11" style="padding-right:0px;">
-                            <textarea name="idpairs_normal" class="form-control" id="textarea_input_a" rows="1" placeholder="Input protein ids here.One line for one pair." style="resize: vertical; "></textarea>
-                        </div>
-                        <div class="col-md-1" style="margin-left:0px; padding-left:0px;">
-                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">A</button>
-                        </div>
+                        <textarea name="idpairs_normal" class="form-control" id="textarea_input_a" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical; "></textarea>
+                        <p style="text-align:left">Examples:
+                            <a class="a-padding-rl-5" href="javascript:showExample(1)">#1</a>
+                            <a class="a-padding-rl-5" href="javascript:showExample(2)">#2</a>
+                            <a class="a-padding-rl-5" href="javascript:showExample(3)">#3</a></p>
                     </div>
                     <div class="col-md-3">
-                        <select name="select_normal" class="form-control" id="select_a" onchange="selectCheck()">
-            <option>Species</option>
-            <option>Yeast</option>
-            <option>Human</option>
-            </select>
+                        <button type="button" class="btn btn-secondary margin-bottom-5" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">Select Protein IDs</button>
+                        <select name="select_normal" class="form-control margin-top-5" id="select_a" onchange="selectCheck()" style="width:138px;display:inline-block;">
+                        <option>Species</option>
+                        <option>Yeast</option>
+                        <option>Human</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -214,6 +214,31 @@
         $('#btn_run_fake').show();
         showMsg('Start running analyze,this may takes serveral minutes.');
         return true;
+    }
+
+    function showExample(expno) {
+        var inputbox;
+        if (cur_normal) {
+            inputbox = document.getElementById("textarea_input_a");
+        } else {
+            inputbox = document.getElementById("textarea_input_b");
+        }
+        inputbox.value = "";
+        var exampledata = "";
+        if (expno == 1) {
+            exampledata = `D6W196 O13512
+O13329 O13516
+P49090 Q9ZZW4`;
+        } else if (expno == 2) {
+            exampledata = `D6W196;O13512
+O13329;O13516
+P49090;Q9ZZW4`;
+        } else {
+            exampledata = `D6W196,O13512
+O13329,O13516
+P49090,Q9ZZW4`;
+        }
+        inputbox.value = exampledata;
     }
 
     // code here for protein id selection 
