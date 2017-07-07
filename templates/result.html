@@ -33,7 +33,7 @@
                     <tbody>
                         {% for data in result[1] %}
                         <tr>
-                            <th scope="row"> {{ loop.index }}</th>
+                            <th scope="row">{{ loop.index }}</th>
                             {% for x in data %}
                             <td>{{x}}</td>
                             {% endfor %}
@@ -64,16 +64,34 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- if a value is None,that means this feature is not used in analyze -->
                         {% for data in result_package %}
                         <tr>
-                            <th scope="row"> {{ loop.index }}</th>
-                            {% for x in data %} {% if x in ("@1","@0") %} {% if x in ("@1") %}
-                            <td class="alert-success" style="border-left: 4px solid #eeeeee;border-bottom: 4px solid #eeeeee;border-right: 4px solid #eeeeee;"></td>
-                            {% else %}
-                            <td class="alert-danger"></td>
-                            {% endif %} {% else %}
-                            <td>{{x}}</td>
-                            {% endif %} {% endfor %}
+                            <th scope="row">{{ loop.index }}</th>
+                            <!-- for below used to set up the row  -->
+                            {% for x in data %}
+                            <!-- if statement below used to control the feature cells-->
+                            {% if (x in ("None") or x|length > 3) and loop.index >2 and loop.index
+                            <8 %} <!-- if below used to control the display of used and unused features -->
+                                <!-- display types are : tabular,text and color -->
+                                <!-- type:tabular -->
+                                {% if TABULAR %} {% if x not in ( "None") %}
+                                <td class="alert-success" style="border-left: 4px solid #eeeeee;border-bottom: 4px solid #eeeeee;border-right: 4px solid #eeeeee;"></td>
+                                {% else %}
+                                <td class="alert-danger" style="border-left: 4px solid #eeeeee;border-bottom: 4px solid #eeeeee;border-right: 4px solid #eeeeee;"></td>
+                                {% endif %}
+                                <!-- type:TEXT -->
+                                {% elif TEXT %} {% if x not in ( " None ") %}
+                                <td>{{x}}</td>
+                                {% else %}
+                                <td style="text-align:center;">Not Used</td>
+                                {% endif %}
+                                <!-- type:COLOR -->
+                                {% elif COLOR %} {% endif %}
+                                <!-- display as normal cells -->
+                                {% else %}
+                                <td>{{x}}</td>
+                                {% endif %} {% endfor %}
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -81,36 +99,36 @@
             </div>
         </div>
         {% endif %}
-        <hr style="margin-top:10px;margin-bottom:3px;width:80%;border-top:1px solid #428bca;" />
-        <div class="row div-center-90">
+        <hr style="margin-top:10px;margin-bottom:3px;width:80%;border-top:1px solid #428bca; " />
+        <div class="row div-center-90 ">
             {% if PWM %}
-            <p><span style="color:#ffa07a;">This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.</span></p>
+            <p><span style="color:#ffa07a; ">This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.</span></p>
             {% else %}
-            <div class="col-md-8" style="color:#ffa07a;margin-top:10px;">
+            <div class="col-md-8 " style="color:#ffa07a;margin-top:10px; ">
                 This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.
             </div>
-            <div class="col-md-4">
-                <table class="table table-striped" style="text-align:center;width:68%;margin: 0 auto;">
-                    <td class="alert-success">Used Feature</td>
-                    <td class="alert-danger">Unused Feature</td>
+            <div class="col-md-4 ">
+                <table class="table table-striped " style="text-align:center;width:68%;margin: 0 auto; ">
+                    <td class="alert-success ">Used Feature</td>
+                    <td class="alert-danger ">Unused Feature</td>
                 </table>
             </div>
             {% endif %}
         </div>
-        <hr style="margin-top:3px;width:50%;border-top:1px solid #428bca;" />
-        <div class="row div-center-90">
-            <a type="button " class="btn  btn-primary" href="/download/{{SESSIONID}}">Download Result</a>
-            <a class="btn btn-primary" data-toggle="collapse" href="#copybox" aria-expanded="false" aria-controls="collapseExample">Permalink</a>
-            <div class="collapse div-dialog-bbx" id="copybox" style="margin-top:20px;width:50%;margin:0 auto;">
-                <div class="div-center-50;">
-                    <input type="text" id="result_page_url" value="http://beta.baderlab.org/result/{{SESSIONID}}" style="display:true;margin-top:20px;margin-bottom:20px;width:60%;" readonly/>
-                    <button id="btn_permalink" type="button" class="btn btn-info" data-copytarget="#result_page_url">Copy Permalink</button>
+        <hr style="margin-top:3px;width:50%;border-top:1px solid #428bca; " />
+        <div class="row div-center-90 ">
+            <a type="button " class="btn btn-primary " href="/download/{{SESSIONID}} ">Download Result</a>
+            <a class="btn btn-primary " data-toggle="collapse " href="#copybox " aria-expanded="false " aria-controls="collapseExample ">Permalink</a>
+            <div class="collapse div-dialog-bbx " id="copybox " style="margin-top:20px;width:50%;margin:0 auto; ">
+                <div class="div-center-50; ">
+                    <input type="text " id="result_page_url " value="http://beta.baderlab.org/result/{{SESSIONID}} " style="display:true;margin-top:20px;margin-bottom:20px;width:60%; " readonly/>
+                    <button id="btn_permalink " type="button " class="btn btn-info " data-copytarget="#result_page_url ">Copy Permalink</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div style="margin-bottom:15px;"></div>
+<div style="margin-bottom:15px; "></div>
 <script>
     var current_mode = "{{PWM}}";
 

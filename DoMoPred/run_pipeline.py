@@ -195,7 +195,7 @@ def run_standalone_protein_with_features_selection(prot_set,features_to_use,outp
         #pred.append((post, num_pot))
         pred.append((post, features_used)) # append features name list directly
 
-    return output,pred,pro_set
+    return output,pred,pro_set,protein # protein stands for the list that conteins features' scores
 
 
 def pwm_runner(pwm, domain, pval, output, gen_data, cel_data):

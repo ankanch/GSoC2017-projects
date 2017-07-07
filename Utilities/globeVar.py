@@ -18,3 +18,8 @@ VAR_FEATURES = {
     "protein_expression":"F"
 }
 
+# result types describes how to dispaly the result to user 
+VAR_RESULTTYPE_TABULAR = "tabular"
+VAR_RESULTTYPE_TEXT = "text"
+VAR_RESULTTYPE_COLOR = "color"
+

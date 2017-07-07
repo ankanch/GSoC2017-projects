@@ -51,16 +51,24 @@ def result(sessionid):
         return server_fault("Invalid session.<br/>Cannot found the session you request.<br/> The session you are looking for might be expired.")
     if analyze_type == "type_normal" or analyze_type == "type_advance":
         # then we open result.txt of that session folder and output the data
+        # outputs types are : tabular,text and color density
+        # result type will be flaged in the first line of the result.txt
         ff = open(globeVar.VAR_PATH_RESULT_FOLDER + "/" + sessionid + "/result.txt")
         data =  ff.readlines()
         ff.close()
-        data = data[1:]
+        result_type = data[:1][0].replace("#","").replace("\n","").replace("\r","")
+        data = data[2:]
         final_data = []
         for lines in data:
             pd = lines.replace("\n","").split(",")
             final_data.append(pd)
         create_time = [SessionManager.getDate(sessionid),str(SessionManager.VAR_RESULT_LIFE)]
-        return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time)
+        if result_type == globeVar.VAR_RESULTTYPE_TABULAR:
+            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,TABULAR=True)
+        elif result_type == globeVar.VAR_RESULTTYPE_TEXT:
+            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,TEXT=True)
+        elif result_type == globeVar.VAR_RESULTTYPE_COLOR:
+            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,COLOR=True)
     elif SessionManager.getType(sessionid) == "type_pwm":
         pass
     
@@ -162,6 +170,10 @@ def run_analyzealyze():
         id_file = request.files["id_file"]
         feature_str = CallAnalyze.getFeatures(features)
 
+        # get result type which describes how to display the result to users
+        output_type = request.form['outputs']
+        print ">>>>>>>output_type=",output_type
+
         # check if user upload a file.
         if len(id_file.filename) > 0:
             # save the file to the disk first.
@@ -176,7 +188,7 @@ def run_analyzealyze():
                         <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
 
             # at last, run the analyze
-            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids,feature_str)
+            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids,feature_str,output_type)
             
         else:
             # no files upload,run analyze as normal
@@ -194,11 +206,12 @@ def run_analyzealyze():
                         <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
 
             # except, the features canbe changable here.
-            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids,feature_str)
+            CallAnalyze.Analyzer_ProteinIDs(session,protein_ids,feature_str,output_type)
 
             # after analyze done, we then make a file of protein ids 
             # into result/sessionid folder
             CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,select_advance)
+        # return the result
         
         return redirect("/result/"+session)
     else:

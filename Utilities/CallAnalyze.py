@@ -54,7 +54,7 @@ def Analyzer(sessionid,pwmfiles,domainfile,features):
 # this function will call  run_standalone_protein(prot_set, output=None) 
 # from run_pipline directly and the result will be stored in the folder 
 # of which named by session id under results folder
-def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE"):
+def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE",result_type="tabular"):
     # first we have to check if the folder with the session id exist
     # if not, make it
     result_list = os.listdir(PATH_RESULTS)
@@ -62,26 +62,33 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE"):
         os.makedirs(PATH_RESULTS + sessionid)
     
     # then we call run_standalone_protein to analyze it. and wtire results to file
-    output,pred,pro_set = RP.run_standalone_protein_with_features_selection(protein_id_set,features_to_use,PATH_RESULTS + sessionid + "/result.txt")
-    #output,pred,pro_set = RP.run_standalone_protein(protein_id_set,PATH_RESULTS + sessionid + "/result.txt")
+    output,pred,pro_set,feature_scroes = RP.run_standalone_protein_with_features_selection(protein_id_set,features_to_use,PATH_RESULTS + sessionid + "/result.txt")
+
+    print "\n>>>feature_score:\n",feature_scroes
+
     ff = open(output,"w")
     # we will not include nagative score
     head = "#\tcellular location\tbiological process\tmolecular function\tgene expression\tsequence signature\tscore\n"
+    head = "#" + result_type + "\n" + head
     ff.write(head)
     feature_code = ["A","B","C","D","E"]
     feature_used = ["A","B","C","D","E"]
-    for pro_pair,pred_result in zip(pro_set,pred):
+    for pro_pair,pred_result,fss in zip(pro_set,pred,feature_scroes):
         astr = pro_pair[0] + "," + pro_pair[1] + ","
         #    features used for analyze          positive
         for x in pred_result[1]:
             feature_used[ feature_code.index(x) ] =  "@1"
         feanamestr = ""
+        for sc in fss:
+            print "\nsc=",sc,"\n"
+            feanamestr += str(sc) + ","
+        """
         for x in feature_used:
             if x != "@1":
                 feanamestr += "@0,"
             else:
                 feanamestr += "@1,"
-        feature_used = copy.copy(feature_code)
+        feature_used = copy.copy(feature_code)"""
         astr += feanamestr + str(round(pred_result[0]["positive"],2))  # round the scroe to decimal
         ff.write(astr + "\n")
     ff.close()
