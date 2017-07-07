@@ -1,0 +1,4 @@
+#tabular
+#	cellular location	biological process	molecular function	gene expression	sequence signature	score
+A2P2R3,D6VPM8,-0.0,None,-0.0,0.443107769942,0.0,0.32
+O13513,D6VPM8,None,None,None,None,None,0.5
