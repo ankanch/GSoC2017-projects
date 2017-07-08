@@ -80,7 +80,6 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE",result_
             feature_used[ feature_code.index(x) ] =  "@1"
         feanamestr = ""
         for sc in fss:
-            print "\nsc=",sc,"\n"
             feanamestr += str(sc) + ","
         """
         for x in feature_used:

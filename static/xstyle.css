@@ -109,3 +109,11 @@
 .margin-right-5 {
     margin-right: 5px;
 }
+
+.div-color-panel-prob {
+    background: linear-gradient(to left, #00ff00 0%, #ccffcc 100%);
+}
+
+.div-color-unused-feature {
+    background: #adadad;
+}

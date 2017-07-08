@@ -23,31 +23,34 @@
             </div>
             <div class="collapse " id="collapse_advance_settings">
                 <div class="row div-margin-top-5">
-                    <div class="col-md-3 div-border-right-1px div-min-height-256">
+                    <div class="col-md-3 div-border-right-1px div-min-height-256" style="height:300px;">
                         <div class="row">
                             <h4>INPUT</h4>
                         </div>
-                        <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
-                            <div class="row div-margin-top-25"><br/>
-                                <textarea name="idpairs_advance" class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:80%;"></textarea>
-                            </div>
-                            <div class="row div-margin-top-10">
-                                <button type="button" style="padding-top:0px;padding-bottom:0px;" class="btn btn-secondary margin-bottom-5" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">Select Protein IDs</button>
-                                <select name="select_advance" class="form-control" id="select_b" style="width:138px;" onchange="selectCheck()">
+
+                        <div class="row"><br/>
+                            <textarea name="idpairs_advance" class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:80%;margin:0 auto;"></textarea>
+                            <p style="text-align:left;padding-left:33px;">Examples:
+                                <a class="a-padding-rl-5" href="javascript:showExample(1)">#1</a>
+                                <a class="a-padding-rl-5" href="javascript:showExample(2)">#2</a>
+                                <a class="a-padding-rl-5" href="javascript:showExample(3)">#3</a></p>
+                        </div>
+                        <div class="row" style="text-align:left;">
+                            <button type="button" style="padding-top:0px;padding-bottom:0px;margin-left:30px;" class="btn btn-secondary margin-bottom-5" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">Select Protein IDs</button>
+                            <select name="select_advance" class="form-control" id="select_b" style="width:138px;margin-left:30px;" onchange="selectCheck()">
                                 <option>Species</option>
                                 <option>Yeast</option>
                                 <option>Human</option>
                                 </select>
-                            </div>
-                            <h5>OR</h5>
-                            <div class="form-group">
-                                <label for="exampleInputFile">Choose a local file</label>
-                                <!--input name="files[]" type="file" class="form-control-file" id="file_input" multiple="true"-->
-                                <input name=id_file type=file class="form-control-file" id="file_input">
-                            </div>
                         </div>
+                        <h5>OR <label for="exampleInputFile">Choose a local file:</label></h5>
+                        <div class="form-group" style="margin-left:16px;">
+                            <!--input name="files[]" type="file" class="form-control-file" id="file_input" multiple="true"-->
+                            <input name=id_file type=file class="form-control-file" id="file_input">
+                        </div>
+
                     </div>
-                    <div class="col-md-3 div-border-right-1px div-min-height-256">
+                    <div class="col-md-3 div-border-right-1px div-min-height-256" style="height:300px;">
                         <div class="row">
                             <h4>FEATURES</h4>
                         </div>
@@ -60,7 +63,7 @@
                             <input type="checkbox" name="features[]" value="protein_expression" checked="checked" id="sel_pe" />Protein expression<br>
                         </div>
                     </div>
-                    <div class="col-md-3 div-border-right-1px div-min-height-256">
+                    <div class="col-md-3 div-border-right-1px div-min-height-256" style="height:300px;">
                         <div class="row">
                             <h4>ALGORITHM</h4>
                         </div>
@@ -238,9 +241,10 @@ P49090 Q9ZZW4`;
 O13329;O13516
 P49090;Q9ZZW4`;
         } else {
-            exampledata = `D6W196,O13512
-O13329,O13516
-P49090,Q9ZZW4`;
+            exampledata = `P11710,15891
+P15891,P32793
+P43603,P39969
+P32793,P38041`;
         }
         inputbox.value = exampledata;
     }

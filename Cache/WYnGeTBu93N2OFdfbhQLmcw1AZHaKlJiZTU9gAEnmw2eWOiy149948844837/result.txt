@@ -1,4 +1,0 @@
-#tabular
-#	cellular location	biological process	molecular function	gene expression	sequence signature	score
-O13513,O13514,None,None,None,None,None,0.5
-O13519,O13521,None,None,None,None,None,0.5

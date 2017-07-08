@@ -68,6 +68,23 @@ def result(sessionid):
         elif result_type == globeVar.VAR_RESULTTYPE_TEXT:
             return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,TEXT=True)
         elif result_type == globeVar.VAR_RESULTTYPE_COLOR:
+            # here we have do a convert, the color cell's color is from RGB(204,255,204) to RGB(0,255,0)
+            # therefor, we will made the convert here
+            row_num = 0
+            ele_num = 0
+            for row in final_data:
+                for ele in row:
+                    if ele_num > 2 and ele_num < 7:
+                        if ele != "None":
+                            XSC = int(float(ele)*204)
+                            print "XSC=",XSC,"\tfloat(ele)=",float(ele),"\tele=",ele
+                            if XSC < 0:
+                                XSC*=-1
+                            final_data[row_num][ele_num] = 204 - XSC
+                    ele_num+=1
+                ele_num = 0
+                row_num+=1
+            print final_data
             return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,COLOR=True)
     elif SessionManager.getType(sessionid) == "type_pwm":
         pass

@@ -76,20 +76,25 @@
                                 <!-- display types are : tabular,text and color -->
                                 <!-- type:tabular -->
                                 {% if TABULAR %} {% if x not in ( "None") %}
-                                <td class="alert-success" style="border-left: 4px solid #eeeeee;border-bottom: 4px solid #eeeeee;border-right: 4px solid #eeeeee;"></td>
+                                <td class="alert-success" style="border-left: 4px solid #eeeeee;border-bottom: 1px solid #eeeeee;border-right: 1px solid #eeeeee;"></td>
                                 {% else %}
-                                <td class="alert-danger" style="border-left: 4px solid #eeeeee;border-bottom: 4px solid #eeeeee;border-right: 4px solid #eeeeee;"></td>
+                                <td class="alert-danger" style="border-left: 4px solid #eeeeee;border-bottom: 1px solid #eeeeee;border-right: 1px solid #eeeeee;"></td>
                                 {% endif %}
                                 <!-- type:TEXT -->
-                                {% elif TEXT %} {% if x not in ( " None ") %}
+                                {% elif TEXT %} {% if x not in ( "None") %}
                                 <td>{{x}}</td>
                                 {% else %}
                                 <td style="text-align:center;">Not Used</td>
                                 {% endif %}
                                 <!-- type:COLOR -->
                                 {% elif COLOR %} {% endif %}
-                                <!-- display as normal cells -->
+                                <!-- display gradient colors 
+                                from RGB(204,255,204) of low probability to High prob with RBG(0,255,0)-->
+                                {% if x is not string %}
+                                <td style="background-color: rgb({{x}},255,{{x}});border-left: 1px solid #eeeeee;border-bottom: 1px solid #eeeeee;border-right: 1px solid #eeeeee;"></td>
                                 {% else %}
+                                <td style="background-color: #adadad;border-left: 1px solid #eeeeee;border-bottom: 1px solid #eeeeee;border-right: 1px solid #eeeeee;"></td>
+                                {% endif %} {% else %}
                                 <td>{{x}}</td>
                                 {% endif %} {% endfor %}
                         </tr>
@@ -108,10 +113,20 @@
                 This page is generated on {{TIME[0]}}, and will be expired in {{TIME[1]}} days.
             </div>
             <div class="col-md-4 ">
+                {% if TABULAR %}
                 <table class="table table-striped " style="text-align:center;width:68%;margin: 0 auto; ">
                     <td class="alert-success ">Used Feature</td>
                     <td class="alert-danger ">Unused Feature</td>
                 </table>
+                {% elif TEXT %}
+                <p>NOT USED means this feature<br/>is not used in analyze.</p>
+                {% elif COLOR %}
+                <div class="row">
+                    <div class="col-md-3 div-color-unused-feature">Unused</div>
+                    <div class="col-md-9 div-color-panel-prob">Probabiliy</div>
+                    <p>Light color stands for lower probability.</p>
+                </div>
+                {% endif %}
             </div>
             {% endif %}
         </div>
