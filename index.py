@@ -2,6 +2,7 @@ import time
 import flask
 import os
 from Utilities import globeVar
+from Utilities import message as Message
 from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file
 from Utilities import SessionManager,ZipMaker,CallAnalyze
 
@@ -41,14 +42,13 @@ def result(sessionid):
         return render_template("result.html",result_package=sample_result,SESSIONID=sessionid,TIME=["1.1.1.1","X"],PWM=True)
     # check session first
     if SessionManager.checkSession(sessionid):
-        not_found("The session you're looking for isn't exist on this server.\n\
-                it might be out of date or never had the session before.")
+        not_found(Message.MSG_ERROR_SESSION_NOT_FOUND)
     # before we print the result, we have to check analyze type,
     # to know it is analyzed by protein id pairs or PWMs
     try:
         analyze_type = SessionManager.getType(sessionid)
     except:
-        return server_fault("Invalid session.<br/>Cannot found the session you request.<br/> The session you are looking for might be expired.")
+        return server_fault(Message.MSG_ERROR_INVALID_SESSION)
     if analyze_type == "type_normal" or analyze_type == "type_advance":
         # then we open result.txt of that session folder and output the data
         # outputs types are : tabular,text and color density
@@ -96,7 +96,7 @@ def download(sessionid):
     # normally,the  result file will have the same filename (session id )
     # with the upload folder
     if sessionid not in os.listdir(globeVar.VAR_PATH_RESULT_FOLDER):
-        return not_found("FIle not found on this server. The result you looking for might be removed.","/result/"+sessionid)
+        return not_found(Message.MSG_ERROR_FILE_NOT_FOUND,"/result/"+sessionid)
     
     # file exist, then we return then we check if an zipped file with the 
     # same name as the folder, if exist, return it. Otherwise, we have to 
@@ -165,8 +165,7 @@ def run_analyzealyze():
         # both satisfied and unsatisfied protein ids.
         protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_normal)
         if len(protein_ids) < 1 or len(protein_ids[0]) < 2:
-            return server_fault("Invalid Protein ID input.<br/> Please use comma,space as separtor.\
-                    <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
+            return server_fault(Message.MSG_ERROR_INVALID_PROTEIN_IDS)
         print "protein_ids=",protein_ids,"\r\ninvalid_ids=",invalid_ids,"\r\ndata[0][0]=",protein_ids[0][0]
         #then we call function Analyzer_ProteinIDs from CallAnalyze to analyze
         CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
@@ -201,8 +200,7 @@ def run_analyzealyze():
             # let Extract_Protein_Ids help us to reads the data,and run analyze for us.
             protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(filepath,True) 
             if len(protein_ids) < 1 or len(protein_ids[0]) < 2:
-                return server_fault("Invalid Protein ID input.<br/> Please use comma,space as separtor.\
-                        <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
+                return server_fault(Message.MSG_ERROR_INVALID_PROTEIN_IDS)
 
             # at last, run the analyze
             CallAnalyze.Analyzer_ProteinIDs(session,protein_ids,feature_str,output_type)
@@ -219,8 +217,7 @@ def run_analyzealyze():
             # secure the protein ids, get both valid and invalid protein ids
             protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_advance) 
             if len(protein_ids) < 1 or len(protein_ids[0]) < 2:
-                return server_fault("Invalid Protein ID input.<br/> Please use comma,space as separtor.\
-                        <br/>You may input less than two protein IDs or no valid protein ID pairs dectected!")
+                return server_fault(Message.MSG_ERROR_INVALID_PROTEIN_IDS)
 
             # except, the features canbe changable here.
             CallAnalyze.Analyzer_ProteinIDs(session,protein_ids,feature_str,output_type)
@@ -241,7 +238,7 @@ def run_analyzealyze():
 # the two functions below are defined as 
 # handler for 404 error and 500 error 
 @app.errorhandler(404)
-def not_found(error="The page you request not found on the server!",lastpage=""):
+def not_found(error=Message.MSG_ERROR_PAGE_NOT_FOUND,lastpage=""):
     return render_template("error.html",MESSAGE=error,LASTPAGE=lastpage),404
 
 @app.errorhandler(500)
@@ -257,5 +254,12 @@ def error():
 
 
 if __name__ == '__main__':
-    #app.run(host='192.168.81.218',port=80) # uncomment this line when running one beta.baderlab.org
-    app.run(host='127.0.0.1',debug=True) # used for local test
+    if "mode.server" in os.listdir("./"):
+        # when a specific file in current dir,bind IP below  
+        # running on beta.baderlab.org
+        print ">>>Running as server mode,use http://beta.baderlab.org to visit."
+        app.run(host='192.168.81.218',port=80)
+    else:
+        # local machine for test
+        print ">>>Running on local machine."
+        app.run(host='127.0.0.1',debug=True)
