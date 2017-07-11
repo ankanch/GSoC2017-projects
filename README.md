@@ -15,19 +15,14 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 * [How to organize user upload files](https://docs.google.com/document/d/1APkUkN0uEzOe7zhLUL_Pja34OvYxDRr7CMukWNaqFUg/edit?usp=sharing)
 
 ## File and Folders
-> `Cache`:Cache folder where to store user upload files.
->
-> `data`: Here is the folder to save built in data.
->
-> `DoMoPred`:DoMo-Pred source code and excuable files.
->
-> `static`:Flask default folder to store JavaScript and CSS.
->
-> `templates`:Flask default folder to store HTML files.
->
-> `Utilities`:Function which will help to manage session,call analyze and so on
->
-> `index.py`:Flask view functions script where to perform rendering HTML file and process HTTP request.
+
+- **_Cache_**:Cache folder where to store user upload files.
+- **_data_**: Here is the folder to save built in data.
+- **_DoMoPred_**:DoMo-Pred source code and excuable files.
+- **_static_**:Flask default folder to store JavaScript and CSS.
+- **_templates_**:Flask default folder to store HTML files.
+- **_Utilities_**:Function which will help to manage session,call analyze and so on
+- **_index.py_**:Flask view functions script where to perform rendering HTML file and process HTTP request.
 
 ## Making it runnable on the server
 
