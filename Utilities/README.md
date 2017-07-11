@@ -8,14 +8,10 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 ##### This folder is used for store some help libaries. Pages descriptions are as below.
 
 ## Pages descriptions
-> `SessionManager.py`:Module for management of  sessions of analyzing.
->
-> `CallAnalyze.py`: Module which will help call functions in DoMo-Pred. THis module is the bridge between the web interface and the DoMo-Pred. 
->
-> `ZipMaker.py`: Function in this module is used to make zip file from results.
->
-> `globeVar.py`: Here stores some globe variables used to exchange data between modules.
->
-> `message.py`: Stores tip/error message displayed to the user
+- **_SessionManager.py_**:Module for management of  sessions of analyzing.
+- **_CallAnalyze.py_**: Module which will help call functions in DoMo-Pred. THis module is the bridge between the web interface and the DoMo-Pred. 
+- **_ZipMaker.py_**: Function in this module is used to make zip file from results.
+- **_globeVar.py_**: Here stores some globe variables used to exchange data between modules.
+- **_message.py_**: Stores tip/error message displayed to the user
 
 ## Realted Documents
