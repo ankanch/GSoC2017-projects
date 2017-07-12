@@ -87,14 +87,14 @@
                                 <td style="text-align:center;">Not Used</td>
                                 {% endif %}
                                 <!-- type:COLOR -->
-                                {% elif COLOR %} {% endif %}
+                                {% elif COLOR %}
                                 <!-- display gradient colors 
                                 from RGB(204,255,204) of low probability to High prob with RBG(0,255,0)-->
                                 {% if x is not string %}
                                 <td style="background-color: rgb({{x}},255,{{x}});border-left: 1px solid #eeeeee;border-bottom: 1px solid #eeeeee;border-right: 1px solid #eeeeee;"></td>
                                 {% else %}
                                 <td style="background-color: #adadad;border-left: 1px solid #eeeeee;border-bottom: 1px solid #eeeeee;border-right: 1px solid #eeeeee;"></td>
-                                {% endif %} {% else %}
+                                {% endif %} {% endif %}{% else %}
                                 <td>{{x}}</td>
                                 {% endif %} {% endfor %}
                         </tr>
