@@ -18,6 +18,18 @@ def index():
     Protein_id_list = CallAnalyze.Load_Protein_IDList()
     return render_template("index.html",PID=Protein_id_list)
 
+# render analyze by protein ids
+@app.route('/ppipred')
+def function_ppipred():
+    Protein_id_list = CallAnalyze.Load_Protein_IDList()
+    return render_template("function_PPI_Pred.html",PID=Protein_id_list)
+
+# render analyze by PWMs
+@app.route('/pwms')
+def function_pwms():
+    Protein_id_list = CallAnalyze.Load_Protein_IDList()
+    return render_template("function_PWMs.html",PID=Protein_id_list)
+
 
 # This is the result URL
 # For test, I use some selected data to show how it looks

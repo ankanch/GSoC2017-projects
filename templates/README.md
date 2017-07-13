@@ -9,6 +9,7 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 
 ## Folder/File descriptions
 - **_index.html_**:Index page of PPI-Pred.
+- **_function_PPI_Pred.html_**: This page is the function called PPI-Pred which analyze by protein ids.
 - **_redirect.html_**:An intermediate page for redirecting.
 - **_result.html_**: Page used to show analyzing results.
 - **_template.html_**:Base page of every other pages,navigation defined here.
