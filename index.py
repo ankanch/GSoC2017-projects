@@ -15,8 +15,10 @@ app.config['RESULT_FOLDER'] = globeVar.VAR_PATH_RESULT_FOLDER
 # This is the entrance URL for the index page
 @app.route('/')
 def index():
-    Protein_id_list = CallAnalyze.Load_Protein_IDList()
-    return render_template("index.html",PID=Protein_id_list)
+    #Protein_id_list = CallAnalyze.Load_Protein_IDList()
+    #return render_template("index.html",PID=Protein_id_list)
+    # default mode is PPI-Pred
+    return redirect("/ppipred")
 
 # render analyze by protein ids
 @app.route('/ppipred')

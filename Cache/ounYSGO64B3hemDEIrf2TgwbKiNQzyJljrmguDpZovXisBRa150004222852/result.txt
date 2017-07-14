@@ -1,0 +1,5 @@
+#tabular
+#	cellular location	biological process	molecular function	gene expression	sequence signature	score
+D6W196,O13512,0.177102692614,-0.0,-0.0,0.168370637479,None,0.01
+O13329,O13516,0.374827566402,0.149160338706,0.122049526927,0.359090140298,None,0.08
+P49090,Q9ZZW4,None,None,None,None,None,0.5
