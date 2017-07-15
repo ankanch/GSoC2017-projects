@@ -248,6 +248,66 @@ def run_analyzealyze():
 
     return not_found(error="unknow analyze type.")
 
+
+# this function is used to run analyze by PWMs
+@app.route('/runanalyze_pwms',methods=['POST'])
+def runanalyze_pwms():
+    if request.method == 'POST':
+        print("In PWMs,querying file...")
+        pwmfilelist = request.files.getlist("file[]")
+        use_built_in = request.form['hid1']
+        print("In PWMs,use built-in domain? ",use_built_in)
+        dofile = None
+        UBI = True
+        if use_built_in == 'false':
+            UBI = False
+            dofile = request.files['domainfile']
+        #secure the filename
+        pwmfilenamelist = []
+        for pwmfile in pwmfilelist:
+            pwmfilenamelist.append(secure_filename(pwmfile.filename))
+        dofilename = ""
+        if UBI == False:
+            dofilename = secure_filename(dofile.filename)
+        #generate session id for organising the upload files
+        #all files that upload are in the same session folder
+        session = SessionManager.generateSessionID()
+        SessionManager.addSession(session)
+        os.makedirs(app.config['UPLOAD_FOLDER']+"/"+session)
+        #save info to the sessionmap.csv
+        dfilename = dofilename
+        if UBI == False:
+            #Structure: [session-id,[pwm-file-list],domain-file]
+            analyze.saveinfo([session,pwmfilenamelist,dofilename])
+        else:
+            analyze.saveinfo([session,pwmfilenamelist,"UBI"])
+        #save file for pocess
+        #we have to save a session id for future lookup results and download results 
+        #we have to save those uploaded file in a session-id named folder for analyze and organize
+        i=0
+        for file in pwmfilelist:
+            file.save(os.path.join(app.config['UPLOAD_FOLDER']+session+"/", pwmfilenamelist[i]))
+            i+=1
+        if UBI == False:
+            dofile.save(os.path.join(app.config['UPLOAD_FOLDER']+session+"/", dfilename))
+            analyze.CallAnalyze(pwmfilenamelist,session+"/"+dfilename,session)
+        else:
+            analyze.CallAnalyze(pwmfilenamelist,"domain.txt",session)
+        #after operation above,data had been put into cache/output/pwmfilename
+        return redirect("/result/"+session)
+        tablestr,buttonstr,xid = analyze.generateTableL(pwmfilenamelist,session)
+        print("In PWMs,analyze done.")
+        if xid == 1:
+            buttonstr = ""
+        #check if it is mulitifile or single file .then render the result page in different ways
+        if len(pwmfilenamelist) == 1:
+            #single file 
+            return render_template('result.html',NAME=pwmfilelist[0].filename,RESULT=tablestr,FILENAME=pwmfilenamelist[0],PLK="/result/"+session,SHOWHEAD="none",SESSION=session)
+        #multifile  pwmfilelist[0].filename
+        return render_template('result.html',NAME=pwmfilelist[0].filename,RESULT=tablestr,FILENAME="pfilename",PLK="/result/"+session,CURSHOW="div_0",BUTTONSTR=buttonstr,SESSION=session)
+    print Message.MAS_ERROR_METHOD_NOT_SUPPORT
+    return not_allowed()
+
 # error handlers for web interface.
 # the two functions below are defined as 
 # handler for 404 error and 500 error 
@@ -258,6 +318,10 @@ def not_found(error=Message.MSG_ERROR_PAGE_NOT_FOUND,lastpage=""):
 @app.errorhandler(500)
 def server_fault(error,lastpage=""):
     return render_template("error.html",MESSAGE="Internal server error!<br>"+error,LASTPAGE=lastpage),500
+
+@app.errorhandler(403)
+def not_allowed(error=Message.MSG_ERROR_NOT_ALLOWED,lastpage=""):
+    return render_template("error.html",MESSAGE=error,LASTPAGE=lastpage),403
 
 ################[function below used for test some features.]#####################3
 ###########[develop only. need to be commented on produce version]########################

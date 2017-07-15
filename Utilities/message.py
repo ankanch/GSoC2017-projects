@@ -12,3 +12,5 @@ MSG_ERROR_INVALID_PROTEIN_IDS = """Invalid Protein ID input.<br/>
                                  Please use comma,space as separtor.<br/>
                                 You may input less than two protein IDs or no valid protein ID pairs dectected!"""
 MSG_ERROR_PAGE_NOT_FOUND = "The page you request not found on the server!"
+MSG_ERROR_NOT_ALLOWED = "You are NOT allowed to visit this page."
+MAS_ERROR_METHOD_NOT_SUPPORT = "Method NOT support"
