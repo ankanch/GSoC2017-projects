@@ -15,3 +15,7 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 - **_message.py_**: Stores tip/error message displayed to the user
 
 ## Realted Documents
+
+None.
+
+###### last modified: Jul 15 2017 CST
