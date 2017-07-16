@@ -290,9 +290,9 @@ def runanalyze_pwms():
             i+=1
         if UBI == False:
             dofile.save(os.path.join(app.config['UPLOAD_FOLDER']+session+"/", dfilename))
-            analyze.CallAnalyze(pwmfilenamelist,session+"/"+dfilename,session)
+            CallAnalyze.Analyzer_PWMs(pwmfilenamelist,session+"/"+dfilename,session)
         else:
-            analyze.CallAnalyze(pwmfilenamelist,"domain.txt",session)
+            CallAnalyze.Analyzer_PWMs(pwmfilenamelist,"domain.txt",session)
         #after operation above,data had been put into cache/output/pwmfilename
         return redirect("/result/"+session)
         tablestr,buttonstr,xid = analyze.generateTableL(pwmfilenamelist,session)

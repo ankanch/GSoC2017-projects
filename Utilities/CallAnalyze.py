@@ -32,21 +32,34 @@ MODE_USE_UPLOAD = 2     # use user upload files
 #                   features: [feature 1, feature 2, ... ,feature n]
 #                                                     - a list of features with the type of string.
 #                                                       decided which feature used for analyze
-def Analyzer(sessionid,pwmfiles,domainfile,features):
+def Analyzer_PWMs(sessionid,pwmfiles,domainfile,features):
     # we have to check if use built in data
     if pwmfiles[0] == True:
         # use built in PWMs
-        
-        pass
+        return True
     else:
         # use user uploaded files
         # then we check how many PWMs user had uploaded
         if len(pwmfiles[1]) == 1:
             # user just uploaded a single file
-            pass
+            print 'In PWMs,Analyzer type : single PWMs'
+            options = {'output': "cache/"+session+"/result-"+pwmfile, 'pwm': "cache/"+session+"/"+pwmfile, 'domain': "cache/"+domainfile, 'p-value': 1e-05}
+            DMP.process_options(options)
+            print 'analyze finished!'
         else:
             # user uploaed many files
-            pass
+            i=0
+            print 'In PWMs, Analyzer type : list of PWMs'
+            print 'file name',str(pwmfile)
+            options = {'domain': "cache/"+domainfile, 'p-value': 1e-05}
+            gen_data = run_peptide.setup_peptide()
+            cel_data = run_protein.setup_protein()
+            for filename in pwmfile:
+                i+=1
+                DMP.pwm_runner("cache/"+session+"/" + filename, options['domain'], options['p-value'],"cache/"+session+"/result-"+filename, gen_data, cel_data)
+            print 'analyze finished!'
+        return True
+    return False
 
 # this function is used to analyze by protein ids
 # given a list of protein ids and this function will
