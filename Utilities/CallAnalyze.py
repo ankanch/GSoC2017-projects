@@ -31,7 +31,7 @@ MODE_USE_UPLOAD = 2     # use user upload files
 #                   features: [feature 1, feature 2, ... ,feature n]
 #                                                     - a list of features with the type of string.
 #                                                       decided which feature used for analyze
-def Analyzer_PWMs(sessionid,pwmfiles,domainfile,features):
+def Analyzer_PWMs(session,pwmfiles,domainfile,features):
     # we have to check if use built in data
     if pwmfiles[0] == True:
         # use built in PWMs
@@ -41,21 +41,16 @@ def Analyzer_PWMs(sessionid,pwmfiles,domainfile,features):
         # then we check how many PWMs user had uploaded
         if len(pwmfiles[1]) == 1:
             # user just uploaded a single file
-            print 'In PWMs,Analyzer type : single PWMs'
-            options = {'output': "cache/"+session+"/result-"+pwmfile, 'pwm': "cache/"+session+"/"+pwmfile, 'domain': "cache/"+domainfile, 'p-value': 1e-05}
-            DMP.process_options(options)
-            print 'analyze finished!'
+            options = {'output': pwmfiles[1][0]+"_result.txt", 'pwm': pwmfiles[1][0], 'domain': domainfile, 'p-value': 1e-05}
+            RP.process_options(options)
         else:
             # user uploaed many files
-            i=0
-            print 'In PWMs, Analyzer type : list of PWMs'
-            print 'file name',str(pwmfile)
-            options = {'domain': "cache/"+domainfile, 'p-value': 1e-05}
+            print 'file name',str(pwmfiles)
+            options = {'domain': domainfile, 'p-value': 1e-05}
             gen_data = run_peptide.setup_peptide()
             cel_data = run_protein.setup_protein()
-            for filename in pwmfile:
-                i+=1
-                DMP.pwm_runner("cache/"+session+"/" + filename, options['domain'], options['p-value'],"cache/"+session+"/result-"+filename, gen_data, cel_data)
+            for filename in pwmfiles[1]:
+                RP.pwm_runner(filename, options['domain'], options['p-value'],filename+"_result.txt", gen_data, cel_data)
             print 'analyze finished!'
         return True
     return False

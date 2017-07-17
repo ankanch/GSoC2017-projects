@@ -286,7 +286,7 @@ def runanalyze_pwms():
             pwmfiles.append(file_path)
             
         # start analyze
-        CallAnalyze.Analyzer_PWMs(session,pwmfiles,store_path+"/domain.txt",session)
+        CallAnalyze.Analyzer_PWMs(session,[False,pwmfiles],store_path+"/domain.txt",session)
         
         #after operation above,data had been put into cache/output/pwmfilename
         return redirect("/result/"+session)
