@@ -1,6 +1,7 @@
 import time
 import flask
 import os
+import shutil
 from Utilities import globeVar
 from Utilities import message as Message
 from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file
@@ -253,46 +254,36 @@ def run_analyzealyze():
 @app.route('/runanalyze_pwms',methods=['POST'])
 def runanalyze_pwms():
     if request.method == 'POST':
-        print("In PWMs,querying file...")
         pwmfilelist = request.files.getlist("file[]")
         use_built_in = request.form['hid1']
-        print("In PWMs,use built-in domain? ",use_built_in)
         dofile = None
-        UBI = True
+        UBI = True # UBI stands for [use built in] domain file
         if use_built_in == 'false':
             UBI = False
             dofile = request.files['domainfile']
-        #secure the filename
-        pwmfilenamelist = []
-        for pwmfile in pwmfilelist:
-            pwmfilenamelist.append(secure_filename(pwmfile.filename))
-        dofilename = ""
-        if UBI == False:
-            dofilename = secure_filename(dofile.filename)
+
         #generate session id for organising the upload files
         #all files that upload are in the same session folder
         session = SessionManager.generateSessionID()
         SessionManager.addSession(session)
-        os.makedirs(app.config['UPLOAD_FOLDER']+"/"+session)
-        #save info to the sessionmap.csv
-        dfilename = dofilename
+        store_path = app.config['UPLOAD_FOLDER']+"/"+session 
+        os.makedirs(store_path)
+
+        #save uploaded files to the current session folder
         if UBI == False:
-            #Structure: [session-id,[pwm-file-list],domain-file]
-            analyze.saveinfo([session,pwmfilenamelist,dofilename])
+            # save user uploaded domain file to the target session folder
+            dofile.save(store_path + "/domain.txt")
         else:
-            analyze.saveinfo([session,pwmfilenamelist,"UBI"])
-        #save file for pocess
-        #we have to save a session id for future lookup results and download results 
-        #we have to save those uploaded file in a session-id named folder for analyze and organize
-        i=0
+            # copy internal domain file to the target session folder
+            shutil.copy2("./data/domain.txt",store_path + "/domain.txt" )
+            
+        # then save uploaded file for further pocess
         for file in pwmfilelist:
-            file.save(os.path.join(app.config['UPLOAD_FOLDER']+session+"/", pwmfilenamelist[i]))
-            i+=1
-        if UBI == False:
-            dofile.save(os.path.join(app.config['UPLOAD_FOLDER']+session+"/", dfilename))
-            CallAnalyze.Analyzer_PWMs(pwmfilenamelist,session+"/"+dfilename,session)
-        else:
-            CallAnalyze.Analyzer_PWMs(pwmfilenamelist,"domain.txt",session)
+            file.save(os.path.join(store_path + "/", file.filename.replace(" ","_") ))
+
+        # start analyze
+        CallAnalyze.Analyzer_PWMs(pwmfilenamelist,store_path + "/domain.txt",session)
+        
         #after operation above,data had been put into cache/output/pwmfilename
         return redirect("/result/"+session)
         tablestr,buttonstr,xid = analyze.generateTableL(pwmfilenamelist,session)
