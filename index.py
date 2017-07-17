@@ -64,11 +64,13 @@ def result(sessionid):
         analyze_type = SessionManager.getType(sessionid)
     except:
         return server_fault(Message.MSG_ERROR_INVALID_SESSION)
+
+    folder_path = globeVar.VAR_PATH_RESULT_FOLDER + "/" + sessionid
     if analyze_type == "type_normal" or analyze_type == "type_advance":
         # then we open result.txt of that session folder and output the data
         # outputs types are : tabular,text and color density
         # result type will be flaged in the first line of the result.txt
-        ff = open(globeVar.VAR_PATH_RESULT_FOLDER + "/" + sessionid + "/result.txt")
+        ff = open( folder_path + "/result.txt")
         data =  ff.readlines()
         ff.close()
         result_type = data[:1][0].replace("#","").replace("\n","").replace("\r","")
@@ -102,7 +104,19 @@ def result(sessionid):
             print final_data
             return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,COLOR=True)
     elif SessionManager.getType(sessionid) == "type_pwm":
-        return render_template('result.html',NAME=pwmfilelist[0].filename,RESULT=tablestr,FILENAME=pwmfilenamelist[0],PLK="/result/"+session,SHOWHEAD="none",SESSION=session)
+        # get all result files then read them one by one
+        result_file_list = [x for x in os.listdir(folder_path) if x.find("_result.txt")>-1]
+        result = []
+        for index,rfile in enumerate(result_file_list):
+            ff = open(folder_path + "/" + rfile)
+            dta =  ff.readlines()
+            ff.close()
+            # split the data
+            pdata = [x.replace("\n","").split("\t") for x in dta]
+            print pdata[1]
+            result.append([index,pdata[1:]])
+        create_time = [SessionManager.getDate(sessionid),str(SessionManager.VAR_RESULT_LIFE)]
+        return render_template("result.html",result_package=result,SESSIONID=sessionid,TIME=create_time,PWM=True)
     
 
 @app.route('/download/<sessionid>')
