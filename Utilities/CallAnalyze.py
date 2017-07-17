@@ -27,8 +27,7 @@ MODE_USE_UPLOAD = 2     # use user upload files
 #                   sessionid: current session id 
 #                   pwmfiles: [usebuilt-in,[file list]]             
 #                                                     - a list with two elements one boolean,one list
-#                   domainfile: [usebuilt-in,domain file name]    
-#                                                     - a list with two elements one boolean,one string
+#                   domainfile: a str indicates where the path of domain file is
 #                   features: [feature 1, feature 2, ... ,feature n]
 #                                                     - a list of features with the type of string.
 #                                                       decided which feature used for analyze

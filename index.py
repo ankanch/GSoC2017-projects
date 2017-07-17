@@ -102,7 +102,7 @@ def result(sessionid):
             print final_data
             return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,COLOR=True)
     elif SessionManager.getType(sessionid) == "type_pwm":
-        pass
+        return render_template('result.html',NAME=pwmfilelist[0].filename,RESULT=tablestr,FILENAME=pwmfilenamelist[0],PLK="/result/"+session,SHOWHEAD="none",SESSION=session)
     
 
 @app.route('/download/<sessionid>')
@@ -268,6 +268,7 @@ def runanalyze_pwms():
         SessionManager.addSession(session)
         store_path = app.config['UPLOAD_FOLDER']+"/"+session 
         os.makedirs(store_path)
+        SessionManager.setType(session,"type_pwm")
 
         #save uploaded files to the current session folder
         if UBI == False:
@@ -278,24 +279,17 @@ def runanalyze_pwms():
             shutil.copy2("./data/domain.txt",store_path + "/domain.txt" )
             
         # then save uploaded file for further pocess
+        pwmfiles = []
         for file in pwmfilelist:
-            file.save(os.path.join(store_path + "/", file.filename.replace(" ","_") ))
-
+            file_path = os.path.join(store_path + "/", file.filename.replace(" ","_") )
+            file.save(file_path)
+            pwmfiles.append(file_path)
+            
         # start analyze
-        CallAnalyze.Analyzer_PWMs(pwmfilenamelist,store_path + "/domain.txt",session)
+        CallAnalyze.Analyzer_PWMs(session,pwmfiles,store_path+"/domain.txt",session)
         
         #after operation above,data had been put into cache/output/pwmfilename
         return redirect("/result/"+session)
-        tablestr,buttonstr,xid = analyze.generateTableL(pwmfilenamelist,session)
-        print("In PWMs,analyze done.")
-        if xid == 1:
-            buttonstr = ""
-        #check if it is mulitifile or single file .then render the result page in different ways
-        if len(pwmfilenamelist) == 1:
-            #single file 
-            return render_template('result.html',NAME=pwmfilelist[0].filename,RESULT=tablestr,FILENAME=pwmfilenamelist[0],PLK="/result/"+session,SHOWHEAD="none",SESSION=session)
-        #multifile  pwmfilelist[0].filename
-        return render_template('result.html',NAME=pwmfilelist[0].filename,RESULT=tablestr,FILENAME="pfilename",PLK="/result/"+session,CURSHOW="div_0",BUTTONSTR=buttonstr,SESSION=session)
     print Message.MAS_ERROR_METHOD_NOT_SUPPORT
     return not_allowed()
 
