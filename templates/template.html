@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %} - DoMo-Pred</title>
 
-    <link href="../static/images/favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="../static/ilogo.png" rel="icon" type="image/x-icon" />
     <!-- Bootstrap  -->
     <link href="../static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -25,16 +25,16 @@
 <body>
 
     <div class="bs-component">
-        <div class="navbar navbar-inverse bg-inverse">
+        <div class="navbar navbar-inverse bg-inverse" style="border-top-width:0px;">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">DoMo-Pred</a>
-            </div>
-            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" id="nav_icon" style="margin-top:1px;margin-right:4px;margin-left:4px;">
+                    <li><img height=48 width=48 src="../static/ilogo.png" /></li>
+                </ul>
                 <ul class="nav navbar-nav" id="nav_1">
                     <li><a href="/ppipred">PPI-Pred</a></li>
                 </ul>
                 <ul class="nav navbar-nav" id="nav_2">
-                    <li><a href="/pwms">PWMs</a></li>
+                    <li><a href="/pwms">DoMo-Pred</a></li>
                 </ul>
                 <ul class="nav navbar-nav" id="nav_3">
                     <li><a href="/#">Contact</a></li>
@@ -49,7 +49,7 @@
         </div>
         <div id="index_placeholder" style="margin-top:100px;"></div>
         <div class="row div-center-90 div-margin-top-5" id="index_icon">
-            <img height=64 width=64 />
+            <img height=64 width=64 src="../static/ilogo.png" />
             <h3 id="main_title">PPP-Pred</h3>
         </div>
         <div class="row div-center-100">
