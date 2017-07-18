@@ -6,6 +6,7 @@ VAR_PATH_PROTEIN_ID_DATABASE = "./DoMoPred/Protein/Db/map_sgd.txt"  # this file 
 VAR_PATH_PWMS = "./data/pwm_dir/"
 VAR_PATH_UPLOAD_FOLDER = "./Cache"
 VAR_PATH_RESULT_FOLDER = "./Cache"  
+VAR_PATH_IREFWEB_ALL = "./data/irefweb_all.pos"
 
 # this dict defines the map of features name and feature code
 # features' name are in index.html , their codes are in run_protein.py
