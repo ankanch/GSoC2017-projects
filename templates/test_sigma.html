@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sigma Test - DoMo-Pred</title>
+
+    <link href="../static/images/favicon.ico" rel="icon" type="image/x-icon" />
+    <!-- Bootstrap  -->
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../static/jquery-3.2.1.min.js"></script>
+    <link href="../static/xstyle.css" rel="stylesheet">
+    <link href="../static/snackbar.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="row">
+        <style>
+            #sigma-container {
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+            }
+        </style>
+        <a href="/getgexf/YoitE1s5FUmu6kxVNjMBPdR37bXhHrOIPx5Ut704X8mkYHv3150030118758"> /getgexf/YoitE1s5FUmu6kxVNjMBPdR37bXhHrOIPx5Ut704X8mkYHv3150030118758 </a>
+        <div id="sigma-container"></div>
+    </div>
+    <script src="../static/sigma-js/sigma.js"></script>
+    <script src="../static/sigma-js/plugins/sigma.layout.forceAtlas2.min.js"></script>
+    <script src="../static/sigma-js/plugins/sigma.parsers.gexf.min.js"></script>
+    <script>
+        sigma.parsers.gexf(
+            '/getgexf/YoitE1s5FUmu6kxVNjMBPdR37bXhHrOIPx5Ut704X8mkYHv3150030118758', { // Here is the ID of the DOM element that
+                // will contain the graph:
+                container: 'sigma-container'
+            },
+            function(sigmaInstance) {
+                sigmaInstance.graph.nodes().forEach(function(node, i, a) {
+                    node.x = Math.cos(Math.PI * 2 * i / a.length);
+                    node.y = Math.sin(Math.PI * 2 * i / a.length);
+                    node.size = 1;
+                });
+                sigmaInstance.refresh();
+                sigmaInstance.startForceAtlas2({
+                    worker: true,
+                    barnesHutOptimize: false
+                });
+                console.log('File downloaded and parsed');
+            }
+        );
+    </script>
+    <style>
+        #sigma-parent {
+            width: 500px;
+            height: 500px;
+            position: relative;
+        }
+        
+        #sigma-example {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</body>
+
+</html>

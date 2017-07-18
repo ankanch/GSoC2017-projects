@@ -3,6 +3,8 @@ import csv
 import random
 import globeVar
 
+# this script is used to generate networks based on protein paires.
+
 irefweb_all_path = globeVar.VAR_PATH_IREFWEB_ALL
 
 def load_graph():
@@ -32,4 +34,6 @@ if __name__ == '__main__':
     G = load_graph()
     nodes = random.sample(G.nodes(), 100)
     H = sub_graph(G, nodes)
+    # save as gexf file
+    nx.write_gexf(H,"../data/test_data/test.gexf")
     print(H.edges())

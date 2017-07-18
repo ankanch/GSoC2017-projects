@@ -4,7 +4,7 @@ import os
 import shutil
 from Utilities import globeVar
 from Utilities import message as Message
-from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file
+from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file,Response
 from Utilities import SessionManager,ZipMaker,CallAnalyze
 
 
@@ -328,6 +328,17 @@ def not_allowed(error=Message.MSG_ERROR_NOT_ALLOWED,lastpage=""):
 @app.route('/error')
 def error():
     return render_template("error.html",MESSAGE="ERROR_MESSAGE")
+
+@app.route('/test_sigma')
+def test_sigma():
+    return render_template("test_sigma.html")
+
+@app.route('/getgexf/<session>')
+def send_gexf(session):
+    ff = open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+session+"/network.gexf")
+    data = ff.read()
+    ff.close()
+    return Response(data, mimetype='text/plain')
 
 
 if __name__ == '__main__':
