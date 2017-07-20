@@ -125,3 +125,7 @@
 .bg-lightblue {
     background: #1b2c8c;
 }
+
+.no-padding {
+    padding: 0;
+}

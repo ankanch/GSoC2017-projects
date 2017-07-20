@@ -1,31 +1,4 @@
 {% extends "template.html" %} {% block title %}PPI-Pred{% endblock %} {% block content %}
-<div class="row" style="margin-left:5px;background:#222;width:350px;border-radius:8px;">
-    <div class="col-md-3" style="padding-left:3px;padding-right:1px;">
-        <button type="button" style="background:#222;color:#bfe2d4;padding:0px;border:0px;margin-left:0px;margin-right:0px;margin-top:4px;margin-bottom:2px;height:32px;width:29px;" class="btn btn-secondary margin-bottom-5" data-toggle="modal" data-target="#easy_proteinid_selection_modal"
-            data-whatever="@getbootstrap">A</button>
-        <button type="button" style="background:#222;color:#bfe2d4;padding:0px;border:0px;margin-left:0px;margin-right:0px;margin-top:4px;margin-bottom:2px;height:32px;width:48px;" class="btn btn-secondary margin-bottom-5" data-toggle="modal" data-target="#easy_proteinid_selection_modal"
-            data-whatever="@getbootstrap">Species</button>
-    </div>
-    <div class="col-md-9 no-padding ">
-        <div class="col-md-8 no-padding ">
-            <textarea onfocus="textarea_on_fucus();" onblur="textarea_lost_fucus()" name="idpairs_normal" class="form-control" id="textarea_input_aa" rows="1" placeholder="Protein id pairs" style="resize: vertical;margin-top:3px;margin-bottom:3px;"></textarea>
-        </div>
-        <div class="col-md-2 no-padding ">
-            <button type="submit" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:8px;background:#222;border:0px;">
-                <i class="material-icons">settings</i>
-            </button>
-        </div>
-        <div class="col-md-2 no-padding">
-            <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
-                <i class="material-icons">search</i>
-            </button>
-        </div>
-    </div>
-    <p style="text-align:left;margin-left:12px;display:none;" id="examples"><span style="color:white">Examples:</span>
-        <a class="a-padding-rl-5" href="javascript:showExample(1)">#1</a>
-        <a class="a-padding-rl-5" href="javascript:showExample(2)">#2</a>
-        <a class="a-padding-rl-5" href="javascript:showExample(3)">#3</a></p>
-</div>
 <div class=" div-margin-top-5">
     <form action="runanalyze" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="row div-center-90">
@@ -116,7 +89,6 @@
             </div>
             <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
                 <input id="btn_run" type="submit" class="btn btn-primary" value="Run" />
-                <button type="submit" class="btn btn-primary" style="padding-top:3px;padding-bottom:0px;"><i class="material-icons">search</i></button>
                 <input id="btn_run_fake" type="button" class="btn btn-primary disabled" value="Running..." style="display:none;" />
                 <br/>
                 <button id="btn_advance" type="button" onclick="advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
@@ -347,23 +319,10 @@ P32793,P38041`;
 
     }
 
-    function textarea_on_fucus() {
-        console.log("textarea on focus.");
-        document.getElementById("examples").style.display = "";
-    }
-
-    function textarea_lost_fucus() {
-        console.log("textarea lose focus.");
-        setTimeout(function() {
-            document.getElementById("examples").style.display = "none";
-        }, 150);
-    }
-
     $(document).ready(function() {
+        //addRow();
         selectCheck();
         document.getElementById("nav_1").classList.add("bg-black");
-        toggleDiv('index_placeholder');
-        toggleDiv('index_icon');
     });
 </script>
 {% endblock %}
