@@ -1,26 +1,28 @@
 {% extends "template.html" %} {% block title %}PPI-Pred{% endblock %} {% block content %}
 <div class="row" style="margin-left:5px;background:#222;width:350px;border-radius:8px;">
-    <div class="col-md-3" style="padding-left:3px;padding-right:1px;">
-        <button type="button" style="background:#222;color:#bfe2d4;padding:0px;border:0px;margin-left:0px;margin-right:0px;margin-top:4px;margin-bottom:2px;height:32px;width:48px;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false" id="select_species">Species<span class="caret"></span></button>
-        <ul class="dropdown-menu" style="background:#222;">
-            <li><a href="javascript:changeSpecies('Yeast')" style="color:#17b174;">Yeast</a></li>
-            <li><a href="javascript:changeSpecies('Human')" style="color:#17b174;">Human</a></li>
-        </ul>
-    </div>
-    <div class="col-md-9 no-padding ">
-        <div class="col-md-8 no-padding ">
-            <textarea onfocus="textarea_on_fucus();" onblur="textarea_lost_fucus()" name="idpairs_normal" class="form-control" id="textarea_input_aa" rows="1" placeholder="Protein id pairs" style="resize: vertical;margin-top:3px;margin-bottom:3px;"></textarea>
+    <div class="row">
+        <div class="col-md-3" style="padding-left:3px;padding-right:1px;">
+            <button type="button" style="background:#222;color:#bfe2d4;padding:0px;border:0px;margin-left:0px;margin-right:0px;margin-top:4px;margin-bottom:2px;height:32px;width:48px;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" id="select_species">Species<span class="caret"></span></button>
+            <ul class="dropdown-menu" style="background:#222;">
+                <li><a href="javascript:changeSpecies('Yeast')" style="color:#17b174;">Yeast</a></li>
+                <li><a href="javascript:changeSpecies('Human')" style="color:#17b174;">Human</a></li>
+            </ul>
         </div>
-        <div class="col-md-2 no-padding ">
-            <button type="submit" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:8px;background:#222;border:0px;">
+        <div class="col-md-9 no-padding ">
+            <div class="col-md-8 no-padding ">
+                <textarea onfocus="textarea_on_fucus();" onblur="textarea_lost_fucus()" name="idpairs_normal" class="form-control" id="textarea_input_aa" rows="1" placeholder="Protein id pairs" style="resize: vertical;margin-top:3px;margin-bottom:3px;"></textarea>
+            </div>
+            <div class="col-md-1 no-padding ">
+                <button type="submit" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:4px;padding-right:4px;background:#222;border:0px;" data-toggle="collapse" href="#advance_settings" aria-expanded="false" aria-controls="advance_settings">
                 <i class="material-icons">settings</i>
             </button>
-        </div>
-        <div class="col-md-2 no-padding">
-            <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
+            </div>
+            <div class="col-md-2 no-padding" style="margin-left:10px;">
+                <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
                 <i class="material-icons">search</i>
             </button>
+            </div>
         </div>
     </div>
     <div class="row" id="hide_bar" style="display:none;margin-left:18px;">
@@ -32,7 +34,52 @@
                 data-whatever="@getbootstrap">Select Protein Id Pairs</button></p>
     </div>
     <form action="runanalyze" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-        <div class="row" id="advance_settings" style="display:none;margin-left:18px;"></div>
+        <div class="row collapse" id="advance_settings" style="width:600px;display:true;margin-left:18px;background:#222;color:#17b174;margin-left:0px;border-bottom-right-radius: 8px;border-bottom-left-radius: 8px;border-top-right-radius: 8px;">
+            <div class="row" style="margin-top:12px;">
+                <div class="col-md-4">
+                    <label for="exampleInputFile">Choose a local file:</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group" style="margin-left:16px;">
+                        <input name=id_file type=file class="form-control-file" id="file_input">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 div-border-right-1px options-column">
+                    <div class="row">
+                        <h4>FEATURES</h4>
+                    </div>
+                    <div class="row no-margin-lr">
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="cellular_location" checked="checked" />Cellular location</p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="biological_process" checked="checked" />Biological process</p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="molecular_function" checked="checked" />Molecular function</p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="gene_expression" checked="checked" />Gene expression</p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="sequence_signature" checked="checked" />Sequence signature</p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="protein_expression" checked="checked" id="sel_pe" />Protein expression</p>
+                    </div>
+                </div>
+                <div class="col-md-4 div-border-right-1px options-column">
+                    <div class="row">
+                        <h4>ALGORITHM</h4>
+                    </div>
+                    <div class="row no-margin-lr">
+                        <p class="align-cb"><input type="radio" name="algorithms" value="naive_bayes" checked="checked" />Naive Bayes</p>
+                    </div>
+                </div>
+                <div class="col-md-3 options-column">
+                    <div class="row">
+                        <h4>OUTPUT</h4>
+                    </div>
+                    <div class="row no-margin-lr">
+                        <p class="align-cb"><input type="radio" name="outputs" value="tabular" checked="checked" />Tabular</p>
+                        <p class="align-cb"> <input type="radio" name="outputs" value="text" />Text</p>
+                        <p class="align-cb"><input type="radio" name="outputs" value="color" />Color Density</p>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
         <div class="row" id="hidden_fields" style="display:none;margin-left:18px;">
             <input name="species" type="text" class="form-control" id="form_hidden_species">
         </div>

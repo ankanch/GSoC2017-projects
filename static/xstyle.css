@@ -129,3 +129,35 @@
 .no-padding {
     padding: 0;
 }
+
+.ml-4 {
+    margin-left: 4px;
+}
+
+.ml-6 {
+    margin-left: 6px;
+}
+
+.ml-8 {
+    margin-left: 8px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.no-margin-lr {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.align-cb {
+    text-align: left;
+    margin-left: 14px;
+    margin-bottom: 1px;
+}
+
+.options-column {
+    height: 175px;
+    margin-bottom: 15px;
+}
