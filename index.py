@@ -163,7 +163,6 @@ def run_analyzealyze():
     # the analyze indicator is post with the value of the hidden filed analyze_type in HTML from of index.html
     # two type of analyze at this time:  1).normal   2).advance
     analyze_type =  request.form['analyze_type']
-
     # generate a session id for this analyze which will used to 
     # flag this analyzing as well as the folder name.
     # After we generate the session, we have to add it to the Session List which help us to manage.
@@ -179,29 +178,29 @@ def run_analyzealyze():
     protein_ids = []
     invalid_ids = []
 
+    #get public field between normal analyze and advance analyze
+    idpairs = request.form['idpairs']
+    species = request.form['species']
+    idpairs = idpairs.replace("\r","")
+    if idpairs.count("\n") == 0:
+        idpairs += "\n"
+
     # Start processing user's options on analyzing
     if analyze_type == "normal":
         SessionManager.setType(session,"type_normal")
-        #user select normal analyze, which requires him to input protein id pairs and select species
-        idpairs_normal = request.form['idpairs_normal']
-        select_normal = request.form['select_normal']
-        idpairs_normal = idpairs_normal.replace("\r","")
-        if idpairs_normal.count("\n") == 0:
-            idpairs_normal += "\n"
 
         # here we call functions to check if the ids user input satisfy the creteria that
         # every line must only contains two protein ids. Function below will help us extract 
         # both satisfied and unsatisfied protein ids.
-        protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_normal)
+        protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs)
         if len(protein_ids) < 1 or len(protein_ids[0]) < 2:
             return server_fault(Message.MSG_ERROR_INVALID_PROTEIN_IDS)
-        print "protein_ids=",protein_ids,"\r\ninvalid_ids=",invalid_ids,"\r\ndata[0][0]=",protein_ids[0][0]
         #then we call function Analyzer_ProteinIDs from CallAnalyze to analyze
         CallAnalyze.Analyzer_ProteinIDs(session,protein_ids)
 
         # after analyze done, we then make a file of protein ids 
         # into result/sessionid folder
-        CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,select_normal)
+        CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,species)
         
         return render_template("redirect.html",TARGET="result/"+session)
     elif analyze_type == "advance":
@@ -217,7 +216,6 @@ def run_analyzealyze():
 
         # get result type which describes how to display the result to users
         output_type = request.form['outputs']
-        print ">>>>>>>output_type=",output_type
 
         # check if user upload a file.
         if len(id_file.filename) > 0:
@@ -236,15 +234,10 @@ def run_analyzealyze():
             
         else:
             # no files upload,run analyze as normal
-            print("No file uploaded.")
-            idpairs_advance = request.form['idpairs_advance']
-            select_advance = request.form['select_advance']
-            idpairs_advance = idpairs_advance.replace("\r","")
-            if idpairs_advance.count("\n") == 0:
-                idpairs_advance += "\n"
+            print("advance:No file uploaded.")
     
             # secure the protein ids, get both valid and invalid protein ids
-            protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs_advance) 
+            protein_ids,invalid_ids =  CallAnalyze.Extract_Protein_Ids(idpairs) 
             if len(protein_ids) < 1 or len(protein_ids[0]) < 2:
                 return server_fault(Message.MSG_ERROR_INVALID_PROTEIN_IDS)
 
@@ -253,7 +246,7 @@ def run_analyzealyze():
 
             # after analyze done, we then make a file of protein ids 
             # into result/sessionid folder
-            CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,select_advance)
+            CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,species)
         # return the result
         
         return redirect("/result/"+session)

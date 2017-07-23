@@ -1,43 +1,47 @@
 {% extends "template.html" %} {% block title %}PPI-Pred{% endblock %} {% block content %}
 <div class="row" style="margin-left:5px;background:#222;width:350px;border-radius:8px;">
-    <div class="row">
-        <div class="col-md-3" style="padding-left:3px;padding-right:1px;">
-            <button type="button" style="background:#222;color:#bfe2d4;padding:0px;border:0px;margin-left:0px;margin-right:0px;margin-top:4px;margin-bottom:2px;height:32px;width:48px;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false" id="select_species">Species<span class="caret"></span></button>
-            <ul class="dropdown-menu" style="background:#222;">
-                <li><a href="javascript:changeSpecies('Yeast')" style="color:#17b174;">Yeast</a></li>
-                <li><a href="javascript:changeSpecies('Human')" style="color:#17b174;">Human</a></li>
-            </ul>
-        </div>
-        <div class="col-md-9 no-padding ">
-            <div class="col-md-8 no-padding ">
-                <textarea onfocus="textarea_on_fucus();" onblur="textarea_lost_fucus()" name="idpairs_normal" class="form-control" id="textarea_input_aa" rows="1" placeholder="Protein id pairs" style="resize: vertical;margin-top:3px;margin-bottom:3px;"></textarea>
+    <form action="runanalyze" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="row">
+            <div class="col-md-3" style="padding-left:3px;padding-right:1px;">
+                <button type="button" style="background:#222;color:#bfe2d4;padding:0px;border:0px;margin-left:0px;margin-right:0px;margin-top:4px;margin-bottom:2px;height:32px;width:48px;"
+                    class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    id="select_species">Species<span class="caret"></span></button>
+                <ul class="dropdown-menu" style="background:#222;">
+                    <li><a href="javascript:changeSpecies('Yeast')" style="color:#17b174;">Yeast</a></li>
+                    <li><a href="javascript:changeSpecies('Human')" style="color:#17b174;">Human</a></li>
+                </ul>
             </div>
-            <div class="col-md-1 no-padding ">
-                <button type="submit" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:4px;padding-right:4px;background:#222;border:0px;" data-toggle="collapse" href="#advance_settings" aria-expanded="false" aria-controls="advance_settings">
+            <div class="col-md-9 no-padding ">
+                <div class="col-md-8 no-padding ">
+                    <textarea onfocus="textarea_on_fucus();" onblur="textarea_lost_fucus()" name="idpairs" class="form-control" id="textarea_input"
+                        rows="1" placeholder="Protein id pairs" style="resize: vertical;margin-top:3px;margin-bottom:3px;"></textarea>
+                </div>
+                <div class="col-md-1 no-padding ">
+                    <button type="submit" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:4px;padding-right:4px;background:#222;border:0px;"
+                        id="btn_advance" data-toggle="collapse" href="#advance_settings" aria-expanded="false" aria-controls="advance_settings">
                 <i class="material-icons">settings</i>
             </button>
-            </div>
-            <div class="col-md-2 no-padding" style="margin-left:10px;">
-                <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
+                </div>
+                <div class="col-md-2 no-padding" style="margin-left:10px;">
+                    <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
                 <i class="material-icons">search</i>
             </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row" id="hide_bar" style="display:none;margin-left:18px;">
-        <p style="text-align:left;margin-bottom:1px;"><span style="color:white">Examples:</span>
-            <a class="a-padding-rl-5" href="javascript:showExample(1)">#1</a>
-            <a class="a-padding-rl-5" href="javascript:showExample(2)">#2</a>
-            <a class="a-padding-rl-5" href="javascript:showExample(3)">#3</a>
-            <button type="button" style="background:#312c2c;color:#c3ae91;padding:0px;border:1px;margin-left:0px;margin-right:0px;margin-top:1px;margin-bottom:1px;height:32px;width:155px;" class="btn btn-secondary" data-toggle="modal" data-target="#easy_proteinid_selection_modal"
-                data-whatever="@getbootstrap">Select Protein Id Pairs</button></p>
-    </div>
-    <form action="runanalyze" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="row collapse" id="hide_bar" style="display:none;margin-left:18px;">
+            <p style="text-align:left;margin-bottom:1px;"><span style="color:white">Examples:</span>
+                <a class="a-padding-rl-5" href="javascript:showExample(1)">#1</a>
+                <a class="a-padding-rl-5" href="javascript:showExample(2)">#2</a>
+                <a class="a-padding-rl-5" href="javascript:showExample(3)">#3</a>
+                <button type="button" style="background:#312c2c;color:#c3ae91;padding:0px;border:1px;margin-left:0px;margin-right:0px;margin-top:1px;margin-bottom:1px;height:32px;width:155px;"
+                    class="btn btn-secondary" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">Select Protein Id Pairs</button></p>
+        </div>
+
         <div class="row collapse" id="advance_settings" style="width:600px;display:true;margin-left:18px;background:#222;color:#17b174;margin-left:0px;border-bottom-right-radius: 8px;border-bottom-left-radius: 8px;border-top-right-radius: 8px;">
             <div class="row" style="margin-top:12px;">
                 <div class="col-md-4">
-                    <label for="exampleInputFile">Choose a local file:</label>
+                    <p><b>OR </b><label for="exampleInputFile"> Choose a local file:</label></p>
                 </div>
                 <div class="col-md-8">
                     <div class="form-group" style="margin-left:16px;">
@@ -52,11 +56,18 @@
                     </div>
                     <div class="row no-margin-lr">
                         <p class="align-cb"><input type="checkbox" name="features[]" value="cellular_location" checked="checked" />Cellular location</p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="biological_process" checked="checked" />Biological process</p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="molecular_function" checked="checked" />Molecular function</p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="biological_process" checked="checked" />Biological
+                            process
+                        </p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="molecular_function" checked="checked" />Molecular
+                            function
+                        </p>
                         <p class="align-cb"><input type="checkbox" name="features[]" value="gene_expression" checked="checked" />Gene expression</p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="sequence_signature" checked="checked" />Sequence signature</p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="protein_expression" checked="checked" id="sel_pe" />Protein expression</p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="sequence_signature" checked="checked" />Sequence
+                            signature
+                        </p>
+                        <p class="align-cb"><input type="checkbox" name="features[]" value="protein_expression" checked="checked" id="sel_pe"
+                            />Protein expression</p>
                     </div>
                 </div>
                 <div class="col-md-4 div-border-right-1px options-column">
@@ -81,110 +92,22 @@
             </div>
         </div>
         <div class="row" id="hidden_fields" style="display:none;margin-left:18px;">
-            <input name="species" type="text" class="form-control" id="form_hidden_species">
+            <input name="species" type="text" class="form-control" value="Species" id="form_hidden_species">
+            <input type="text" name="analyze_type" value="normal" class="form-control" id="analyze_type" />
         </div>
     </form>
+    <div class="row div-center-90">
+        <div class="row progress div-center-90 div-margin-top-25" id="progress_bar_x" style="width:20%;display:none;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100"
+                aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+        </div>
+    </div>
 </div>
 <div class=" div-margin-top-5">
-    <form action="runanalyze" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-        <div class="row div-center-90">
-            <div class="row div-margin-top-25 div-center-90 " id="input_built_in" style="width:512px;">
-                <div class="row ">
-                    <div class="col-md-9">
-                        <textarea name="idpairs_normal" class="form-control" id="textarea_input_a" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical; "></textarea>
-                        <p style="text-align:left">Examples:
-                            <a class="a-padding-rl-5" href="javascript:showExample(1)">#1</a>
-                            <a class="a-padding-rl-5" href="javascript:showExample(2)">#2</a>
-                            <a class="a-padding-rl-5" href="javascript:showExample(3)">#3</a></p>
-                    </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-secondary margin-bottom-5" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">Select Protein IDs</button>
-                        <select name="select_normal" class="form-control margin-top-5" id="select_a" onchange="selectCheck()" style="width:138px;display:inline-block;">
-                        <option>Species</option>
-                        <option>Yeast</option>
-                        <option>Human</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="collapse " id="collapse_advance_settings">
-                <div class="row div-margin-top-5">
-                    <div class="col-md-3 div-border-right-1px div-min-height-256" style="height:300px;">
-                        <div class="row">
-                            <h4>INPUT</h4>
-                        </div>
-
-                        <div class="row"><br/>
-                            <textarea name="idpairs_advance" class="form-control" id="textarea_input_b" rows="3" placeholder="Input protein ids here.One line for one pair." style="resize: vertical;width:80%;margin:0 auto;"></textarea>
-                            <p style="text-align:left;padding-left:33px;">Examples:
-                                <a class="a-padding-rl-5" href="javascript:showExample(1)">#1</a>
-                                <a class="a-padding-rl-5" href="javascript:showExample(2)">#2</a>
-                                <a class="a-padding-rl-5" href="javascript:showExample(3)">#3</a></p>
-                        </div>
-                        <div class="row" style="text-align:left;">
-                            <button type="button" style="padding-top:0px;padding-bottom:0px;margin-left:30px;" class="btn btn-secondary margin-bottom-5" data-toggle="modal" data-target="#easy_proteinid_selection_modal" data-whatever="@getbootstrap">Select Protein IDs</button>
-                            <select name="select_advance" class="form-control" id="select_b" style="width:138px;margin-left:30px;" onchange="selectCheck()">
-                                <option>Species</option>
-                                <option>Yeast</option>
-                                <option>Human</option>
-                                </select>
-                        </div>
-                        <h5>OR <label for="exampleInputFile">Choose a local file:</label></h5>
-                        <div class="form-group" style="margin-left:16px;">
-                            <!--input name="files[]" type="file" class="form-control-file" id="file_input" multiple="true"-->
-                            <input name=id_file type=file class="form-control-file" id="file_input">
-                        </div>
-
-                    </div>
-                    <div class="col-md-3 div-border-right-1px div-min-height-256" style="height:300px;">
-                        <div class="row">
-                            <h4>FEATURES</h4>
-                        </div>
-                        <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
-                            <input type="checkbox" name="features[]" value="cellular_location" checked="checked" />Cellular location<br>
-                            <input type="checkbox" name="features[]" value="biological_process" checked="checked" />Biological process<br>
-                            <input type="checkbox" name="features[]" value="molecular_function" checked="checked" />Molecular function<br>
-                            <input type="checkbox" name="features[]" value="gene_expression" checked="checked" />Gene expression<br>
-                            <input type="checkbox" name="features[]" value="sequence_signature" checked="checked" />Sequence signature<br>
-                            <input type="checkbox" name="features[]" value="protein_expression" checked="checked" id="sel_pe" />Protein expression<br>
-                        </div>
-                    </div>
-                    <div class="col-md-3 div-border-right-1px div-min-height-256" style="height:300px;">
-                        <div class="row">
-                            <h4>ALGORITHM</h4>
-                        </div>
-                        <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
-                            <input type="radio" name="algorithms" value="naive_bayes" checked="checked" />Naive Bayes
-                        </div>
-                    </div>
-                    <div class="col-md-3 div-min-height-256">
-                        <div class="row">
-                            <h4>OUTPUT</h4>
-                        </div>
-                        <div class="row div-certer-vertical div-height-100p div-left-90-l35p">
-                            <input type="radio" name="outputs" value="tabular" checked="checked" />Tabular<br>
-                            <input type="radio" name="outputs" value="text" />Text<br>
-                            <input type="radio" name="outputs" value="color" />Color Density<br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row progress div-center-90 div-margin-top-25" id="progress_bar_x" style="width:20%;display:none;">
-                <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                <input type="text" name="analyze_type" value="normal" style="display:none;" id="analyze_type" />
-            </div>
-            <div class="row div-margin-top-5  div-margin-top-25 div-margin-bottom-25">
-                <input id="btn_run" type="submit" class="btn btn-primary" value="Run" />
-                <button type="submit" class="btn btn-primary" style="padding-top:3px;padding-bottom:0px;"><i class="material-icons">search</i></button>
-                <input id="btn_run_fake" type="button" class="btn btn-primary disabled" value="Running..." style="display:none;" />
-                <br/>
-                <button id="btn_advance" type="button" onclick="advancedSwitcher()" class="btn btn-link div-margin-top-5" data-toggle="collapse" href="#collapse_advance_settings" aria-expanded="false" aria-controls="collapse_advance_settings">Advance Settings</button>
-            </div>
-        </div>
-    </form>
     <!--div below is the modal for easy protein id pairs selections-->
     <div class="row" style="text-align:left;">
-        <div class="modal fade" id="easy_proteinid_selection_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="easy_proteinid_selection_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -237,7 +160,8 @@
                             <!--div below is where the protein id pairs shows / add/ delete-->
                             <div class="form-group" id="psa_pid" style="text-align:center;">
                                 <div class="alert alert-danger" role="alert">
-                                    You <strong>haven't</strong> add any protein id pairs yet, please use selection above to select protein id pairs then click<strong> add</strong> button.
+                                    You <strong>haven't</strong> add any protein id pairs yet, please use selection above
+                                    to select protein id pairs then click<strong> add</strong> button.
                                 </div>
                             </div>
                         </form>
@@ -257,30 +181,9 @@
     </div>
 </div>
 <script>
-    function toggleDiv(divId) {
-        $("#" + divId).toggle();
-
-    }
-
-    var cur_normal = true;
-
-    function advancedSwitcher() {
-        toggleDiv('index_placeholder');
-        toggleDiv('input_built_in');
-        if (cur_normal) {
-            document.getElementById("analyze_type").setAttribute("value", "advance");
-            document.getElementById("btn_advance").innerText = "Back To Normal";
-            cur_normal = false;
-        } else {
-            document.getElementById("analyze_type").setAttribute("value", "normal");
-            document.getElementById("btn_advance").innerText = "Advance Settings";
-            cur_normal = true;
-        }
-    }
-
     // this function is used to enable features based on Species selection box value
     function selectCheck() {
-        var sel = document.getElementById("select_b").value;
+        var sel = document.getElementById("form_hidden_species").value;
         if (sel == "Human") {
             document.getElementById("sel_pe").disabled = false;
             document.getElementById("sel_pe").checked = true;
@@ -291,32 +194,19 @@
     }
 
     function validateForm() {
-        var e;
-        if (cur_normal) {
-            e = document.getElementById("select_a");
-        } else {
-            e = document.getElementById("select_b");
-        }
-        var ev = e.options[e.selectedIndex].value;
+        var e = document.getElementById("form_hidden_species");
+        var ev = e.value;
         if (ev == "Species") {
             showMsg("Please select Species before submit.")
             return false;
         }
         toggleDiv('progress_bar_x');
-        document.getElementById('btn_advance').disabled = true;
-        $('#btn_run').hide();
-        $('#btn_run_fake').show();
         showMsg('Start running analyze,this may takes serveral minutes.');
         return true;
     }
 
     function showExample(expno) {
-        var inputbox;
-        if (cur_normal) {
-            inputbox = document.getElementById("textarea_input_a");
-        } else {
-            inputbox = document.getElementById("textarea_input_b");
-        }
+        var inputbox = document.getElementById("textarea_input");
         inputbox.value = "";
         var exampledata = "";
         if (expno == 1) {
@@ -337,7 +227,8 @@ P32793,P38041`;
     }
 
     // code here for protein id selection 
-    var row_data = `<div class="row" id="ppp_@PPPID@" style="margin-top:1px;margin-bottom:1px;">
+    var row_data =
+        `<div class="row" id="ppp_@PPPID@" style="margin-top:1px;margin-bottom:1px;">
                         <div class="col-md-4">
                             <span style="color:brown" id="pps_a_@PPPID@">@ProteinA@</span>
                         </div>
@@ -354,7 +245,8 @@ P32793,P38041`;
         $("#ppp_" + rid).remove();
         current_row_count--;
         if (current_row_count == 0) {
-            document.getElementById("psa_pid").innerHTML = `<div class="alert alert-danger" role="alert">You <strong>haven't add 
+            document.getElementById("psa_pid").innerHTML =
+                `<div class="alert alert-danger" role="alert">You <strong>haven't add 
             any protein id pairs</strong> , please use selection above to select protein id pairs then click<strong> 
             add</strong> button.</div>`;
         }
@@ -379,11 +271,7 @@ P32793,P38041`;
 
     //this function is used to converted user selected pids in modal to input box
     function getProteinIDPairs() {
-        if (cur_normal) {
-            document.getElementById("textarea_input_a").value = "";
-        } else {
-            document.getElementById("textarea_input_b").value = "";
-        }
+        document.getElementById("textarea_input").value = "";
         var protein_ids_data = "";
         x = 1;
         for (; x <= current_row_count; x++) {
@@ -393,11 +281,7 @@ P32793,P38041`;
             var pb = pid_b.innerText;
             protein_ids_data += pa + "," + pb + "\r\n";
         }
-        if (cur_normal) {
-            document.getElementById("textarea_input_a").value = protein_ids_data;
-        } else {
-            document.getElementById("textarea_input_b").value = protein_ids_data;
-        }
+        document.getElementById("textarea_input").value = protein_ids_data;
         $('#easy_proteinid_selection_modal').modal('toggle');
     }
 
@@ -405,21 +289,23 @@ P32793,P38041`;
         var sel_sp = document.getElementById("select_species");
         sel_sp.innerHTML = sname + `<span class="caret"></span>`;
         document.getElementById("form_hidden_species").value = sname;
+        selectCheck();
     }
 
     function textarea_on_fucus() {
         console.log("textarea on focus.");
         document.getElementById("hide_bar").style.display = "";
+        $('#hide_bar').collapse("show");
     }
 
     function textarea_lost_fucus() {
         console.log("textarea lose focus.");
-        setTimeout(function() {
-            document.getElementById("hide_bar").style.display = "none";
+        setTimeout(function () {
+            $('#hide_bar').collapse("hide");
         }, 150);
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         selectCheck();
         document.getElementById("nav_1").classList.add("bg-black");
         toggleDiv('index_placeholder');
