@@ -17,8 +17,8 @@
                         rows="1" placeholder="Protein id pairs" style="resize: vertical;margin-top:3px;margin-bottom:3px;"></textarea>
                 </div>
                 <div class="col-md-1 no-padding ">
-                    <button type="submit" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:4px;padding-right:4px;background:#222;border:0px;"
-                        id="btn_advance" data-toggle="collapse" href="#advance_settings" aria-expanded="false" aria-controls="advance_settings">
+                    <button type="button" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:4px;padding-right:4px;background:#222;border:0px;"
+                        id="btn_advance" onclick="advancedSwitcher()" data-toggle="collapse" href="#advance_settings" aria-expanded="false" aria-controls="advance_settings">
                 <i class="material-icons">settings</i>
             </button>
                 </div>
@@ -40,10 +40,10 @@
 
         <div class="row collapse" id="advance_settings" style="width:600px;display:true;margin-left:18px;background:#222;color:#17b174;margin-left:0px;border-bottom-right-radius: 8px;border-bottom-left-radius: 8px;border-top-right-radius: 8px;">
             <div class="row" style="margin-top:12px;">
-                <div class="col-md-4">
-                    <p><b>OR </b><label for="exampleInputFile"> Choose a local file:</label></p>
+                <div class="col-md-6" style="text-align:right;padding-right:0px;">
+                    <p>Input id above <b>OR </b><label for="exampleInputFile"> Choose a local file:</label></p>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4" style="padding-left:0px;">
                     <div class="form-group" style="margin-left:16px;">
                         <input name=id_file type=file class="form-control-file" id="file_input">
                     </div>
@@ -181,6 +181,15 @@
     </div>
 </div>
 <script>
+    function advancedSwitcher() {
+        var hid_type = document.getElementById("analyze_type");
+        if (hid_type.value == "normal") {
+            hid_type.setAttribute("value", "advance");
+        } else {
+            hid_type.setAttribute("value", "normal");
+        }
+    }
+
     // this function is used to enable features based on Species selection box value
     function selectCheck() {
         var sel = document.getElementById("form_hidden_species").value;
@@ -310,6 +319,7 @@ P32793,P38041`;
         document.getElementById("nav_1").classList.add("bg-black");
         toggleDiv('index_placeholder');
         toggleDiv('index_icon');
+        $('body').css('background-image', 'url(../images/backgrounds/header-top.jpg)');
     });
 </script>
 {% endblock %}
