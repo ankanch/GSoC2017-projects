@@ -7,8 +7,21 @@
                 <p style="color:crimson;font-size:22px;">Preview, some functions will not work!</p>
                 <form action="runanalyze_pwms" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()" id="uploadform_pwms">
                     <div class="row">
+                        <div class="row form-group" id="built_in_pwms">
+                            <label for="inputFile" class="col-md-3 control-label text_right"> PWMs Selected: </label>
 
-                        <div class="form-group">
+                            <div class="col-md-6">
+                                <textarea type="text" id="built_in_pwm" name="pwms" style="width:100%;vertical-align:center;resize:vertical;"></textarea>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;"
+                                    data-toggle="modal" data-target="#easy_pwm_selection_modal" data-whatever="@getbootstrap">
+                                   <i class="material-icons">add_box</i>
+                                </button>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row form-group" id="user_pwms">
                             <label for="inputFile" class="col-md-3 control-label text_right"> PWM Files: </label>
 
                             <div class="col-md-8">
@@ -16,7 +29,7 @@
                             </div>
                         </div>
                         <br/>
-                        <div class="form-group" id="dfile">
+                        <div class="row form-group" id="dfile">
                             <label for="inputFile" class="col-md-3 control-label text_right">Domain File: </label>
 
                             <div class="col-md-8">
@@ -44,6 +57,71 @@
 <!--div below is the modal for easy protein id pairs selections-->
 <div class="row" style="text-align:left;">
 </div>
+<div class="row" style="text-align:left;">
+    <div class="modal fade" id="easy_pwm_selection_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="title" style="text-align:center;">Select Built-In PWMs</h3>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="psa">
+                        <!--code below is where the selection box -->
+                        <div class="row" id="select_box_area">
+                            <div class="col-md-4" style="margin-top:7px;text-align:right;">
+                                <strong style="color:deeppink">Select PWMs:</strong>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select class="form-control" id="pps_a">
+                                        {% for id in PWM %}
+                                        <option>{{id}}</option>
+                                        {% endfor %}
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" onclick="addRow()" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                        <hr style="margin-bottom:0px;" />
+                        <!--column titles-->
+                        <div class="row" style="text-align:center;">
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-control-label">PWMS</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-control-label">Options</label>
+                            </div>
+                        </div>
+                        <hr style="margin-top:0px;" />
+                        <!--div below is where the protein id pairs shows / add/ delete-->
+                        <div class="form-group" id="psa_pid" style="text-align:center;">
+                            <div class="alert alert-danger" role="alert">
+                                You <strong>haven't</strong> add any PWMs yet, please use selection above to select protein
+                                id pairs then click<strong> add</strong> button.
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-5" style="text-align:left;">
+                        <span id="pro_count" style="color:darkgray">Protein ID Pairs Count:  0</span>
+                    </div>
+                    <div class="col-md-7">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="getProteinIDPairs()">Add All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var cur_normal = true;
@@ -58,8 +136,61 @@
             btn.innerText = "Use Built-in Domain File (Toggle to change)";
         }
     }
+    // code here for protein id selection 
+    var row_data =
+        `<div class="row" id="ppp_@PPPID@" style="margin-top:1px;margin-bottom:1px;">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <span style="color:brown" id="pps_b_@PPPID@">@ProteinB@</span>
+                        </div>
+                        <div class="col-md-4">
+                                <button type="button" class="btn btn-danger" onclick="delteRow('@PPPID@')" style="padding-top:1px;padding-bottom:1px;">x</button>
+                        </div>
+                    </div>`;
+    var current_row_count = 0;
+    //delete button in protein selction
+    function delteRow(rid) {
+        $("#ppp_" + rid).remove();
+        current_row_count--;
+        if (current_row_count == 0) {
+            document.getElementById("psa_pid").innerHTML =
+                `<div class="alert alert-danger" role="alert">You <strong>haven't add 
+            any protein id pairs</strong> , please use selection above to select protein id pairs then click<strong> 
+            add</strong> button.</div>`;
+        }
+        document.getElementById("pro_count").innerText = "Protein ID Pairs Count:  " + current_row_count;
+    }
 
-    $(document).ready(function() {
+    //add a new row to the protein selection
+    function addRow() {
+        current_row_count++;
+        var pro_a = document.getElementById("pps_a").value;
+        var rrow_data = row_data.replace(new RegExp("@PPPID@", 'g'), current_row_count);
+        rrow_data = rrow_data.replace(new RegExp("@ProteinB@", 'g'), pro_a);
+        if (current_row_count == 1) {
+            document.getElementById("psa_pid").innerHTML = rrow_data;
+        } else {
+            document.getElementById("psa_pid").innerHTML = document.getElementById("psa_pid").innerHTML + rrow_data;
+        }
+        document.getElementById("pro_count").innerText = "Protein ID Pairs Count:" + current_row_count;
+    }
+
+    //this function is used to converted user selected pids in modal to input box
+    function getProteinIDPairs() {
+        document.getElementById("built_in_pwm").value = "";
+        var protein_ids_data = "";
+        x = 1;
+        for (; x <= current_row_count; x++) {
+            var pid_b = document.getElementById("pps_b_" + x);
+            var pb = pid_b.innerText;
+            protein_ids_data += pb + ",";
+        }
+        document.getElementById("built_in_pwm").value = protein_ids_data;
+        $('#easy_pwm_selection_modal').modal('toggle');
+    }
+
+    $(document).ready(function () {
         toggleDiv("index_placeholder");
         document.getElementById("nav_2").classList.add("bg-black");
         document.getElementById("main_title").innerText = "DoMo-Pred";

@@ -30,8 +30,8 @@ def function_ppipred():
 # render analyze by PWMs
 @app.route('/pwms')
 def function_pwms():
-    Protein_id_list = CallAnalyze.Load_Protein_IDList()
-    return render_template("function_PWMs.html",PID=Protein_id_list)
+    pwm_list = CallAnalyze.Load_PWMs_List()
+    return render_template("function_PWMs.html",PWM=pwm_list)
 
 
 # This is the result URL
@@ -262,6 +262,7 @@ def run_analyzealyze():
 def runanalyze_pwms():
     if request.method == 'POST':
         pwmfilelist = request.files.getlist("file[]")
+        built_in_pwms = request.form["pwms"]
         use_built_in = request.form['hid1']
         dofile = None
         UBI = True # UBI stands for [use built in] domain file
@@ -277,26 +278,41 @@ def runanalyze_pwms():
         os.makedirs(store_path)
         SessionManager.setType(session,"type_pwm")
 
-        #save uploaded files to the current session folder
+        # domain file
         if UBI == False:
             # save user uploaded domain file to the target session folder
             dofile.save(store_path + "/domain.txt")
         else:
             # copy internal domain file to the target session folder
             shutil.copy2("./data/domain.txt",store_path + "/domain.txt" )
-            
-        # then save uploaded file for further pocess
+        # here, we check wether user slect to use built in PWMs or they want to use their own.
+        # if the variable built_in_pwms not null, then we assume user choose use built-in, otherwise,their own
         pwmfiles = []
-        for file in pwmfilelist:
-            file_path = os.path.join(store_path + "/", file.filename.replace(" ","_") )
-            file.save(file_path)
-            pwmfiles.append(file_path)
-            
-        # start analyze
+        if len(built_in_pwms) < 3:
+            # user choose to use their own PWMs
+            # then save uploaded pwmfile for further pocess
+            for file in pwmfilelist:
+                file_path = os.path.join(store_path + "/", file.filename.replace(" ","_") )
+                file.save(file_path)
+                pwmfiles.append(file_path)
+        else:
+            # user choose to use built in PWMs
+            pwm_ids = [x for x in built_in_pwms.split(",") if len(x)>0]
+
+            # then we copy these built-in PWMs to seesion folder
+            for pwm in pwm_ids:
+                pwm_path = store_path + "/" + pwm 
+                shutil.copy2(globeVar.VAR_PATH_PWMS+pwm,pwm_path)
+                pwmfiles.append(pwm_path)
+                    # start analyze
+        
+        # then we run the normal analyze.
         CallAnalyze.Analyzer_PWMs(session,[False,pwmfiles],store_path+"/domain.txt",session)
         
         #after operation above,data had been put into cache/output/pwmfilename
         return redirect("/result/"+session)
+
+
     print Message.MAS_ERROR_METHOD_NOT_SUPPORT
     return not_allowed()
 

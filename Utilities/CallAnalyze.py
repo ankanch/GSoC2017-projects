@@ -14,6 +14,7 @@ from Protein import run_protein
 
 # here is a list saving protein ids
 VAR_PROTEIN_ID_LIST = []  
+VAR_PWMS_LIST = []
 
 # paths for built in data
 PATH_DOMAIN = "./data/domain.txt"
@@ -158,6 +159,12 @@ def Load_Protein_IDList():
     linedata =  ff.readlines()[1:]
     VAR_PROTEIN_ID_LIST = [ x.split('\t')[0] for x in linedata ]
     return VAR_PROTEIN_ID_LIST
+
+def Load_PWMs_List():
+    global VAR_PWMS_LIST
+    v = os.listdir(globeVar.VAR_PATH_PWMS)
+    VAR_PWMS_LIST = v
+    return v
 
 def Save_ProteinID_List_TO_File(session,pairlist,pro_type="Yeast"):
     ff = open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+session+"/input_protein_ids.txt","w")
