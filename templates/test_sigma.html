@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="row">
+    <div style="margin:12px;">
         <style>
             #sigma-container {
                 top: 0;
@@ -32,24 +32,40 @@
     <script src="../static/sigma-js/sigma.js"></script>
     <script src="../static/sigma-js/plugins/sigma.layout.forceAtlas2.min.js"></script>
     <script src="../static/sigma-js/plugins/sigma.parsers.gexf.min.js"></script>
+    <script src="../static/sigma-js/plugins/sigma.plugins.dragNodes.min.js"></script>
     <script>
         sigma.parsers.gexf(
             '/getgexf/YoitE1s5FUmu6kxVNjMBPdR37bXhHrOIPx5Ut704X8mkYHv3150030118758', { // Here is the ID of the DOM element that
                 // will contain the graph:
                 container: 'sigma-container'
             },
-            function(sigmaInstance) {
-                sigmaInstance.graph.nodes().forEach(function(node, i, a) {
+            function (sigmaInstance) {
+                sigmaInstance.graph.nodes().forEach(function (node, i, a) {
                     node.x = Math.cos(Math.PI * 2 * i / a.length);
                     node.y = Math.sin(Math.PI * 2 * i / a.length);
                     node.size = 1;
                 });
-                sigmaInstance.refresh();
+                sigmaInstance.refresh(); //
                 sigmaInstance.startForceAtlas2({
                     worker: true,
                     barnesHutOptimize: false
-                });
+                }); //
+                //sigmaInstance.stopForceAtlas2();
                 console.log('File downloaded and parsed');
+                // Initialize the dragNodes plugin:
+                var dragListener = sigma.plugins.dragNodes(sigmaInstance, sigmaInstance.renderers[0]);
+                dragListener.bind('startdrag', function (event) {
+                    sigmaInstance.stopForceAtlas2();
+                });
+                /*/dragListener.bind('drop', function (event) {
+                    setTimeout(function () {
+                        sigmaInstance.startForceAtlas2({
+                            worker: true,
+                            barnesHutOptimize: false
+                        }); 
+                    }, 10000);
+                });/*/
+                console.log('Drag inited');
             }
         );
     </script>
@@ -59,7 +75,7 @@
             height: 500px;
             position: relative;
         }
-        
+
         #sigma-example {
             position: absolute;
             width: 100%;
