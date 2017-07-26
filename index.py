@@ -5,7 +5,7 @@ import shutil
 from Utilities import globeVar
 from Utilities import message as Message
 from flask import Flask, jsonify, redirect, render_template, request,make_response,send_file,Response
-from Utilities import SessionManager,ZipMaker,CallAnalyze
+from Utilities import SessionManager,ZipMaker,CallAnalyze,graph
 
 
 app = Flask(__name__)
@@ -201,6 +201,7 @@ def run_analyzealyze():
         # after analyze done, we then make a file of protein ids 
         # into result/sessionid folder
         CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,species)
+        graph.generate_graph(session)
         
         return render_template("redirect.html",TARGET="result/"+session)
     elif analyze_type == "advance":

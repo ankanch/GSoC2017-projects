@@ -72,7 +72,7 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE",result_
     # then we call run_standalone_protein to analyze it. and wtire results to file
     output,pred,pro_set,feature_scroes = RP.run_standalone_protein_with_features_selection(protein_id_set,features_to_use,PATH_RESULTS + sessionid + "/result.txt")
 
-    print "\n>>>feature_score:\n",feature_scroes
+    # USED FOR DEBUG print "\n>>>feature_score:\n",feature_scroes
 
     ff = open(output,"w")
     # we will not include nagative score
@@ -174,5 +174,6 @@ def Save_ProteinID_List_TO_File(session,pairlist,pro_type="Yeast"):
         astr += pair[0] + "," + pair[1] + "\n"
     ff.write(astr)
     ff.close()
+
         
 Load_Protein_IDList()

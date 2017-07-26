@@ -102,6 +102,27 @@
                     </tbody>
                 </table>
             </div>
+            <div style="margin:12px;">
+                <style>
+                    #sigma-container {
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        width: 100%;
+                        height: 500px;
+                        background: white;
+                        position: relative;
+                    }
+                </style>
+
+                <a href="/getgexf/{{SESSIONID}}">Network</a>
+                <div id="sigma-container"></div>
+                <script src="../static/sigma-js/sigma.js"></script>
+                <script src="../static/sigma-js/plugins/sigma.layout.forceAtlas2.min.js"></script>
+                <script src="../static/sigma-js/plugins/sigma.parsers.gexf.min.js"></script>
+                <script src="../static/sigma-js/plugins/sigma.plugins.dragNodes.min.js"></script>
+            </div>
         </div>
         {% endif %}
         <hr style="margin-top:10px;margin-bottom:3px;width:80%;border-top:1px solid #428bca; " />
@@ -136,7 +157,8 @@
             <a class="btn btn-primary" data-toggle="collapse" href="#copybox " aria-expanded="false" aria-controls="collapseExample">Permalink</a>
             <div class="collapse div-dialog-bbx" id="copybox" style="margin-top:20px;width:50%;margin:0 auto; ">
                 <div class="div-center-50;">
-                    <input type="text" id="result_page_url" value="http://beta.baderlab.org/result/{{SESSIONID}}" style="display:true;margin-top:20px;margin-bottom:20px;width:60%;" readonly="">
+                    <input type="text" id="result_page_url" value="http://beta.baderlab.org/result/{{SESSIONID}}" style="display:true;margin-top:20px;margin-bottom:20px;width:60%;"
+                        readonly="">
                     <button id="btn_permalink" type="button" class="btn btn-info" data-copytarget="#result_page_url">Copy Permalink</button>
                 </div>
             </div>
@@ -144,7 +166,6 @@
     </div>
 </div>
 <div style="margin-bottom:15px; "></div>
-<script src="../static/sigma.min.js"></script>
 <script>
     var current_mode = "{{PWM}}";
 
@@ -152,7 +173,7 @@
         $("#" + divId).toggle();
     }
     // when document ready , function below will be executed
-    $(document).ready(function() {
+    $(document).ready(function () {
         toggleDiv('index_placeholder');
         toggleDiv('index_icon');
         toggleDiv("table_0");
@@ -160,6 +181,41 @@
             document.getElementById("btn_0").classList.remove("btn-secondary");
             document.getElementById("btn_0").classList.add("btn-danger");
         }
+        // load sigma.js graph
+        sigma.parsers.gexf(
+            '/getgexf/{{SESSIONID}}', { // Here is the ID of the DOM element that
+                // will contain the graph:
+                container: 'sigma-container'
+            },
+            function (sigmaInstance) {
+                sigmaInstance.graph.nodes().forEach(function (node, i, a) {
+                    node.x = Math.cos(Math.PI * 2 * i / a.length);
+                    node.y = Math.sin(Math.PI * 2 * i / a.length);
+                    node.size = 1;
+                });
+                sigmaInstance.refresh(); //
+                sigmaInstance.startForceAtlas2({
+                    worker: true,
+                    barnesHutOptimize: false
+                }); //
+                //sigmaInstance.stopForceAtlas2();
+                console.log('File downloaded and parsed');
+                // Initialize the dragNodes plugin:
+                var dragListener = sigma.plugins.dragNodes(sigmaInstance, sigmaInstance.renderers[0]);
+                dragListener.bind('startdrag', function (event) {
+                    sigmaInstance.stopForceAtlas2();
+                });
+                /*/dragListener.bind('drop', function (event) {
+                    setTimeout(function () {
+                        sigmaInstance.startForceAtlas2({
+                            worker: true,
+                            barnesHutOptimize: false
+                        }); 
+                    }, 10000);
+                });/*/
+                console.log('Drag inited');
+            }
+        );
     });
 
     var current_view = "0"; //store current rersult view id
@@ -175,7 +231,7 @@
     }
 
     // copy to clipboard function from https://www.sitepoint.com/javascript-copy-to-clipboard/
-    (function() {
+    (function () {
         'use strict';
         // click events
         document.body.addEventListener('click', copy, true);
