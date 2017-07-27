@@ -248,6 +248,7 @@ def run_analyzealyze():
             # after analyze done, we then make a file of protein ids 
             # into result/sessionid folder
             CallAnalyze.Save_ProteinID_List_TO_File(session,protein_ids,species)
+            graph.generate_graph(session)
         # return the result
         
         return redirect("/result/"+session)

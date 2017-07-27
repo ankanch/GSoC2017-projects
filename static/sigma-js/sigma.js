@@ -2861,14 +2861,14 @@
     // {string}
     defaultLabelColor: '#000',
     // {string}
-    defaultEdgeColor: '#000',
+    defaultEdgeColor: '#6aa84f',  //KANCH: CHANGE HERE MUST SET edgeColor to default
     // {string}
-    defaultNodeColor: '#000',
+    defaultNodeColor: '#3c78d8',  //KANCH:SET DEFAULT NODE COLOR HERE.
     // {string}
-    defaultLabelSize: 14,
+    defaultLabelSize: 15, //KANCH:SET LABEL SIZE HERE
     // {string} Indicates how to choose the edges color. Available values:
     //          "source", "target", "default"
-    edgeColor: 'source',
+    edgeColor: 'default', //original:source
     // {number} Defines the minimal edge's arrow display size.
     minArrowSize: 0,
     // {string}
@@ -2888,9 +2888,9 @@
     // {number} The oversampling factor used in WebGL renderer.
     webglOversamplingRatio: 2,
     // {number} The size of the border of hovered nodes.
-    borderSize: 0,
+    borderSize: 3,    //KANCH:SET BORDER SIZE HERE WHEN HOVERED
     // {number} The default hovered node border's color.
-    defaultNodeBorderColor: '#000',
+    defaultNodeBorderColor: '#cc0000',  //KANCH:SET BORDER COLOR HERE WHEN HOVERED
     // {number} The hovered node's label font. If not specified, will heritate
     //          the "font" value.
     hoverFont: '',
@@ -2905,9 +2905,9 @@
     labelHoverShadowColor: '#000',
     // {string} Indicates how to choose the hovered nodes color.
     //          Available values: "node", "default"
-    nodeHoverColor: 'node',
+    nodeHoverColor: 'default',  //KANCH: NOT WORK
     // {string}
-    defaultNodeHoverColor: '#000',
+    defaultNodeHoverColor: '#c00',  //KANCH: NOT WORK
     // {string} Indicates how to choose the hovered nodes background color.
     //          Available values: "node", "default"
     labelHoverBGColor: 'default',
@@ -2920,11 +2920,11 @@
     defaultLabelHoverColor: '#000',
     // {string} Indicates how to choose the edges hover color. Available values:
     //          "edge", "default"
-    edgeHoverColor: 'edge',
+    edgeHoverColor: 'default',    //KANCH: NOT WORK
     // {number} The size multiplicator of hovered edges.
-    edgeHoverSizeRatio: 1,
+    edgeHoverSizeRatio: 1.5,    //KANCH: NOT WORK
     // {string}
-    defaultEdgeHoverColor: '#000',
+    defaultEdgeHoverColor: '#e69138',  //KANCH: NOT WORK
     // {boolean} Indicates if the edge extremities must be hovered when the
     //           edge is hovered.
     edgeHoverExtremities: false,
@@ -2990,7 +2990,7 @@
     eventsEnabled: true,
     // {number} Defines by how much multiplicating the zooming level when the
     //          user zooms with the mouse-wheel.
-    zoomingRatio: 1.7,
+    zoomingRatio: 1.5,   //KANCH:SET ZOOM RATIO
     // {number} Defines by how much multiplicating the zooming level when the
     //          user zooms by double clicking.
     doubleClickZoomingRatio: 2.2,
