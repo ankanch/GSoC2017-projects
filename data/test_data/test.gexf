@@ -2,12 +2,143 @@
 <gexf version="1.1" xmlns="http://www.gexf.net/1.1draft" xmlns:viz="http://www.gexf.net/1.1draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
   <graph defaultedgetype="undirected" mode="static">
     <nodes>
-      <node id="O13516" label="O13516" />
-      <node id="P49090" label="P49090" />
-      <node id="O13329" label="O13329" />
-      <node id="D6W196" label="D6W196" />
-      <node id="O13512" label="O13512" />
+      <node id="Q99234" label="Q99234" />
+      <node id="Q12260" label="Q12260" />
+      <node id="Q99231" label="Q99231" />
+      <node id="P40016" label="P40016" />
+      <node id="P0CE68" label="P0CE68" />
+      <node id="Q12436" label="Q12436" />
+      <node id="P40556" label="P40556" />
+      <node id="P40550" label="P40550" />
+      <node id="Q12060" label="Q12060" />
+      <node id="P40090" label="P40090" />
+      <node id="P23060" label="P23060" />
+      <node id="P25371" label="P25371" />
+      <node id="P02994" label="P02994" />
+      <node id="P31385" label="P31385" />
+      <node id="P36142" label="P36142" />
+      <node id="Q03759" label="Q03759" />
+      <node id="P39722" label="P39722" />
+      <node id="P25637" label="P25637" />
+      <node id="P46983" label="P46983" />
+      <node id="Q12378" label="Q12378" />
+      <node id="P22224" label="P22224" />
+      <node id="P35056" label="P35056" />
+      <node id="P25348" label="P25348" />
+      <node id="Q03290" label="Q03290" />
+      <node id="P39076" label="P39076" />
+      <node id="P46988" label="P46988" />
+      <node id="P43572" label="P43572" />
+      <node id="Q04921" label="Q04921" />
+      <node id="Q12080" label="Q12080" />
+      <node id="P40850" label="P40850" />
+      <node id="Q08216" label="Q08216" />
+      <node id="P03873" label="P03873" />
+      <node id="Q04487" label="Q04487" />
+      <node id="Q6B0X2" label="Q6B0X2" />
+      <node id="P53898" label="P53898" />
+      <node id="Q04080" label="Q04080" />
+      <node id="P32875" label="P32875" />
+      <node id="P39715" label="P39715" />
+      <node id="Q03080" label="Q03080" />
+      <node id="Q12505" label="Q12505" />
+      <node id="Q99369" label="Q99369" />
+      <node id="P40047" label="P40047" />
+      <node id="P14904" label="P14904" />
+      <node id="P53194" label="P53194" />
+      <node id="P32588" label="P32588" />
+      <node id="Q12156" label="Q12156" />
+      <node id="P20107" label="P20107" />
+      <node id="P40993" label="P40993" />
+      <node id="P11412" label="P11412" />
+      <node id="Q03702" label="Q03702" />
+      <node id="P36074" label="P36074" />
+      <node id="P50111" label="P50111" />
+      <node id="P40095" label="P40095" />
+      <node id="Q03648" label="Q03648" />
+      <node id="P43622" label="P43622" />
+      <node id="P38922" label="P38922" />
+      <node id="Q03921" label="Q03921" />
+      <node id="Q03723" label="Q03723" />
+      <node id="P32606" label="P32606" />
+      <node id="P38859" label="P38859" />
+      <node id="P52492" label="P52492" />
+      <node id="P53427" label="P53427" />
+      <node id="P32353" label="P32353" />
+      <node id="P47001" label="P47001" />
+      <node id="P36084" label="P36084" />
+      <node id="P43132" label="P43132" />
+      <node id="P32907" label="P32907" />
+      <node id="P37267" label="P37267" />
+      <node id="P53321" label="P53321" />
+      <node id="P32529" label="P32529" />
+      <node id="P40466" label="P40466" />
+      <node id="Q02983" label="Q02983" />
+      <node id="P47111" label="P47111" />
+      <node id="P48164" label="P48164" />
+      <node id="P32328" label="P32328" />
+      <node id="P17157" label="P17157" />
+      <node id="Q8TGK9" label="Q8TGK9" />
+      <node id="P0CX31" label="P0CX31" />
+      <node id="P38220" label="P38220" />
+      <node id="Q06412" label="Q06412" />
+      <node id="P20840" label="P20840" />
+      <node id="P23394" label="P23394" />
+      <node id="P07250" label="P07250" />
+      <node id="Q07468" label="Q07468" />
+      <node id="P38988" label="P38988" />
+      <node id="A5Z2X5" label="A5Z2X5" />
+      <node id="NP_014296" label="NP_014296" />
+      <node id="P34246" label="P34246" />
+      <node id="P40000" label="P40000" />
+      <node id="P36516" label="P36516" />
+      <node id="O13564" label="O13564" />
+      <node id="P35202" label="P35202" />
+      <node id="P40319" label="P40319" />
+      <node id="P53192" label="P53192" />
+      <node id="O13568" label="O13568" />
+      <node id="P41948" label="P41948" />
+      <node id="Q01080" label="Q01080" />
+      <node id="P25368" label="P25368" />
+      <node id="P43557" label="P43557" />
+      <node id="P21373" label="P21373" />
     </nodes>
-    <edges />
+    <edges>
+      <edge id="0" source="P40016" target="P38922" />
+      <edge id="1" source="P40016" target="P39076" />
+      <edge id="2" source="P0CE68" target="P40550" />
+      <edge id="3" source="Q12060" target="P17157" />
+      <edge id="4" source="P40090" target="P46988" />
+      <edge id="5" source="P02994" target="P32328" />
+      <edge id="6" source="P02994" target="P52492" />
+      <edge id="7" source="P02994" target="P25368" />
+      <edge id="8" source="P02994" target="P17157" />
+      <edge id="9" source="P02994" target="P25637" />
+      <edge id="10" source="P02994" target="P40319" />
+      <edge id="11" source="P02994" target="P39076" />
+      <edge id="12" source="P02994" target="P0CX31" />
+      <edge id="13" source="P25637" target="P38922" />
+      <edge id="14" source="P25637" target="P46988" />
+      <edge id="15" source="P25348" target="P46988" />
+      <edge id="16" source="P39076" target="P53898" />
+      <edge id="17" source="P39076" target="P52492" />
+      <edge id="18" source="P39076" target="P53192" />
+      <edge id="19" source="Q12080" target="P48164" />
+      <edge id="20" source="Q12080" target="P43557" />
+      <edge id="21" source="Q12080" target="NP_014296" />
+      <edge id="22" source="Q12080" target="P17157" />
+      <edge id="23" source="P40850" target="P32328" />
+      <edge id="24" source="P46988" target="P47111" />
+      <edge id="25" source="P46988" target="P38922" />
+      <edge id="26" source="P46988" target="Q12505" />
+      <edge id="27" source="P46988" target="P53898" />
+      <edge id="28" source="P46988" target="P40047" />
+      <edge id="29" source="Q12505" target="P21373" />
+      <edge id="30" source="P20107" target="P48164" />
+      <edge id="31" source="P32529" target="Q01080" />
+      <edge id="32" source="P48164" target="P0CX31" />
+      <edge id="33" source="P17157" target="P40319" />
+      <edge id="34" source="P17157" target="Q06412" />
+    </edges>
   </graph>
 </gexf>

@@ -344,6 +344,10 @@ def error():
 def test_sigma():
     return render_template("test_sigma.html")
 
+@app.route('/test_cyto')
+def test_cyto():
+    return render_template("test_cyto.html")
+
 @app.route('/getgexf/<session>')
 def send_gexf(session):
     ff = open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+session+"/network.gexf")
@@ -351,6 +355,12 @@ def send_gexf(session):
     ff.close()
     return Response(data, mimetype='text/plain')
 
+@app.route('/getjson/<session>')
+def send_json(session):
+    ff = open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+session+"/network.json")
+    data = ff.read()
+    ff.close()
+    return Response(data, mimetype='text/plain')
 
 if __name__ == '__main__':
     if "mode.server" in os.listdir("./"):
