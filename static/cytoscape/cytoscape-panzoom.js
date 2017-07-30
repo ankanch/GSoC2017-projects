@@ -91,7 +91,7 @@ SOFTWARE.
       init: function(){
         var browserIsMobile = 'ontouchstart' in window;
 
-        return $(cyRef.container().each(function(){
+        return $(cyRef.container()).each(function(){
           var $container = $(this);
           $container.cytoscape = cytoscape;
 

@@ -340,10 +340,6 @@ def not_allowed(error=Message.MSG_ERROR_NOT_ALLOWED,lastpage=""):
 def error():
     return render_template("error.html",MESSAGE="ERROR_MESSAGE")
 
-@app.route('/test_sigma')
-def test_sigma():
-    return render_template("test_sigma.html")
-
 @app.route('/test_cyto')
 def test_cyto():
     return render_template("test_cyto.html")
