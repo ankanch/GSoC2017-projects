@@ -327,7 +327,7 @@ def not_found(error=Message.MSG_ERROR_PAGE_NOT_FOUND,lastpage=""):
 
 @app.errorhandler(500)
 def server_fault(error,lastpage=""):
-    return render_template("error.html",MESSAGE="Internal server error!<br>"+error,LASTPAGE=lastpage),500
+    return render_template("error.html",MESSAGE="Internal server error!<br>"+str(error),LASTPAGE=lastpage),500
 
 @app.errorhandler(403)
 def not_allowed(error=Message.MSG_ERROR_NOT_ALLOWED,lastpage=""):
