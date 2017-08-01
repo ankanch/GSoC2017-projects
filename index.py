@@ -71,6 +71,14 @@ def result(sessionid):
         # outputs types are : tabular,text and color density
         # result type will be flaged in the first line of the result.txt
         ff = open( folder_path + "/result.txt")
+        input_ids = [line.replace("\n","") for line in open(folder_path + "/input_protein_ids.txt")][1:]
+        css_selector_str = ""
+        for idp in input_ids:
+            idp = idp.split(",")
+            css_selector_str+= " #"+idp[0]+", #"+idp[1]+","
+        css_selector_str = css_selector_str[:len(css_selector_str)-1]
+        print(css_selector_str)
+        print(input_ids)
         data =  ff.readlines()
         ff.close()
         result_type = data[:1][0].replace("#","").replace("\n","").replace("\r","")
@@ -81,9 +89,9 @@ def result(sessionid):
             final_data.append(pd)
         create_time = [SessionManager.getDate(sessionid),str(SessionManager.VAR_RESULT_LIFE)]
         if result_type == globeVar.VAR_RESULTTYPE_TABULAR:
-            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,TABULAR=True)
+            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,INPUT_NODES=css_selector_str,TABULAR=True)
         elif result_type == globeVar.VAR_RESULTTYPE_TEXT:
-            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,TEXT=True)
+            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,INPUT_NODES=css_selector_str,TEXT=True)
         elif result_type == globeVar.VAR_RESULTTYPE_COLOR:
             # here we have do a convert, the color cell's color is from RGB(204,255,204) to RGB(0,255,0)
             # therefor, we will made the convert here
@@ -102,7 +110,7 @@ def result(sessionid):
                 ele_num = 0
                 row_num+=1
             print final_data
-            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,COLOR=True)
+            return  render_template("result.html",result_package=final_data,SESSIONID=sessionid,TIME=create_time,INPUT_NODES=css_selector_str,COLOR=True)
     elif SessionManager.getType(sessionid) == "type_pwm":
         # get all result files then read them one by one
         result_file_list = [x for x in os.listdir(folder_path) if x.find("_result.txt")>-1]

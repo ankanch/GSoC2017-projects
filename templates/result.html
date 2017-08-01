@@ -87,6 +87,9 @@
                                 <li style="display:none"><a id="download_data" href="#" download>DOWNLOAD DATA</a></li>
                             </ul>
                         </li>
+                        <li class="function-menu">
+                             <a href="#" style="padding:4px;">Legend</a>
+                        </li>
                     </ul>
                 </div>
                 <div id="cy" style="margin:0 auto 20px;"></div>
@@ -220,13 +223,12 @@
                     elements: data,
                     style: [ // the stylesheet for the graph
                         {
-                            selector: 'node',
+                            selector: 'node', // color for other nodes
                             style: {
                                 'background-color': '#3c78d8',
                                 'label': 'data(id)'
                             }
                         },
-
                         {
                             selector: 'edge',
                             style: {
@@ -234,6 +236,13 @@
                                 'line-color': '#e69138',
                                 'target-arrow-color': '#ccc',
                                 'target-arrow-shape': 'triangle'
+                            }
+                        },
+                        {
+                            selector: '{{INPUT_NODES}}', // color for input nodes
+                            style: {
+                                'background-color': '#c00',
+                                'label': 'data(id)'
                             }
                         }
                     ],
