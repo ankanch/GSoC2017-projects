@@ -222,15 +222,18 @@
             exampledata = `D6W196 O13512
 O13329 O13516
 P49090 Q9ZZW4`;
+            changeSpecies('Yeast');
         } else if (expno == 2) {
             exampledata = `D6W196;O13512
 O13329;O13516
 P49090;Q9ZZW4`;
+            changeSpecies('Yeast');
         } else {
             exampledata = `P11710,15891
 P15891,P32793
 P43603,P39969
 P32793,P38041`;
+            changeSpecies('Human');
         }
         inputbox.value = exampledata;
     }
