@@ -15,6 +15,8 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 - **_result.html_**: Page used to show analyzing results.
 - **_template.html_**:Base page of every other pages,navigation defined here.
 - **_error.html_**: Error page which will be rendered to user when an error occured
+- **_test_cyto.html_**: Test page for graph of Cytoscape.js
+- **_\*.backup_**: backup file for specify file.
 
 ## Realted Documents
 

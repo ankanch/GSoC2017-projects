@@ -13,6 +13,7 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 - **_ZipMaker.py_**: Function in this module is used to make zip file from results.
 - **_globeVar.py_**: Here stores some globe variables used to exchange data between modules.
 - **_message.py_**: Stores tip/error message displayed to the user
+- **_graph.py_**: functions used for generate network of an interaction.
 
 ## Realted Documents
 

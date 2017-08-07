@@ -12,6 +12,8 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 - **_domain.txt_**: the default domain data.
 - **_SESSION.session_**: File to store session data(session id and session created date). 
 - **_test_data_**: here is the folder of test data used for test web interface
+- **_logo_**: Here stores the logo of this web interface (drawed by Inkscape).
+- **_irefweb_all.pos_**: Here sotres all protein interactions pairs,network will be generate dependent on this.
 
 **NOTES:** Protein IDs are stored in /DoMoPred/Protein/map.sgd.txt
 
