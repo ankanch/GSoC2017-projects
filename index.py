@@ -54,7 +54,7 @@ def result(sessionid):
     #               ,....  ]
     if len(sessionid) < 5:
         # for debug
-        return render_template("result.html",result_package=sample_result,SESSIONID=sessionid,TIME=["1.1.1.1","X"],PWM=True)
+        return render_template("result.html",result_package=sample_result,SESSIONID=sessionid,TIME=["1.1.1.1","X"],PWM=True,CUR_PWM_VIEW=sample_result[0][0])
     # check session first
     if SessionManager.checkSession(sessionid):
         not_found(Message.MSG_ERROR_SESSION_NOT_FOUND)
@@ -121,10 +121,10 @@ def result(sessionid):
             ff.close()
             # split the data
             pdata = [x.replace("\n","").split("\t") for x in dta]
-            print pdata[1]
-            result.append([index,pdata[1:]])
+            result_name = pdata[1][0]
+            result.append([result_name,pdata[1:]])    # result_name stores the name of this result.
         create_time = [SessionManager.getDate(sessionid),str(SessionManager.VAR_RESULT_LIFE)]
-        return render_template("result.html",result_package=result,SESSIONID=sessionid,TIME=create_time,PWM=True)
+        return render_template("result.html",result_package=result,SESSIONID=sessionid,TIME=create_time,PWM=True,CUR_PWM_VIEW=result_name)
     
 
 @app.route('/download/<sessionid>')

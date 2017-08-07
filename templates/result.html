@@ -206,6 +206,7 @@
 <div style="margin-bottom:15px; "></div>
 <script>
     var current_mode = "{{PWM}}";
+    var current_view = "{{CUR_PWM_VIEW}}"; //store current rersult view id
     var cy; // used for store current Cytoscape.js instance
 
     function toggleDiv(divId) {
@@ -215,10 +216,10 @@
     $(document).ready(function () {
         toggleDiv('index_placeholder');
         toggleDiv('index_icon');
-        toggleDiv("table_0");
+        toggleDiv("table_"+current_view);
         if (current_mode.length > 0) {
-            document.getElementById("btn_0").classList.remove("btn-secondary");
-            document.getElementById("btn_0").classList.add("btn-danger");
+            document.getElementById("btn_"+current_view).classList.remove("btn-secondary");
+            document.getElementById("btn_"+current_view).classList.add("btn-danger");
         }
         // load Cytoscape.js graph
         if (current_mode.indexOf("True") == -1) {
@@ -293,7 +294,6 @@
         db.click();
     }
 
-    var current_view = "0"; //store current rersult view id
     //function below is used to change result view
     function changeView(id) {
         document.getElementById("btn_" + current_view).classList.add("btn-secondary");
