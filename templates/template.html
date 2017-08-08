@@ -71,13 +71,25 @@
     function showMsg(message) {
         // Get the snackbar DIV
         var x = document.getElementById("snackbar");
-        x.innerText = message;
+        x.innerHTML = message;
         // Add the "show" class to DIV
         x.className = "show";
         // After 3 seconds, remove the show class from DIV
-        setTimeout(function() {
+        setTimeout(function () {
             x.className = x.className.replace("show", "");
         }, 3000);
+    }
+
+    function showMsg(message, sec) {
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar");
+        x.innerHTML = message;
+        // Add the "show" class to DIV
+        x.className = "show";
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function () {
+            x.className = x.className.replace("show", "");
+        }, sec * 1000);
     }
 </script>
 

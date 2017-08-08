@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-3" style="padding-left:3px;padding-right:1px;">
                 <button type="button" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:65px;border-radius:8px;"
-                    data-toggle="modal" data-target="#easy_pwm_selection_modal" data-whatever="@getbootstrap">
+                    data-toggle="modal" data-target="#easy_pwm_selection_modal" data-whatever="@getbootstrap" id="select_pwms">
                     <i class="material-icons">add_box</i>
                 </button>
             </div>
@@ -30,17 +30,20 @@
             <div class="row" style="margin-top:12px;">
                 <div class="form-group">
                     <div class="togglebutton" style="text-align:left;margin-left:100px;">
-                        <label style="text-align:left;color:wheat;">
-                            <div class="row">
+                        <div class="row">
+                            <label style="text-align:left;color:wheat;">
                             <input type="checkbox" name="builtin" value="1" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;" checked> 
                             Use Built-in Domain File</input> 
-                            </div>
+                            </label>
+                        </div>
                         <div class="row">
+                            <label style="text-align:left;color:wheat;">
                             <input type="checkbox" name="onoffswitch" onclick="useBuiltInPWMsSwitcher()" class="onoffswitch-checkbox" id="myonoffswitch" checked>
                             Use Built-In PWMs</input>
+                            </label>
                         </div>
-                            <input type="hidden" id="hid" name="hid1" value="false"/>
-                        </label>
+                        <input type="hidden" id="hid" name="hid1" value="false" />
+
                     </div>
                 </div>
             </div>
@@ -148,11 +151,19 @@
 
     function useBuiltInPWMsSwitcher() {
         var upload_div = document.getElementById("upload_pwms");
+        var sel_pwms = document.getElementById("select_pwms");
+        var ta_pwms = document.getElementById("built_in_pwm");
         if (use_builtin) {
             toggleDiv("upload_pwms");
+            sel_pwms.disabled = true;
+            ta_pwms.disabled = true;
+            ta_pwms.value = "please upload your PWMs";
             use_builtin = false;
         } else {
             toggleDiv("upload_pwms");
+            sel_pwms.disabled = false;
+            ta_pwms.disabled = false;
+            ta_pwms.value = "";
             use_builtin = true;
         }
 
@@ -217,7 +228,13 @@
     }
 
     function validateForm() {
-        showMsg("Running analyze...");
+        var td = document.getElementById("built_in_pwm").value;
+        if(td.length <2){
+            showMsg("You haven't input any PWMs.<br/>Please select PWMs by click button on the left.");
+            return false;
+        }
+        showMsg("Running analyze...",20);
+        return true;
     }
 
     $(document).ready(function () {
