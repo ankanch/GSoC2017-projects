@@ -3,7 +3,7 @@
     <form action="runanalyze_pwms" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()" id="uploadform_pwms">
         <div class="row">
             <div class="col-md-3" style="padding-left:3px;padding-right:1px;">
-                <button type="button" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;"
+                <button type="button" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:65px;border-radius:8px;"
                     data-toggle="modal" data-target="#easy_pwm_selection_modal" data-whatever="@getbootstrap">
                     <i class="material-icons">add_box</i>
                 </button>
@@ -15,33 +15,36 @@
                 </div>
                 <div class="col-md-1 no-padding ">
                     <button type="button" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:4px;padding-right:4px;background:#222;border:0px;"
-                        id="btn_advance" data-toggle="collapse" href="#advance_settings" aria-expanded="false"
-                        aria-controls="advance_settings">
+                        id="btn_advance" data-toggle="collapse" href="#advance_settings" aria-expanded="false" aria-controls="advance_settings">
                 <i class="material-icons">settings</i>
             </button>
                 </div>
                 <div class="col-md-2 no-padding" style="margin-left:10px;">
-                      <input type="submit" value="Upload and Run" class="btn btn-raised btn-primary">
                     <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
                 <i class="material-icons">search</i>
             </button>
                 </div>
             </div>
         </div>
-        <div class="row collapse" id="advance_settings" style="width:600px;display:true;margin-left:18px;background:#222;color:#17b174;margin-left:0px;border-bottom-right-radius: 8px;border-bottom-left-radius: 8px;border-top-right-radius: 8px;">
+        <div class="row collapse" id="advance_settings" style="width:428px;display:true;margin-left:18px;background:#222;color:#17b174;margin-left:0px;border-bottom-right-radius: 8px;border-bottom-left-radius: 8px;border-top-right-radius: 8px;">
             <div class="row" style="margin-top:12px;">
                 <div class="form-group">
-                    <div class="togglebutton" style="margin:0 auto;">
-                        <label style="text-align:center;color:wheat;">
-                        <input type="checkbox" name="builtin" value="1" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;text-align:center;"> 
-                        Use Built-in Domain File (Toggle to change)</input> 
-                         <input type="checkbox" name="onoffswitch" onclick="useBuiltInPWMsSwitcher()" class="onoffswitch-checkbox" id="myonoffswitch">Upload PWMS manully</input>
-                        <input type="hidden" id="hid" name="hid1" value="false"/>
-                    </label>
+                    <div class="togglebutton" style="text-align:left;margin-left:100px;">
+                        <label style="text-align:left;color:wheat;">
+                            <div class="row">
+                            <input type="checkbox" name="builtin" value="1" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;" checked> 
+                            Use Built-in Domain File</input> 
+                            </div>
+                        <div class="row">
+                            <input type="checkbox" name="onoffswitch" onclick="useBuiltInPWMsSwitcher()" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                            Use Built-In PWMs</input>
+                        </div>
+                            <input type="hidden" id="hid" name="hid1" value="false"/>
+                        </label>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="upload_pwms">
                 <div class="form-group" id="user_pwms" style="margin-bottom:1px;">
                     <label for="inputFile" class="col-md-3 control-label text_right"> PWM Files: </label>
                     <div class="col-md-8">
@@ -49,8 +52,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="row form-group" id="dfile">
+            <div class="row" id="upload_domain">
+                <div class="form-group" id="dfile">
                     <label for="inputFile" class="col-md-3 control-label text_right">Domain File: </label>
 
                     <div class="col-md-8">
@@ -141,18 +144,15 @@
     </div>
 </div>
 <script>
-    var use_builtin = false;
+    var use_builtin = true;
 
     function useBuiltInPWMsSwitcher() {
-        var upload_div = document.getElementById("user_pwms");
-        var usebuiltin_div = document.getElementById("built_in_pwms");
+        var upload_div = document.getElementById("upload_pwms");
         if (use_builtin) {
-            toggleDiv("user_pwms");
-            toggleDiv("built_in_pwms");
+            toggleDiv("upload_pwms");
             use_builtin = false;
         } else {
-            toggleDiv("built_in_pwms");
-            toggleDiv("user_pwms");
+            toggleDiv("upload_pwms");
             use_builtin = true;
         }
 
@@ -160,13 +160,7 @@
 
     function useBuiltInSwitcher() {
         document.getElementById('hid').value = this.checked;
-        toggleDiv('dfile');
-        var btn = document.getElementById("use_built_in_btn");
-        if (btn.innerText == "Use Built-in Domain File (Toggle to change)") {
-            btn.innerText = "Use Local Domain File (Toggle to change)";
-        } else {
-            btn.innerText = "Use Built-in Domain File (Toggle to change)";
-        }
+        toggleDiv('upload_domain');
     }
     // code here for protein id selection 
     var row_data =
@@ -232,6 +226,8 @@
         document.getElementById("nav_2").classList.add("bg-black");
         document.getElementById("main_title").innerText = "DoMo-Pred";
         toggleDiv('index_icon');
+        toggleDiv("upload_pwms");
+        toggleDiv("upload_domain");
     });
 </script>
 {% endblock %}
