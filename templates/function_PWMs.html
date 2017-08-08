@@ -1,63 +1,73 @@
 {% extends "template.html" %} {% block title %}DoMo-Pred{% endblock %} {% block content %}
-<div class=" div-margin-top-5">
-    <link href="../static/switcher.css" rel="stylesheet">
-    <div class="row div-center-90 div-50">
-        <div class="panel panel-default div-margin-top-5 div-center-90">
-            <div class="panel-heading">
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" onclick="useBuiltInPWMsSwitcher()" class="onoffswitch-checkbox" id="myonoffswitch">
-                    <label class="onoffswitch-label" for="myonoffswitch">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
+<div class="row" style="margin-left:5px;background:#222;width:350px;border-radius:8px;">
+    <form action="runanalyze_pwms" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()" id="uploadform_pwms">
+        <div class="row">
+            <div class="col-md-3" style="padding-left:3px;padding-right:1px;">
+                <button type="button" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;"
+                    data-toggle="modal" data-target="#easy_pwm_selection_modal" data-whatever="@getbootstrap">
+                    <i class="material-icons">add_box</i>
+                </button>
+            </div>
+            <div class="col-md-9 no-padding ">
+                <div class="col-md-8 no-padding ">
+                    <textarea placeholder="click left button to choose" type="text" id="built_in_pwm" rows="1" class="form-control" name="pwms"
+                        style="resize: vertical;margin-top:3px;margin-bottom:3px;"></textarea>
+                </div>
+                <div class="col-md-1 no-padding ">
+                    <button type="button" class="btn btn-primary" style="padding-top:8px;padding-bottom:0px;padding-left:4px;padding-right:4px;background:#222;border:0px;"
+                        id="btn_advance" data-toggle="collapse" href="#advance_settings" aria-expanded="false"
+                        aria-controls="advance_settings">
+                <i class="material-icons">settings</i>
+            </button>
+                </div>
+                <div class="col-md-2 no-padding" style="margin-left:10px;">
+                      <input type="submit" value="Upload and Run" class="btn btn-raised btn-primary">
+                    <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
+                <i class="material-icons">search</i>
+            </button>
                 </div>
             </div>
-            <div class="panel-body" style="background:#f4f4f4;">
-                <form action="runanalyze_pwms" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()" id="uploadform_pwms">
-                    <div class="row">
-                        <div class="row form-group" id="built_in_pwms" style="margin-bottom:2px;">
-                            <label for="inputFile" class="col-md-3 control-label text_right"> PWMs Selected: </label>
-
-                            <div class="col-md-6">
-                                <textarea placeholder="click button on the right to choose,or imput manually with comma as separtor" type="text" id="built_in_pwm"
-                                    name="pwms" style="width:100%;vertical-align:center;resize:vertical;"></textarea>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="button" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;"
-                                    data-toggle="modal" data-target="#easy_pwm_selection_modal" data-whatever="@getbootstrap">
-                                   <i class="material-icons">add_box</i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row form-group" id="user_pwms" style="margin-bottom:1px;">
-                            <label for="inputFile" class="col-md-3 control-label text_right"> PWM Files: </label>
-                            <div class="col-md-8">
-                                <input type="file" id="pwmfile" name="file[]" multiple="">
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row form-group" id="dfile">
-                            <label for="inputFile" class="col-md-3 control-label text_right">Domain File: </label>
-
-                            <div class="col-md-8">
-                                <input type="file" id="domainfile" name="domainfile" multiple="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="togglebutton" style="margin:0 auto;">
-                                <label style="text-align:center;">
-                                    <input type="checkbox" name="builtin" value="1" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;text-align:center;"> 
-                                    Use Built-in Domain File (Toggle to change)</input> 
-                                    <input type="hidden" id="hid" name="hid1" value="false"/>
-                                </label>
-                            </div>
-                        </div>
+        </div>
+        <div class="row collapse" id="advance_settings" style="width:600px;display:true;margin-left:18px;background:#222;color:#17b174;margin-left:0px;border-bottom-right-radius: 8px;border-bottom-left-radius: 8px;border-top-right-radius: 8px;">
+            <div class="row" style="margin-top:12px;">
+                <div class="form-group">
+                    <div class="togglebutton" style="margin:0 auto;">
+                        <label style="text-align:center;color:wheat;">
+                        <input type="checkbox" name="builtin" value="1" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;text-align:center;"> 
+                        Use Built-in Domain File (Toggle to change)</input> 
+                         <input type="checkbox" name="onoffswitch" onclick="useBuiltInPWMsSwitcher()" class="onoffswitch-checkbox" id="myonoffswitch">Upload PWMS manully</input>
+                        <input type="hidden" id="hid" name="hid1" value="false"/>
+                    </label>
                     </div>
-                    <div class="row" style="text-align: center;">
-                        <input type="submit" value="Upload and Run" class="btn btn-raised btn-primary">
-                    </div>
-                </form>
+                </div>
             </div>
+            <div class="row">
+                <div class="form-group" id="user_pwms" style="margin-bottom:1px;">
+                    <label for="inputFile" class="col-md-3 control-label text_right"> PWM Files: </label>
+                    <div class="col-md-8">
+                        <input type="file" id="pwmfile" name="file[]" multiple="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row form-group" id="dfile">
+                    <label for="inputFile" class="col-md-3 control-label text_right">Domain File: </label>
+
+                    <div class="col-md-8">
+                        <input type="file" id="domainfile" name="domainfile" multiple="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="hidden_fields" style="display:none;margin-left:18px;">
+            <input name="species" type="text" class="form-control" value="Species" id="form_hidden_species">
+            <input type="text" name="analyze_type" value="normal" class="form-control" id="analyze_type" />
+        </div>
+    </form>
+    <div class="row div-center-90">
+        <div class="row progress div-center-90 div-margin-top-25" id="progress_bar_x" style="width:20%;display:none;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100"
+                aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
         </div>
     </div>
 </div>
@@ -221,6 +231,7 @@
         toggleDiv("built_in_pwms");
         document.getElementById("nav_2").classList.add("bg-black");
         document.getElementById("main_title").innerText = "DoMo-Pred";
+        toggleDiv('index_icon');
     });
 </script>
 {% endblock %}
