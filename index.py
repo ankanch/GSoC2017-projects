@@ -270,13 +270,18 @@ def run_analyzealyze():
 # this function is used to run analyze by PWMs
 @app.route('/runanalyze_pwms',methods=['POST'])
 def runanalyze_pwms():
+    print "111111111111111111111111111111111"
     if request.method == 'POST':
+        print "122222222222222222222222222222"
         pwmfilelist = request.files.getlist("file[]")
         built_in_pwms = request.form["pwms"]
-        use_built_in = request.form['hid1']
+        use_built_in_domain = request.form['use_builtin_domain']
+        print "use_built_in_domain=",use_built_in_domain
+        use_builtin_pwms = request.form['use_builtin_pwms']
+        print "\tuse_builtin_pwms=",use_builtin_pwms
         dofile = None
         UBI = True # UBI stands for [use built in] domain file
-        if use_built_in == 'false':
+        if use_built_in_domain == 'false':
             UBI = False
             dofile = request.files['domainfile']
 
@@ -298,7 +303,7 @@ def runanalyze_pwms():
         # here, we check wether user slect to use built in PWMs or they want to use their own.
         # if the variable built_in_pwms not null, then we assume user choose use built-in, otherwise,their own
         pwmfiles = []
-        if len(built_in_pwms) < 3:
+        if use_builtin_pwms == 'false':
             # user choose to use their own PWMs
             # then save uploaded pwmfile for further pocess
             for file in pwmfilelist:

@@ -32,17 +32,16 @@
                     <div class="togglebutton" style="text-align:left;margin-left:100px;">
                         <div class="row">
                             <label style="text-align:left;color:wheat;">
-                            <input type="checkbox" name="builtin" value="1" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;" checked> 
+                            <input type="checkbox" name="use_builtin_domain" value="true" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;" checked> 
                             Use Built-in Domain File</input> 
                             </label>
                         </div>
                         <div class="row">
                             <label style="text-align:left;color:wheat;">
-                            <input type="checkbox" name="onoffswitch" onclick="useBuiltInPWMsSwitcher()" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                            <input type="checkbox" name="use_builtin_pwms" value="true" onclick="javascript:useBuiltInPWMsSwitcher()" checked>
                             Use Built-In PWMs</input>
                             </label>
                         </div>
-                        <input type="hidden" id="hid" name="hid1" value="false" />
 
                     </div>
                 </div>
@@ -147,30 +146,39 @@
     </div>
 </div>
 <script>
-    var use_builtin = true;
+    var use_builtin_pwms = true;
+    var use_builtin_domains = true;
 
     function useBuiltInPWMsSwitcher() {
         var upload_div = document.getElementById("upload_pwms");
         var sel_pwms = document.getElementById("select_pwms");
         var ta_pwms = document.getElementById("built_in_pwm");
-        if (use_builtin) {
+        if (use_builtin_pwms) {
             toggleDiv("upload_pwms");
+            this.value = "true";
             sel_pwms.disabled = true;
-            ta_pwms.disabled = true;
+            ta_pwms.readonly = true;
             ta_pwms.value = "please upload your PWMs";
-            use_builtin = false;
+            use_builtin_pwms = false;
         } else {
             toggleDiv("upload_pwms");
+            this.value = "false";
             sel_pwms.disabled = false;
-            ta_pwms.disabled = false;
+            ta_pwms.readonly = false;
             ta_pwms.value = "";
-            use_builtin = true;
+            use_builtin_pwms = true;
         }
 
     }
 
     function useBuiltInSwitcher() {
-        document.getElementById('hid').value = this.checked;
+        if(use_builtin_domains){
+            this.value = "false";
+            use_builtin_domains = false;
+        }else{
+            this.value = "true";
+            use_builtin_domains = true;
+        }
         toggleDiv('upload_domain');
     }
     // code here for protein id selection 
