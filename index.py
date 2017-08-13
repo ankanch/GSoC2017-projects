@@ -270,15 +270,26 @@ def run_analyzealyze():
 # this function is used to run analyze by PWMs
 @app.route('/runanalyze_pwms',methods=['POST'])
 def runanalyze_pwms():
-    print "111111111111111111111111111111111"
     if request.method == 'POST':
-        print "122222222222222222222222222222"
-        pwmfilelist = request.files.getlist("file[]")
-        built_in_pwms = request.form["pwms"]
-        use_built_in_domain = request.form['use_builtin_domain']
+        # coe below is used to detect if user want to use built in domain data and PWMs data.
+        use_builtin_pwms =  'true'
+        use_built_in_domain = 'true'
+        try:
+            use_builtin_pwms = request.form['use_builtin_pwms']
+        except:
+            use_builtin_pwms = 'false'
+        print "use_builtin_pwms=",use_builtin_pwms
+        try:
+            use_built_in_domain = request.form['use_builtin_domain']
+        except:
+            use_built_in_domain = 'false'
         print "use_built_in_domain=",use_built_in_domain
-        use_builtin_pwms = request.form['use_builtin_pwms']
-        print "\tuse_builtin_pwms=",use_builtin_pwms
+
+        # request for real data used for analyzing
+        built_in_pwms = request.form["pwms"]
+        pwmfilelist = None
+        if use_builtin_pwms == 'false':
+            pwmfilelist = request.files.getlist("file[]")
         dofile = None
         UBI = True # UBI stands for [use built in] domain file
         if use_built_in_domain == 'false':

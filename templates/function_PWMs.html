@@ -32,13 +32,13 @@
                     <div class="togglebutton" style="text-align:left;margin-left:100px;">
                         <div class="row">
                             <label style="text-align:left;color:wheat;">
-                            <input type="checkbox" name="use_builtin_domain" value="true" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;" checked> 
+                            <input id="cb_bi_do" type="checkbox" name="use_builtin_domain" value="true" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;" checked> 
                             Use Built-in Domain File</input> 
                             </label>
                         </div>
                         <div class="row">
                             <label style="text-align:left;color:wheat;">
-                            <input type="checkbox" name="use_builtin_pwms" value="true" onclick="javascript:useBuiltInPWMsSwitcher()" checked>
+                            <input id="cb_bi_pwms" type="checkbox" name="use_builtin_pwms" value="true" onclick="javascript:useBuiltInPWMsSwitcher()" checked>
                             Use Built-In PWMs</input>
                             </label>
                         </div>
@@ -155,14 +155,14 @@
         var ta_pwms = document.getElementById("built_in_pwm");
         if (use_builtin_pwms) {
             toggleDiv("upload_pwms");
-            this.value = "true";
+            document.getElementById("cb_bi_pwms").value = "true";
             sel_pwms.disabled = true;
             ta_pwms.readonly = true;
             ta_pwms.value = "please upload your PWMs";
             use_builtin_pwms = false;
         } else {
             toggleDiv("upload_pwms");
-            this.value = "false";
+            document.getElementById("cb_bi_pwms").value = "false";
             sel_pwms.disabled = false;
             ta_pwms.readonly = false;
             ta_pwms.value = "";
@@ -173,10 +173,10 @@
 
     function useBuiltInSwitcher() {
         if(use_builtin_domains){
-            this.value = "false";
+            document.getElementById("cb_bi_do").value = "false";
             use_builtin_domains = false;
         }else{
-            this.value = "true";
+            document.getElementById("cb_bi_do").value = "true";
             use_builtin_domains = true;
         }
         toggleDiv('upload_domain');
