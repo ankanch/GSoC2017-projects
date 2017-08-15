@@ -45,6 +45,7 @@ sudo python index.py
 * numpy
 * scipy
 * apscheduler
+* gunicorn
 
 ##### In addition to make it running in a productive envirement, you have to create a file named as `mode.server` in the root directory. We use this file to dectect if it's in debug mode or productive.
 
