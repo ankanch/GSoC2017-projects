@@ -42,7 +42,6 @@ def deleteSession(sessionids):
     sessiondata = f.read()
     # start delete
     for session in sessionids:
-        print("process session:",session)
         if sessiondata.find(session) > -1:
             sessiondata =  sessiondata[:sessiondata.find(session)-1] + \
                              sessiondata[sessiondata.rfind("\n",sessiondata.rfind(session)):]
