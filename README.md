@@ -22,6 +22,7 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 - **_static_**:Flask default folder to store JavaScript and CSS.
 - **_templates_**:Flask default folder to store HTML files.
 - **_Utilities_**:Function which will help to manage session,call analyze and so on
+- **_app.py_**: This is the entry for the web interface, including start cache cleaner and loading balance.
 - **_index.py_**:Flask view functions script where to perform rendering HTML file and process HTTP request.
 
 ## Making it runnable on the server
@@ -35,8 +36,10 @@ sudo systemctl stop apache2.service
 then type and run command below:
 
 ```shell
-sudo python index.py
+sudo python app.py
 ```
+
+The script will automatically dectect if it's on server or local machine. The we b interface use gunicorn to balance the load.
 
 ##### Python Modules Needed
 
@@ -60,4 +63,4 @@ sudo python index.py
 * [My Proposal:Developing a web interface for DoMo-Pred](https://storage.googleapis.com/summerofcode-prod.appspot.com/gsoc/core_project/doc/4956808348172288_1491032260_ProposalforDevelopingawebinterfaceforDoMo-Pred-NRNB-LongZhang_3.pdf?Expires=1495094303&GoogleAccessId=summerofcode-prod%40appspot.gserviceaccount.com&Signature=G7zxVNZpdiWA1tGfg%2FzYMQnWqKHZHsthUo0GUoY3uDWFrB4kW1LOvoHwhoEi7ntWMzi7DSAimiVsmC1jQLhMKN2Na8bTCKzFbCQXprxr6TOVHLWuWI2pWNZmOJm2C6mlLE3RpYIlhxwWaouE%2FJwvNd2k0DhqYVXWOsEWmXt%2B9HzB15Tx2BLa4wLeCrdWs9jouHoJx2uqHc8n1eJCgEbqbJ7WTJ%2B9r%2FmO1apJOuiM%2FPwZicilgaW4XJ5iWohXAgcce6gXUqFQt5yceYPcgU8Fvzt6nMNNkSxVk%2BM8ulFayMXRZP56OENtYBEJnuYUVbxXzQyd8UP%2FcXfOlgoGOSHSlw%3D%3D)
 
 
-###### last modified: Aug 7 2017 CST
+###### last modified: Aug 16 2017 CST

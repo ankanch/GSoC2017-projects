@@ -17,4 +17,4 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 
 **NOTES:** Protein IDs are stored in /DoMoPred/Protein/map.sgd.txt
 
-###### last modified: Jul 15 2017 CST
+###### last modified: Aug 16 2017 CST
