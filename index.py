@@ -278,12 +278,10 @@ def runanalyze_pwms():
             use_builtin_pwms = request.form['use_builtin_pwms']
         except:
             use_builtin_pwms = 'false'
-        print "use_builtin_pwms=",use_builtin_pwms
         try:
             use_built_in_domain = request.form['use_builtin_domain']
         except:
             use_built_in_domain = 'false'
-        print "use_built_in_domain=",use_built_in_domain
 
         # request for real data used for analyzing
         built_in_pwms = request.form["pwms"]
@@ -295,6 +293,9 @@ def runanalyze_pwms():
         if use_built_in_domain == 'false':
             UBI = False
             dofile = request.files['domainfile']
+
+        # request features that want to used in analyze
+        features = request.form.getlist('features[]')
 
         #generate session id for organising the upload files
         #all files that upload are in the same session folder

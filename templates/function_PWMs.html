@@ -27,12 +27,13 @@
             </div>
         </div>
         <div class="row collapse" id="advance_settings" style="width:428px;display:true;margin-left:18px;background:#222;color:#17b174;margin-left:0px;border-bottom-right-radius: 8px;border-bottom-left-radius: 8px;border-top-right-radius: 8px;">
-            <div class="row" style="margin-top:12px;">
-                <div class="form-group">
+            <h5 style="margin-top:12px;">DATA SOURCE</h5>
+            <div class="row" style="margin-top:5px;">
+                <div class="form-group" style="margin-bottom:10px;">
                     <div class="togglebutton" style="text-align:left;margin-left:100px;">
                         <div class="row">
                             <label style="text-align:left;color:wheat;">
-                            <input id="cb_bi_do" type="checkbox" name="use_builtin_domain" value="true" onclick="javascript:useBuiltInSwitcher();" style="margin-top:15px;" checked> 
+                            <input id="cb_bi_do" type="checkbox" name="use_builtin_domain" value="true" onclick="javascript:useBuiltInSwitcher();" style="margin-top:5px;" checked> 
                             Use Built-in Domain File</input> 
                             </label>
                         </div>
@@ -42,11 +43,10 @@
                             Use Built-In PWMs</input>
                             </label>
                         </div>
-
                     </div>
                 </div>
             </div>
-            <div class="row" id="upload_pwms">
+            <div class="row div-content-center" id="upload_pwms">
                 <div class="form-group" id="user_pwms" style="margin-bottom:1px;">
                     <label for="inputFile" class="col-md-3 control-label text_right"> PWM Files: </label>
                     <div class="col-md-8">
@@ -54,13 +54,24 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="upload_domain">
+            <div class="row div-content-center" id="upload_domain">
                 <div class="form-group" id="dfile">
-                    <label for="inputFile" class="col-md-3 control-label text_right">Domain File: </label>
+                    <label for="inputFile" class="col-md-3 control-label text_right">Domain: </label>
 
                     <div class="col-md-8">
                         <input type="file" id="domainfile" name="domainfile" multiple="">
                     </div>
+                </div>
+            </div>
+            <h5 style="font-size: 16px;font-weight: bold;">FEATURES</h5>
+            <div class="row pwm-advance-margin" id="features">
+                <div class="col-md-6" style="padding-left: 0px;">
+                    <p class="align-cb"> <label style="text-align:left;color:wheat;"><input type="checkbox" name="features[]" value="disorder" checked="checked" />Disorder</label></p>
+                    <p class="align-cb"> <label style="text-align:left;color:wheat;"><input type="checkbox" name="features[]" value="surface" checked="checked" />Surface</label></p>
+                </div>
+                <div class="col-md-6"  style="padding-left: 0px;">
+                    <p class="align-cb"> <label style="text-align:left;color:wheat;"><input type="checkbox" name="features[]" value="peptide" checked="checked" />Peptide</label></p>
+                    <p class="align-cb"> <label style="text-align:left;color:wheat;"><input type="checkbox" name="features[]" value="structure" checked="checked" />Structure</label></p>
                 </div>
             </div>
         </div>
@@ -172,10 +183,10 @@
     }
 
     function useBuiltInSwitcher() {
-        if(use_builtin_domains){
+        if (use_builtin_domains) {
             document.getElementById("cb_bi_do").value = "false";
             use_builtin_domains = false;
-        }else{
+        } else {
             document.getElementById("cb_bi_do").value = "true";
             use_builtin_domains = true;
         }
@@ -237,11 +248,11 @@
 
     function validateForm() {
         var td = document.getElementById("built_in_pwm").value;
-        if(td.length <2){
+        if (td.length < 2) {
             showMsg("You haven't input any PWMs.<br/>Please select PWMs by click button on the left.");
             return false;
         }
-        showMsg("Running analyze...",20);
+        showMsg("Running analyze...", 20);
         return true;
     }
 

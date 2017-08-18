@@ -162,3 +162,17 @@
     margin-bottom: 15px;
 }
 
+.pwm-advance-margin{
+    margin-left: 55px;
+    margin-bottom: 10px;
+}
+
+h4{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+h5{
+    font-size: 16px;
+    font-weight: bold;
+}

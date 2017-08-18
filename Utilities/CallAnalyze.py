@@ -33,6 +33,9 @@ MODE_USE_UPLOAD = 2     # use user upload files
 #                                                     - a list of features with the type of string.
 #                                                       decided which feature used for analyze
 def Analyzer_PWMs(session,pwmfiles,domainfile,features):
+    """
+    The return value stands for nothing
+    """
     # we have to check if use built in data
     if pwmfiles[0] == True:
         # use built in PWMs
