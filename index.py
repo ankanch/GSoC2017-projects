@@ -124,7 +124,15 @@ def result(sessionid):
             result_name = pdata[1][0]
             result.append([result_name,pdata[1:]])    # result_name stores the name of this result.
         create_time = [SessionManager.getDate(sessionid),str(SessionManager.VAR_RESULT_LIFE)]
-        return render_template("result.html",result_package=result,SESSIONID=sessionid,TIME=create_time,PWM=True,CUR_PWM_VIEW=result_name)
+
+        # get features used in analyze
+        features_used = ""
+        with open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+sessionid+"/"+"type_pwm") as ff:
+            features_used =  ff.readline()
+            if len(features_used) <1:
+                features_used = "disorder,surface,peptide,structure"
+                    
+        return render_template("result.html",result_package=result,SESSIONID=sessionid,TIME=create_time,PWM=True,CUR_PWM_VIEW=result_name,FEATURES=features_used)
     
 
 @app.route('/download/<sessionid>')
@@ -305,6 +313,8 @@ def runanalyze_pwms():
         store_path = app.config['UPLOAD_FOLDER']+"/"+session 
         os.makedirs(store_path)
         SessionManager.setType(session,"type_pwm")
+        with open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+session+"/type_pwm","w") as ff:
+            ff.write(",".join(features))
 
         # domain file
         if UBI == False:
