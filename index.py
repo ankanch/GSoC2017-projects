@@ -296,6 +296,7 @@ def runanalyze_pwms():
 
         # request features that want to used in analyze
         features = request.form.getlist('features[]')
+        feature_str = CallAnalyze.getFeatures(features)
 
         #generate session id for organising the upload files
         #all files that upload are in the same session folder
@@ -334,7 +335,8 @@ def runanalyze_pwms():
                     # start analyze
         
         # then we run the normal analyze.
-        CallAnalyze.Analyzer_PWMs(session,[False,pwmfiles],store_path+"/domain.txt",session)
+        print "feature_string=",feature_str
+        CallAnalyze.Analyzer_PWMs(session,[False,pwmfiles],store_path+"/domain.txt",feature_str)
         
         #after operation above,data had been put into cache/output/pwmfilename
         return redirect("/result/"+session)

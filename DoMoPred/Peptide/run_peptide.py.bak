@@ -52,32 +52,6 @@ def setup_peptide():
 
     return disd, surf, pepd, strt
 
-def setup_peptide_with_selections(selections):
-    '''
-    Setup feature datasets by choosing their own features
-    '''
-    feature_code = "LMNO"
-    # L     M     N     O  <---- feature code
-    disd, surf, pepd, strt = (None, None, None, None)
-
-    print "\nSetting up genomic features .... \n"
-    if "L" in selections:
-        print "   Setting up disorder .... "
-        disd = load_disorder(PATH)
-
-    if "M" in selections:
-        print "   Setting up surface .... "
-        surf = load_surface(PATH)
-
-    if "N" in selections:
-        print "   Setting up peptide .... "
-        pepd = load_peptide(PATH)
-
-    if "O" in selections:
-        print "   Setting up structure .... "
-        strt = load_structure(PATH)
-
-    return disd, surf, pepd, strt
 
 # def information_content(column):
 #    '''Return information cotent of column'''

@@ -51,7 +51,8 @@ def Analyzer_PWMs(session,pwmfiles,domainfile,features):
             # user uploaed many files
             print 'file name',str(pwmfiles)
             options = {'domain': domainfile, 'p-value': 1e-05}
-            gen_data = run_peptide.setup_peptide()
+            #gen_data = run_peptide.setup_peptide()
+            gen_data = run_peptide.setup_peptide_with_selections(features)
             cel_data = run_protein.setup_protein()
             for filename in pwmfiles[1]:
                 RP.pwm_runner(filename, options['domain'], options['p-value'],filename+"_result.txt", gen_data, cel_data)
