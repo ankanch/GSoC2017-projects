@@ -42,21 +42,14 @@ def Analyzer_PWMs(session,pwmfiles,domainfile,features):
         return True
     else:
         # use user uploaded files
-        # then we check how many PWMs user had uploaded
-        if len(pwmfiles[1]) == 1:
-            # user just uploaded a single file
-            options = {'output': pwmfiles[1][0]+"_result.txt", 'pwm': pwmfiles[1][0], 'domain': domainfile, 'p-value': 1e-05}
-            RP.process_options(options)
-        else:
-            # user uploaed many files
-            print 'file name',str(pwmfiles)
-            options = {'domain': domainfile, 'p-value': 1e-05}
-            #gen_data = run_peptide.setup_peptide()
-            gen_data = run_peptide.setup_peptide_with_selections(features)
-            cel_data = run_protein.setup_protein()
-            for filename in pwmfiles[1]:
-                RP.pwm_runner(filename, options['domain'], options['p-value'],filename+"_result.txt", gen_data, cel_data)
-            print 'analyze finished!'
+        print 'file name',str(pwmfiles)
+        options = {'domain': domainfile, 'p-value': 1e-05}
+        #gen_data = run_peptide.setup_peptide()
+        gen_data = run_peptide.setup_peptide_with_selections(features) # select to use which peptide features.
+        cel_data = run_protein.setup_protein()
+        for filename in pwmfiles[1]:
+            RP.pwm_runner(filename, options['domain'], options['p-value'],filename+"_result.txt", gen_data, cel_data)
+        print 'analyze finished!'
         return True
     return False
 

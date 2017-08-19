@@ -345,7 +345,6 @@ def runanalyze_pwms():
                     # start analyze
         
         # then we run the normal analyze.
-        print "feature_string=",feature_str
         CallAnalyze.Analyzer_PWMs(session,[False,pwmfiles],store_path+"/domain.txt",feature_str)
         
         #after operation above,data had been put into cache/output/pwmfilename

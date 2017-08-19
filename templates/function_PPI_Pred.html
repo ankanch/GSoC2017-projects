@@ -23,7 +23,10 @@
             </button>
                 </div>
                 <div class="col-md-2 no-padding" style="margin-left:10px;">
-                    <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
+                        <button id="btn_submit_fake" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;display:none;" disabled>
+                                <i class="material-icons">search</i>
+                            </button>
+                    <button  id="btn_submit" type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;display:show;">
                 <i class="material-icons">search</i>
             </button>
                 </div>
@@ -97,7 +100,7 @@
         </div>
     </form>
     <div class="row div-center-90">
-        <div class="row progress div-center-90 div-margin-top-25" id="progress_bar_x" style="width:20%;display:none;">
+        <div class="row progress div-center-90 div-margin-top-25" id="progress_bar_x" style="width:40%;display:none;margin-bottom:20px;">
             <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100"
                 aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
         </div>
@@ -204,13 +207,20 @@
 
     function validateForm() {
         var e = document.getElementById("form_hidden_species");
+        var ids = document.getElementById("textarea_input").value;
         var ev = e.value;
         if (ev == "Species") {
-            showMsg("Please select Species before submit.")
+            showMsg("Please select Species before submit.",4);
             return false;
         }
+        if(ids.length < 2){
+            showMsg("Please input protein id pairs before submit.",4);
+            return false; 
+        }
+        $("#btn_submit_fake").show();
+        $("#btn_submit").hide();
         toggleDiv('progress_bar_x');
-        showMsg('Start running analyze,this may takes serveral minutes.');
+        showMsg('Start running analyze,this may takes serveral minutes.',60);
         return true;
     }
 

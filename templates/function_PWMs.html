@@ -20,7 +20,10 @@
             </button>
                 </div>
                 <div class="col-md-2 no-padding" style="margin-left:10px;">
-                    <button type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;">
+                        <button id="btn_submit_fake" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;display:none;" disabled>
+                                <i class="material-icons">search</i>
+                            </button>
+                    <button id="btn_submit" type="submit" class="btn btn-primary" style="padding-top:6px;padding-bottom:2px;padding-left:8px;width:100%;border-radius:8px;display:show;">
                 <i class="material-icons">search</i>
             </button>
                 </div>
@@ -249,9 +252,12 @@
     function validateForm() {
         var td = document.getElementById("built_in_pwm").value;
         if (td.length < 2) {
-            showMsg("You haven't input any PWMs.<br/>Please select PWMs by click button on the left.");
+            console.log(td);
+            showMsg("You haven't input any PWMs.<br/>Please select PWMs by click button on the left.",4);
             return false;
         }
+        $("#btn_submit").hide();
+        $("#btn_submit_fake").show();
         showMsg("Running analyze...", 20);
         return true;
     }
