@@ -21,7 +21,10 @@ VAR_FEATURES = {
     "disorder":"L",             # features from here are belongs to PWMs
     "surface":"M",
     "peptide":"N",
-    "structure":"O"
+    "structure":"O",
+    "semantic":"P",
+    "expression":"Q",
+    "sequence":"R",
 }
 
 # result types describes how to dispaly the result to user 

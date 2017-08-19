@@ -46,7 +46,7 @@ def Analyzer_PWMs(session,pwmfiles,domainfile,features):
         options = {'domain': domainfile, 'p-value': 1e-05}
         #gen_data = run_peptide.setup_peptide()
         gen_data = run_peptide.setup_peptide_with_selections(features) # select to use which peptide features.
-        cel_data = run_protein.setup_protein()
+        cel_data = run_protein.setup_protein_with_feature_selection(features)
         for filename in pwmfiles[1]:
             RP.pwm_runner(filename, options['domain'], options['p-value'],filename+"_result.txt", gen_data, cel_data)
         print 'analyze finished!'

@@ -56,7 +56,6 @@ def setup_peptide_with_selections(selections):
     '''
     Setup feature datasets by choosing their own features
     '''
-    feature_code = "LMNO"
     # L     M     N     O  <---- feature code
     disd, surf, pepd, strt = (None, None, None, None)
 

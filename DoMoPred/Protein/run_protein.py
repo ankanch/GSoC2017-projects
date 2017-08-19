@@ -27,6 +27,29 @@ def setup_protein():
 
     return semt, expn, sign
 
+def setup_protein_with_feature_selection(selections):
+    '''
+    Setup feature datasets.
+    '''
+    # P     Q    R      <---- feature code
+    semt, expn, sign = (None, None, None)
+    print "\nSetting up protein features .... \n"
+
+    if "P" in selections:
+        print "  Setting up semantic:cellular location .... "
+        print "  Setting up semantic:biological process .... "
+        print "  Setting up semantic:molecular function .... "
+        semt = load_semantic(PATH)
+    if "Q" in selections:
+        print "  Setting up expression ...."
+        expn = load_expression(PATH)
+
+    if "R" in selections:
+        print "  Setting up sequence signature ....\n\n"
+        sign = load_sequence(PATH)
+
+    return semt, expn, sign
+
 
 def run_features(prot_set, *args):
     '''
