@@ -5,6 +5,8 @@
 This repository is used for my Google Summer of Code 2017 project that develop a web interface for DoMo-Pred.
 
 
+* To change the result life (how long a result will be delete when its been generated), please modify the variable `VAR_RESULT_LIFE` in file `SessionManager.py`
+
 ##### This folder is used for store some help libaries. Pages descriptions are as below.
 
 ## Pages descriptions
@@ -20,4 +22,4 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 
 None.
 
-###### last modified: Aug 16 2017 CST
+###### last modified: Aug 20 2017 CST

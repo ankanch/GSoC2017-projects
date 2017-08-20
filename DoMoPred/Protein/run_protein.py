@@ -89,7 +89,7 @@ def run_features_standalone(prot_set, *args):
             if data:
                 val = features[idx](prot1, prot2, data)
                 tmp.append(val)
-                print "\n====\n",val
+                #print "\n====\n",val
         results.append(tmp)
         int_set.append([prot1, prot2])
     return array(results), array(int_set)
