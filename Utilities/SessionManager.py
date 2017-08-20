@@ -17,7 +17,7 @@ PATH_SESSION_FILE = "./data/SESSION.session"
 PATH_RESULT_FOLDER = "./Cache/"
 # out of date time, varible below defined the days that an analyzing result 
 # will be expired( delete from the server)
-VAR_RESULT_LIFE = 7 
+VAR_RESULT_LIFE = 2
 
 #gernerate session id for better organised data
 def generateSessionID():

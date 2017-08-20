@@ -23,6 +23,12 @@ PATH_RESULTS = "./Cache/"
 MODE_USE_BUILT_IN = 1   # use built in pwms and domains
 MODE_USE_UPLOAD = 2     # use user upload files
 
+# set up globe data used for analyze
+print ">>>set up globe analyze data..."
+VAR_GEN_DATA = run_peptide.setup_peptide()
+VAR_CEL_DATA = run_protein.setup_protein()
+print ">>>done."
+
 # this function is used to call analyze functions directly from DoMo-Pred source code.
 # need 4 paramaters: 
 #                   sessionid: current session id 
@@ -46,8 +52,9 @@ def Analyzer_PWMs(session,pwmfiles,domainfile,features):
         options = {'domain': domainfile, 'p-value': 1e-05}
         #gen_data = run_peptide.setup_peptide()
         print "features=",features
-        gen_data = run_peptide.setup_peptide_with_selections(features) # select to use which peptide features.
-        cel_data = run_protein.setup_protein_with_feature_selection(features)
+        gen_data,cel_data = chooseFeatures(features)
+        #gen_data = run_peptide.setup_peptide_with_selections(features) # select to use which peptide features.
+        #cel_data = run_protein.setup_protein_with_feature_selection(features)
         for filename in pwmfiles[1]:
             RP.pwm_runner(filename, options['domain'], options['p-value'],filename+"_result.txt", gen_data, cel_data)
         print 'analyze finished!'
@@ -72,31 +79,23 @@ def Analyzer_ProteinIDs(sessionid,protein_id_set,features_to_use="ABCDE",result_
 
     # USED FOR DEBUG print "\n>>>feature_score:\n",feature_scroes
 
-    ff = open(output,"w")
-    # we will not include nagative score
-    head = "#\tcellular location\tbiological process\tmolecular function\tgene expression\tsequence signature\tscore\n"
-    head = "#" + result_type + "\n" + head
-    ff.write(head)
-    feature_code = ["A","B","C","D","E"]
-    feature_used = ["A","B","C","D","E"]
-    for pro_pair,pred_result,fss in zip(pro_set,pred,feature_scroes):
-        astr = pro_pair[0] + "," + pro_pair[1] + ","
-        #    features used for analyze          positive
-        for x in pred_result[1]:
-            feature_used[ feature_code.index(x) ] =  "@1"
-        feanamestr = ""
-        for sc in fss:
-            feanamestr += str(sc) + ","
-        """
-        for x in feature_used:
-            if x != "@1":
-                feanamestr += "@0,"
-            else:
-                feanamestr += "@1,"
-        feature_used = copy.copy(feature_code)"""
-        astr += feanamestr + str(round(pred_result[0]["positive"],2))  # round the scroe to decimal
-        ff.write(astr + "\n")
-    ff.close()
+    with open(output,"w") as ff:
+        # we will not include nagative score
+        head = "#\tcellular location\tbiological process\tmolecular function\tgene expression\tsequence signature\tscore\n"
+        head = "#" + result_type + "\n" + head
+        ff.write(head)
+        feature_code = ["A","B","C","D","E"]
+        feature_used = ["A","B","C","D","E"]
+        for pro_pair,pred_result,fss in zip(pro_set,pred,feature_scroes):
+            astr = pro_pair[0] + "," + pro_pair[1] + ","
+            #    features used for analyze          positive
+            for x in pred_result[1]:
+                feature_used[ feature_code.index(x) ] =  "@1"
+            feanamestr = ""
+            for sc in fss:
+                feanamestr += str(sc) + ","
+            astr += feanamestr + str(round(pred_result[0]["positive"],2))  # round the scroe to decimal
+            ff.write(astr + "\n")
 
     return True
 
@@ -110,8 +109,30 @@ def getFeatures(fea_list):
     return fstr
 
 # this function is used to choose features to use in analyze
-def chooseFeatures():
-    pass
+def chooseFeatures(sel_features,xtype="PWM"):
+    """
+    if it is PWM, then return two feature lists, one for peptide, the other for protein.
+
+    if it is PPI-pred, then return one list.
+    """
+    if xtype == "PWM":
+        # DoMo-Pred
+        peptide_feature_code = "LMNO"
+        protein_feature_code = "PQR"
+        # sleect peptide features
+        pepfea = [None,None,None,None]
+        profea = [None,None,None]
+        for code in sel_features:
+            if code in peptide_feature_code:
+                i = peptide_feature_code.index(code)
+                pepfea[i] = VAR_GEN_DATA[i]
+            elif code in protein_feature_code:
+                i = protein_feature_code.index(code)
+                profea[i] = VAR_CEL_DATA[i]
+        return pepfea,profea
+    else:
+        # PPI-Pred
+        feature_code = "ABCDE"
 
 # this function is used to extract protein ids from user's uploaed file and user input
 # the pramater is the file user upload or the list user input in input box.

@@ -3,7 +3,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from Utilities import SessionManager as SM
 import os
 
-CACHE_CLEAN_INTERVAL = 1  # hours to clean cache
+CACHE_CLEAN_INTERVAL = 24*SM.VAR_RESULT_LIFE  # hours to clean cache
 
 def cacheCleaner_Start():
     scheduler = BlockingScheduler()

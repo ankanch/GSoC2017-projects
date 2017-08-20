@@ -168,7 +168,7 @@ def run_standalone_protein(prot_set, output=None):
         num_pot = 5 - list(case).count(None)
         post = prot_cls.test(case)
 
-        print ">>>>>>>>>\ncase:",case,"\npost:",post,"\n>>>>>>>>>>>>"
+        #print ">>>>>>>>>\ncase:",case,"\npost:",post,"\n>>>>>>>>>>>>"
 
         pred.append((post, num_pot))
 
