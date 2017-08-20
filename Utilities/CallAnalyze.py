@@ -45,6 +45,7 @@ def Analyzer_PWMs(session,pwmfiles,domainfile,features):
         print 'file name',str(pwmfiles)
         options = {'domain': domainfile, 'p-value': 1e-05}
         #gen_data = run_peptide.setup_peptide()
+        print "features=",features
         gen_data = run_peptide.setup_peptide_with_selections(features) # select to use which peptide features.
         cel_data = run_protein.setup_protein_with_feature_selection(features)
         for filename in pwmfiles[1]:
@@ -107,6 +108,10 @@ def getFeatures(fea_list):
     for fea in fea_list:
         fstr += globeVar.VAR_FEATURES[str(fea)]
     return fstr
+
+# this function is used to choose features to use in analyze
+def chooseFeatures():
+    pass
 
 # this function is used to extract protein ids from user's uploaed file and user input
 # the pramater is the file user upload or the list user input in input box.
