@@ -162,8 +162,11 @@ def download(sessionid):
     # the result dataset with the same session id, it will return the exist file generate last time.
     print("new zip")
     targetfolder = globeVar.VAR_PATH_RESULT_FOLDER+"/"+ sessionid + "/"
+    cache_folder =  globeVar.VAR_PATH_RESULT_FOLDER + "/"
     filename = "Dataset_%s.zip" % sessionid
-    ZipMaker.make_zip(targetfolder,targetfolder+filename)
+    ZipMaker.make_zip(targetfolder,cache_folder+filename) # in order to avoid recursive compression
+    shutil.copy2(cache_folder+filename,targetfolder)
+    os.remove(cache_folder+filename)
     response = make_response(send_file( targetfolder + filename ))
     response.headers["Content-Disposition"] = ("attachment; filename=%s;" % filename)
     return response
