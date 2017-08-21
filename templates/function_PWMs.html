@@ -87,10 +87,10 @@
         </div>
     </form>
     <div class="row div-center-90">
-        <div class="row progress div-center-90 div-margin-top-25" id="progress_bar_x" style="width:20%;display:none;">
-            <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100"
-                aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-        </div>
+            <div class="row progress div-center-90 div-margin-top-25" id="progress_bar_x" style="width:40%;display:none;margin-bottom:20px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100"
+                        aria-valuemin="0" aria-valuemax="100" style="width: 100%">Running</div>
+                </div>
     </div>
 </div>
 <!--div below is the modal for easy protein id pairs selections-->
@@ -261,17 +261,16 @@
         }
         $("#btn_submit").hide();
         $("#btn_submit_fake").show();
+        document.getElementById("btn_advance").disabled = true;
+        toggleDiv('progress_bar_x');
         showMsg("Running analyze...", 20);
         return true;
     }
 
     $(document).ready(function () {
         $('body').css('background-image', 'url(../static/pwm-logo.svg)');
-        toggleDiv("index_placeholder");
         toggleDiv("built_in_pwms");
         document.getElementById("nav_2").classList.add("bg-black");
-        document.getElementById("main_title").innerText = "DoMo-Pred";
-        toggleDiv('index_icon');
         toggleDiv("upload_pwms");
         toggleDiv("upload_domain");
     });

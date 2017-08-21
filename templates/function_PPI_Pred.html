@@ -58,19 +58,12 @@
                         <h4>FEATURES</h4>
                     </div>
                     <div class="row no-margin-lr">
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="cellular_location" checked="checked" />Cellular location</p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="biological_process" checked="checked" />Biological
-                            process
-                        </p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="molecular_function" checked="checked" />Molecular
-                            function
-                        </p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="gene_expression" checked="checked" />Gene expression</p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="sequence_signature" checked="checked" />Sequence
-                            signature
-                        </p>
-                        <p class="align-cb"><input type="checkbox" name="features[]" value="protein_expression" checked="checked" id="sel_pe"
-                            />Protein expression</p>
+                        <p class="align-cb"><label class="selections"><input type="checkbox" name="features[]" value="cellular_location" checked="checked" />Cellular location</label></p>
+                        <p class="align-cb"><label class="selections"><input type="checkbox" name="features[]" value="biological_process" checked="checked" />Biological process</label></p>
+                        <p class="align-cb"><label class="selections"><input type="checkbox" name="features[]" value="molecular_function" checked="checked" />Molecular function</label></p>
+                        <p class="align-cb"><label class="selections"><input type="checkbox" name="features[]" value="gene_expression" checked="checked" />Gene expression</label></p>
+                        <p class="align-cb"><label class="selections"><input type="checkbox" name="features[]" value="sequence_signature" checked="checked" />Sequencesignature</label></p>
+                        <p class="align-cb"><label class="selections"><input type="checkbox" name="features[]" value="protein_expression" checked="checked" id="sel_pe"/>Protein expression</label></p>
                     </div>
                 </div>
                 <div class="col-md-4 div-border-right-1px options-column">
@@ -78,7 +71,7 @@
                         <h4>ALGORITHM</h4>
                     </div>
                     <div class="row no-margin-lr">
-                        <p class="align-cb"><input type="radio" name="algorithms" value="naive_bayes" checked="checked" />Naive Bayes</p>
+                        <p class="align-cb"><label class="selections"><input type="radio" name="algorithms" value="naive_bayes" checked="checked" />Naive Bayes</label></p>
                     </div>
                 </div>
                 <div class="col-md-3 options-column">
@@ -86,9 +79,9 @@
                         <h4>OUTPUT</h4>
                     </div>
                     <div class="row no-margin-lr">
-                        <p class="align-cb"><input type="radio" name="outputs" value="tabular" checked="checked" />Tabular</p>
-                        <p class="align-cb"> <input type="radio" name="outputs" value="text" />Text</p>
-                        <p class="align-cb"><input type="radio" name="outputs" value="color" />Color Density</p>
+                        <p class="align-cb"><label class="selections"><input type="radio" name="outputs" value="tabular" checked="checked" />Tabular</label></p>
+                        <p class="align-cb"><label class="selections"> <input type="radio" name="outputs" value="text" />Text</label></p>
+                        <p class="align-cb"><label class="selections"><input type="radio" name="outputs" value="color" />Color Density</label></p>
                     </div>
                 </div>
                 <div class="col-md-1"></div>
@@ -102,7 +95,7 @@
     <div class="row div-center-90">
         <div class="row progress div-center-90 div-margin-top-25" id="progress_bar_x" style="width:40%;display:none;margin-bottom:20px;">
             <div class="progress-bar progress-bar-striped progress-bar-animated active  bg-danger" role="progressbar" aria-valuenow="100"
-                aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                aria-valuemin="0" aria-valuemax="100" style="width: 100%">Running</div>
         </div>
     </div>
 </div>
@@ -219,7 +212,11 @@
         }
         $("#btn_submit_fake").show();
         $("#btn_submit").hide();
+        document.getElementById("btn_advance").disabled = true;
         toggleDiv('progress_bar_x');
+        if(document.getElementById("analyze_type").value == "advance"){
+            $("#advance_settings").collapse("hide");
+        }
         showMsg('Start running analyze,this may takes serveral minutes.',60);
         return true;
     }
@@ -331,8 +328,6 @@ P32793,P38041`;
         $('body').css('background-image', 'url(../static/logo.svg)');
         selectCheck();
         document.getElementById("nav_1").classList.add("bg-black");
-        toggleDiv('index_placeholder');
-        toggleDiv('index_icon');
     });
 </script>
 {% endblock %}
