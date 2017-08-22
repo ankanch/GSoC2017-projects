@@ -13,21 +13,16 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = globeVar.VAR_PATH_UPLOAD_FOLDER
 app.config['RESULT_FOLDER'] = globeVar.VAR_PATH_RESULT_FOLDER
 
-# This is the entrance URL for the index page
 @app.route('/')
 def index():
-    #Protein_id_list = CallAnalyze.Load_Protein_IDList()
-    #return render_template("index.html",PID=Protein_id_list)
     # default mode is PPI-Pred
     return redirect("/ppipred")
 
-# render analyze by protein ids
 @app.route('/ppipred')
 def function_ppipred():
     Protein_id_list = CallAnalyze.Load_Protein_IDList()
     return render_template("function_PPI_Pred.html",PID=Protein_id_list)
 
-# render analyze by PWMs
 @app.route('/pwms')
 def function_pwms():
     pwm_list = CallAnalyze.Load_PWMs_List()
@@ -38,23 +33,6 @@ def function_pwms():
 # For test, I use some selected data to show how it looks
 @app.route('/result/<sessionid>')
 def result(sessionid):
-    sample_result=[[0,[["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
-                    ["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
-                    ["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
-                    ["P15891","Q06604",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0]]],
-               [1,[["P15800","Q06694",427,436,"PAIPQKKSFL",0.94,4,0.95,4,1.0],
-                    ["P15800","Q06694",427,436,"PASDKYLFMS",0.94,4,0.95,4,1.0],
-                    ["P15800","Q06694",427,436,"PMSHTKSALN",0.94,4,0.95,4,1.0]]]]
-    #about result package.
-    #result package should be a list of lists which contains a lot of different pairs protein-protein interaction result
-    #the interaction result set made up of two part:result name(or id),result list
-    #A typical result_package should be look like below:
-    #       [       [result name ,[result list]  ] ,
-    #               [sample result ,[[result one],[result two],[...],...]  ]
-    #               ,....  ]
-    if len(sessionid) < 5:
-        # for debug
-        return render_template("result.html",result_package=sample_result,SESSIONID=sessionid,TIME=["1.1.1.1","X"],PWM=True,CUR_PWM_VIEW=sample_result[0][0])
     # check session first
     if SessionManager.checkSession(sessionid):
         not_found(Message.MSG_ERROR_SESSION_NOT_FOUND)
@@ -387,11 +365,6 @@ def not_allowed(error=Message.MSG_ERROR_NOT_ALLOWED,lastpage=""):
 
 ################[function below used for test some features.]#####################3
 ###########[develop only. need to be commented on produce version]########################
-#used for test error page
-@app.route('/error')
-def error():
-    return render_template("error.html",MESSAGE="ERROR_MESSAGE")
-
 @app.route('/test_cyto')
 def test_cyto():
     return render_template("test_cyto.html")

@@ -48,10 +48,10 @@ def Analyzer_PWMs(session,pwmfiles,domainfile,features):
         return True
     else:
         # use user uploaded files
-        print 'file name',str(pwmfiles)
+        #print 'file name',str(pwmfiles)
         options = {'domain': domainfile, 'p-value': 1e-05}
         #gen_data = run_peptide.setup_peptide()
-        print "features=",features
+        #print "features=",features
         gen_data,cel_data = chooseFeatures(features)
         #gen_data = run_peptide.setup_peptide_with_selections(features) # select to use which peptide features.
         #cel_data = run_protein.setup_protein_with_feature_selection(features)
