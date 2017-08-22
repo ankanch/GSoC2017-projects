@@ -357,6 +357,19 @@ def runanalyze_pwms():
     print Message.MAS_ERROR_METHOD_NOT_SUPPORT
     return not_allowed()
 
+@app.route('/contact')
+def page_contace():
+    return render_template("contact.html")
+
+@app.route('/help')
+def page_help():
+    return render_template("help.html")
+
+@app.route('/cite')
+def page_cite():
+    return render_template("cite.html")
+
+
 # error handlers for web interface.
 # the two functions below are defined as 
 # handler for 404 error and 500 error 

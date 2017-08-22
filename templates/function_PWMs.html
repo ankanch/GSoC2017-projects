@@ -263,6 +263,9 @@
         $("#btn_submit_fake").show();
         document.getElementById("btn_advance").disabled = true;
         toggleDiv('progress_bar_x');
+        if($("#advance_settings").attr("aria-expanded")){
+            $("#advance_settings").collapse("hide");
+        }
         showMsg("Running analyze...", 20);
         return true;
     }
