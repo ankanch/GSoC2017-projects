@@ -1,5 +1,4 @@
 # Web Interface for DoMo-Pred 
->> #### /data/
 ## About
 
 This repository is used for my Google Summer of Code 2017 project that develop a web interface for DoMo-Pred.
@@ -16,5 +15,3 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 - **_irefweb_all.pos_**: Here sotres all protein interactions pairs,network will be generate dependent on this.
 
 **NOTES:** Protein IDs are stored in /DoMoPred/Protein/map.sgd.txt
-
-###### last modified: Aug 16 2017 CST

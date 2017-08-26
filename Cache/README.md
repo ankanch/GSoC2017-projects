@@ -1,5 +1,4 @@
 # Web Interface for DoMo-Pred 
->> #### /Cache/
 ## About
 
 This repository is used for my Google Summer of Code 2017 project that develop a web interface for DoMo-Pred.
@@ -21,5 +20,3 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 
 * [File format of protein id pairs file (used for analyze by protein id)](https://docs.google.com/document/d/1d3OU4iEo2ixZHa-XjzLC7WLOsvs0n_exekfBsm0L7Ws/edit?usp=sharing)
 
-
-###### last modified: Aug 16 2017 CST

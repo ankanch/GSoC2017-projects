@@ -1,5 +1,5 @@
 # Web Interface for DoMo-Pred 
->> #### /Utilities/
+
 ## About
 
 This repository is used for my Google Summer of Code 2017 project that develop a web interface for DoMo-Pred.
@@ -21,5 +21,3 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 ## Realted Documents
 
 None.
-
-###### last modified: Aug 20 2017 CST
