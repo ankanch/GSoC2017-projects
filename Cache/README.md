@@ -6,7 +6,7 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 
 ##### This folder is used for store user upload files and analyzing results.
 
-#### every run of analye will be stored into a folder in the name of session id. orignal protein ids, PWMs and results will be stored in it.
+#### every run of analying will be stored into a folder in the name of session id. orignal protein ids, PWMs and results will be stored in it.
 
 ## Files stored in a session folder
 - **`analyze type indicator`**: it's an empty file with the name of `type_normal` or `type_advance` used to tag what kind of analyze it is

@@ -17,16 +17,18 @@ You can find the live version here : [http://beta.baderlab.org](http://beta.bade
 
 ## File and Folders
 
-- **_Cache_**:Cache folder where to store user upload files.
-- **_data_**: Here is the folder to save built in data.
-- **_DoMoPred_**:DoMo-Pred source code and excuable files.
-- **_static_**:Flask default folder to store JavaScript and CSS.
-- **_templates_**:Flask default folder to store HTML files.
-- **_Utilities_**:Function which will help to manage session,call analyze and so on
-- **_app.py_**: This is the entry for the web interface, including start cache cleaner and loading balance.
-- **_index.py_**:Flask view functions script where to perform rendering HTML file and process HTTP request.
+- __Cache__:Cache folder where to store user upload files and analyze result.
+- __data__: Here is the folder to save built in data like PWMs and domain as well as network data.
+- __DoMoPred__:The original DoMo-Pred source code and excuable files (Some changes made for web interface support).
+- __static__:Flask default folder to store JavaScript and CSS.
+- __templates__:Flask default folder to store HTML files.
+- __Utilities__:Function which will help to manage session,call analyze functions and so on.
+- __app.py__: This is the entry for the web interface, including start cache cleaner and loading balance.
+- __index.py__:Flask view functions script where to perform rendering HTML file and process HTTP request.
 
 ## Making it runnable on the server
+
+Before you start, you have to [download the database files from here](https://drive.google.com/drive/folders/0B1wYCRysoEhza1J0WmVHM3VNWmM?usp=sharing), due to the file size limits of Github repo.
 
 It will be running on port 80, therefore, on the Ubuntu we have to stop Apache2 first by running command below in the terminal:
 
@@ -40,9 +42,11 @@ then type and run command below:
 sudo python app.py
 ```
 
-The script will automatically dectect if it's on server or local machine. The we b interface use gunicorn to balance the load.
+The script will automatically dectect if it's on server or local machine. The web interface use gunicorn to balance the load.
 
-##### Python Modules Needed
+##### In addition to make it running in a productive envirement, you have to create a file named as `mode.server` in the root directory. We use this file to dectect if it's in debug mode or productive.
+
+## Python Modules Needed
 
 * networkx
 * flask
@@ -50,8 +54,6 @@ The script will automatically dectect if it's on server or local machine. The we
 * scipy
 * apscheduler
 * gunicorn
-
-##### In addition to make it running in a productive envirement, you have to create a file named as `mode.server` in the root directory. We use this file to dectect if it's in debug mode or productive.
 
 ## External Link
 
