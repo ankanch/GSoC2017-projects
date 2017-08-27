@@ -14,29 +14,33 @@
             </button> {% endfor %}
         </div>
         <div class="row div-center-90" style="margin-top:5px;">
-                Species selected:<b>{{SPECIES}}</b><br>
-            Features used for analyze:<b>{{FEATURES}}</b>
-            
+            <div class="col-md-4" style="text-align:right;">
+                Species selected:<b>{{SPECIES}}</b>
+            </div>
+            <div class="col-md-8">
+            Features used for analyze:<b>{{FEATURES}}</b><br>
+            </div>
+            <span style="margin-left:-24px;"><i class="material-icons">swap_vert</i>Tips:You can click column title to sort the result.</span>
         </div>
         <hr style="margin-top:10px;width:80%;border-top:1px solid #428bca;" />
         <div class="row" style=" width: 85%;text-align:initial;margin:0 auto;margin-top:15px;">
             <!--result[0] for result_set id,rsult[1] for result set-->
             {% for result in result_package %}
             <div class="row" id="table_{{result[0]}}" style="width:99%;margin:0 auto;text-align:initial;display:none;">
-                <table class="table table-striped">
+                <table class="table table-striped" id="domopred_result_{{result[0]}}">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Domain</th>
-                            <th>Peptide</th>
-                            <th>Start</th>
-                            <th>Stop</th>
-                            <th>Sequence</th>
-                            <th>Peptide Score</th>
-                            <th>Peptide Count</th>
-                            <th>Protein Score</th>
-                            <th>Protein Count</th>
-                            <th>Score</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',0)">Domain</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',1)">Peptide</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',2)">Start</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',3)">Stop</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',4)">Sequence</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',5)">Peptide Score</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',6)">Peptide Count</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',7)">Protein Score</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',8)">Protein Count</th>
+                            <th onclick="sortTable('domopred_result_{{result[0]}}',9)">Score</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,18 +113,19 @@
             <hr style="margin-top:1px;width:80%;border-top:1px solid #428bca;" />
             <a href="#" style="font-size:24px;">Result</a>
             <div class="row" id="table_result" style="width:99%;margin:0 auto;text-align:initial;">
-                <table class="table table-striped">
+                    <span style="margin-left:1px;"><i class="material-icons">swap_vert</i>Tips:You can click column title to sort the result.</span>
+                <table class="table table-striped" id="ppi_result">
                     <thead>
                         <tr>
-                            <th style="border-bottom: 1px solid #e7e7e7;">#</th>
-                            <th style="border-bottom: 1px solid #e7e7e7;">Protein A</th>
-                            <th style="border-bottom: 1px solid #e7e7e7;">Protein B</th>
-                            <th style="border-bottom: 1px solid #e7e7e7;">Cellular location</th>
-                            <th style="border-bottom: 1px solid #e7e7e7;">Biological process</th>
-                            <th style="border-bottom: 1px solid #e7e7e7;">Molecular function</th>
-                            <th style="border-bottom: 1px solid #e7e7e7;">Gene expression</th>
-                            <th style="border-bottom: 1px solid #e7e7e7;">Sequence signature</th>
-                            <th style="border-bottom: 1px solid #e7e7e7;">Score</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" >#</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" onclick="sortTable('ppi_result',0)">Protein A</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" onclick="sortTable('ppi_result',1)">Protein B</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" onclick="sortTable('ppi_result',2)">Cellular location</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" onclick="sortTable('ppi_result',3)">Biological process</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" onclick="sortTable('ppi_result',4)">Molecular function</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" onclick="sortTable('ppi_result',5)">Gene expression</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" onclick="sortTable('ppi_result',6)">Sequence signature</th>
+                            <th style="border-bottom: 1px solid #e7e7e7;" onclick="sortTable('ppi_result',7)">Score</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -206,6 +211,7 @@
     </div>
 </div>
 <div style="margin-bottom:15px; "></div>
+<script src="../static/sort_table.js"></script>
 <script>
     var current_mode = "{{PWM}}";
     var current_view = "{{CUR_PWM_VIEW}}"; //store current rersult view id
