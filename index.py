@@ -105,12 +105,14 @@ def result(sessionid):
 
         # get features used in analyze
         features_used = ""
+        species = ""
         with open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+sessionid+"/"+"type_pwm") as ff:
+            species = ff.readline()
             features_used =  ff.readline()
             if len(features_used) <1:
                 features_used = "disorder,surface,peptide,structure"
                     
-        return render_template("result.html",result_package=result,SESSIONID=sessionid,TIME=create_time,PWM=True,CUR_PWM_VIEW=result_name,FEATURES=features_used)
+        return render_template("result.html",result_package=result,SESSIONID=sessionid,TIME=create_time,PWM=True,CUR_PWM_VIEW=result_name,FEATURES=features_used,SPECIES=species)
     
 
 @app.route('/download/<sessionid>')
@@ -274,6 +276,8 @@ def runanalyze_pwms():
 
         # request for real data used for analyzing
         built_in_pwms = request.form["pwms"]
+        species = request.form["species"]       # current not use
+        #print(species)
         pwmfilelist = None
         if use_builtin_pwms == 'false':
             pwmfilelist = request.files.getlist("file[]")
@@ -295,6 +299,7 @@ def runanalyze_pwms():
         os.makedirs(store_path)
         SessionManager.setType(session,"type_pwm")
         with open(globeVar.VAR_PATH_RESULT_FOLDER+"/"+session+"/type_pwm","w") as ff:
+            ff.writelines([species+"\r\n"])
             ff.write(",".join(features))
 
         # domain file

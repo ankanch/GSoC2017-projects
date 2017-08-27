@@ -66,6 +66,19 @@
                     </div>
                 </div>
             </div>
+            <h5 style="font-size: 16px;font-weight: bold;">SPECIES</h5>
+            <div class="row pwm-advance-margin" id="species">
+                <div class="col-md-3" style="padding-left:3px;padding-right:1px;margin:0 auto;">
+                    <button type="button" style="background:#222;color:#bfe2d4;padding:0px;border:0px;margin-left:0px;margin-right:0px;margin-top:4px;margin-bottom:2px;height:32px;width:48px;"
+                        class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        id="select_species"><b>Choose Species here</b> <span class="caret"></span></button>
+                    <ul class="dropdown-menu" style="background:#222;">
+                        <li><a href="javascript:changeSpecies('Yeast')" style="color:#17b174;">Yeast</a></li>
+                        <li><a href="javascript:changeSpecies('Human')" style="color:#17b174;">Human</a></li>
+                    </ul>
+                </div>
+                <input name="species" type="text" class="form-control" value="Species" id="form_hidden_species" style="display:none;">
+            </div>
             <h5 style="font-size: 16px;font-weight: bold;">FEATURES</h5>
             <div class="row pwm-advance-margin" id="features">
                 <div class="col-md-6" style="padding-left: 0px;">
@@ -254,6 +267,12 @@
 
     function validateForm() {
         var td = document.getElementById("built_in_pwm").value;
+        var e = document.getElementById("form_hidden_species");
+        var ev = e.value;
+        if (ev == "Species") {
+            showMsg("Please select Species before submit.",4);
+            return false;
+        }
         if (td.length < 2) {
             console.log(td);
             showMsg("You haven't input any PWMs.<br/>Please select PWMs by click button on the left.",4);
@@ -268,6 +287,12 @@
         }
         showMsg("Running analyze...", 20);
         return true;
+    }
+
+    function changeSpecies(sname) {
+        var sel_sp = document.getElementById("select_species");
+        sel_sp.innerHTML = "Current species: <b>" + sname + `</b>  <span class="caret"></span>`;
+        document.getElementById("form_hidden_species").value = sname;
     }
 
     $(document).ready(function () {

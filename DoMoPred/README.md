@@ -8,7 +8,7 @@ The original README of DoMo-Pred has been renamed as `oldREADME` in the root of 
 
 ## Changes
 
-Modified these files  for web interface support:
+Modified these files below for web interface support:
 
 * `run_pipeline.py`
 * `run_protein.py`

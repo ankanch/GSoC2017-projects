@@ -13,18 +13,22 @@ You can find the live version here : [http://beta.baderlab.org](http://beta.bade
 ## Documents
 
 * [Web Interface Structure](https://docs.google.com/drawings/d/1qi1b4SFCYvlnH7GY6Xb6FxQY9YhwJtauFVaq_J4hUCE/edit?usp=sharing)
+
 * [How to organize user upload files](https://docs.google.com/document/d/1APkUkN0uEzOe7zhLUL_Pja34OvYxDRr7CMukWNaqFUg/edit?usp=sharing)
+
+* [Procedure of Web interface](https://docs.google.com/document/d/1Mxs1QFGY9P9gsiIp_eJzmWr3jVp3obnPCpP7bg-OfCs/edit?usp=sharing)
+
 
 ## File and Folders
 
-- __Cache__:Cache folder where to store user upload files and analyze result.
-- __data__: Here is the folder to save built in data like PWMs and domain as well as network data.
-- __DoMoPred__:The original DoMo-Pred source code and excuable files (Some changes made for web interface support).
-- __static__:Flask default folder to store JavaScript and CSS.
-- __templates__:Flask default folder to store HTML files.
-- __Utilities__:Function which will help to manage session,call analyze functions and so on.
-- __app.py__: This is the entry for the web interface, including start cache cleaner and loading balance.
-- __index.py__:Flask view functions script where to perform rendering HTML file and process HTTP request.
+- **Cache**:Cache folder where to store user upload files and analyze result.
+- **data**: Here is the folder to save built in data like PWMs and domain as well as network data.
+- **DoMoPred**:The original DoMo-Pred source code and excuable files (Some changes made for web interface support).
+- **static**:Flask default folder to store JavaScript and CSS.
+- **templates**:Flask default folder to store HTML files.
+- **Utilities**:Function which will help to manage session,call analyze functions and so on.
+- **app.py**: This is the entry for the web interface, including start cache cleaner and loading balance.
+- **index.py**:Flask view functions script where to perform rendering HTML file and process HTTP request.
 
 ## Making it runnable on the server
 
