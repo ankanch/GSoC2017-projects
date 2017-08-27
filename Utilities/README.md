@@ -18,6 +18,4 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 - **message.py**: Stores tip/error message displayed to the user
 - **graph.py**: functions used for generate network of an interaction.
 
-## Realted Documents
 
-None.

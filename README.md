@@ -12,11 +12,12 @@ You can find the live version here : [http://beta.baderlab.org](http://beta.bade
 
 ## Documents
 
+* [Procedure of Web interface](https://docs.google.com/document/d/1Mxs1QFGY9P9gsiIp_eJzmWr3jVp3obnPCpP7bg-OfCs/edit?usp=sharing)
+
 * [Web Interface Structure](https://docs.google.com/drawings/d/1qi1b4SFCYvlnH7GY6Xb6FxQY9YhwJtauFVaq_J4hUCE/edit?usp=sharing)
 
 * [How to organize user upload files](https://docs.google.com/document/d/1APkUkN0uEzOe7zhLUL_Pja34OvYxDRr7CMukWNaqFUg/edit?usp=sharing)
 
-* [Procedure of Web interface](https://docs.google.com/document/d/1Mxs1QFGY9P9gsiIp_eJzmWr3jVp3obnPCpP7bg-OfCs/edit?usp=sharing)
 
 
 ## File and Folders
@@ -48,7 +49,7 @@ sudo python app.py
 
 The script will automatically dectect if it's on server or local machine. The web interface use gunicorn to balance the load.
 
-##### In addition to make it running in a productive envirement, you have to create a file named as `mode.server` in the root directory. We use this file to dectect if it's in debug mode or productive.
+##### In order to make it running in a productive envirement, you have to create a file named as `mode.server` in the root directory. We use this file to dectect if it's in debug mode or productive.
 
 ## Python Modules Needed
 
