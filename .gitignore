@@ -101,9 +101,3 @@ ENV/
 # mypy
 .mypy_cache/
 
-# <<git ignore for other big files>>
-# more than 100 MB
-
-# numpy arrays
-*.npy
-*.npz
