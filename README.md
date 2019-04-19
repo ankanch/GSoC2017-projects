@@ -6,7 +6,7 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 
  For more information,please refer to the [Documents](#documents) section and the [External Link](#external-link) section.
 
-~~You can find the live version here : [http://beta.baderlab.org](http://beta.baderlab.org) (2017) ~~
+~~You can find the live version here : [http://beta.baderlab.org](http://beta.baderlab.org) (2017)~~
 
 ##### You can find more documents in related directories.
 
