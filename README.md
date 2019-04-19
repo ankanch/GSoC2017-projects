@@ -6,7 +6,7 @@ This repository is used for my Google Summer of Code 2017 project that develop a
 
  For more information,please refer to the [Documents](#documents) section and the [External Link](#external-link) section.
 
-You can find the live version here : [http://beta.baderlab.org](http://beta.baderlab.org) 
+~~You can find the live version here : [http://beta.baderlab.org](http://beta.baderlab.org) (2017) ~~
 
 ##### You can find more documents in related directories.
 
@@ -66,6 +66,6 @@ The script will automatically dectect if it's on server or local machine. The we
 
 * [Original Issue:Developing a web interface for DoMo-Pred, the protein interactions prediction tool](https://github.com/nrnb/GoogleSummerOfCode/issues/63)
 
-* [Projects Link on GSoC 2017 Site](https://summerofcode.withgoogle.com/projects/#5045706436902912)
+* [Project Link on Google Summer of Code 2017 Archive]( https://summerofcode.withgoogle.com/archive/2017/projects/4664231135805440 )
 
 * [My Proposal:Developing a web interface for DoMo-Pred](https://storage.googleapis.com/summerofcode-prod.appspot.com/gsoc/core_project/doc/4956808348172288_1491032260_ProposalforDevelopingawebinterfaceforDoMo-Pred-NRNB-LongZhang_3.pdf?Expires=1495094303&GoogleAccessId=summerofcode-prod%40appspot.gserviceaccount.com&Signature=G7zxVNZpdiWA1tGfg%2FzYMQnWqKHZHsthUo0GUoY3uDWFrB4kW1LOvoHwhoEi7ntWMzi7DSAimiVsmC1jQLhMKN2Na8bTCKzFbCQXprxr6TOVHLWuWI2pWNZmOJm2C6mlLE3RpYIlhxwWaouE%2FJwvNd2k0DhqYVXWOsEWmXt%2B9HzB15Tx2BLa4wLeCrdWs9jouHoJx2uqHc8n1eJCgEbqbJ7WTJ%2B9r%2FmO1apJOuiM%2FPwZicilgaW4XJ5iWohXAgcce6gXUqFQt5yceYPcgU8Fvzt6nMNNkSxVk%2BM8ulFayMXRZP56OENtYBEJnuYUVbxXzQyd8UP%2FcXfOlgoGOSHSlw%3D%3D)
